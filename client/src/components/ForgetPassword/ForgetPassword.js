@@ -14,6 +14,7 @@ import logoImg from "../../assets/Logo.png";
 
 const ForgetPassword = () => {
   const onSubmitHandeler = async (values) => {
+    //REDUX TODO
     console.log(values);
   };
 
