@@ -9,24 +9,21 @@ import {
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
-import styles from "./Login.module.css";
+import styles from "./ForgetPassword.module.css";
 import logoImg from "../../assets/Logo.png";
 
-const Login = () => {
+const ForgetPassword = () => {
   const onSubmitHandeler = async (values) => {
+    //REDUX TODO
     console.log(values);
   };
 
   let initVals = {
     email: "",
-    password: "",
   };
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string().required("Email is required!"),
-    password: Yup.string()
-      .required("Password is required!")
-      .min(6, "Password is too short!"),
   });
   return (
     <>
@@ -64,41 +61,25 @@ const Login = () => {
                       <small className="text-danger pt-2">{errors.email}</small>
                     ) : null}
                   </InputGroup>
-
-                  <InputGroup className=" d-flex flex-column">
-                    <div className="d-flex justify-content-between align-items-center pb-2">
-                      <label htmlFor="password" className="">
-                        Password
-                      </label>
-                    </div>
-                    <Field
-                      as={BootstrapForm.Control}
-                      placeholder="Create your own password"
-                      name="password"
-                      isValid={!errors.password && touched.password}
-                      type="password"
-                      className={`${styles.input} w-100`}
-                      isInvalid={errors.password && touched.password}
-                    />
-                    {errors.password && touched.password ? (
-                      <small className="text-danger pt-2">
-                        {errors.password}
-                      </small>
-                    ) : null}
-                  </InputGroup>
-                  <div className="text-end">
-                    <Link to="/forget-password" className={styles.link}>
-                      Forget Password?
-                    </Link>
-                  </div>
-
-                  <div className="pt-3">
+                  <small className={styles.small_text}>
+                    You will recieve an email containing information about
+                    setting up new password.
+                  </small>
+                  <div className="pt-4 d-flex justify-content-between align-items-center">
                     <Button
                       variant="primary"
                       type="submit"
                       className={styles.btn}
                     >
-                      Login
+                      Submit
+                    </Button>
+                    <Button
+                      variant="primary"
+                      as={Link}
+                      to="/"
+                      className={styles.btn}
+                    >
+                      Cancel
                     </Button>
                   </div>
                 </Form>
@@ -111,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;
