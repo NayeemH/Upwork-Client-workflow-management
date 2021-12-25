@@ -1,0 +1,26 @@
+.wrapper {
+  width: 100%;
+  height: 50px;
+  background: var(--dark-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary);
+  padding: 0 2.5rem;
+}
+
+.ham {
+  color: var(--primary);
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.ham:hover {
+  color: var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.logo {
+  height: 36px;
+}

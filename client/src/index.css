@@ -1,5 +1,11 @@
 :root {
-  --blue: #0d6efd;
+  --primary: #0d6efd;
+  --primary-hover: #014bb9;
+  --secondary: rgb(211, 211, 211);
+  --danger: #dc3545;
+  --dark: #212529;
+  --dark-bg: #1d2024;
+  --light: #fff;
 }
 
 body {
