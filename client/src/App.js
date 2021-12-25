@@ -2,7 +2,7 @@ import { Provider } from "react-redux";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import store from "./store/Store";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { LoginPage, FogetPasswordPage } from "./views";
+import { LoginPage, FogetPasswordPage, DashboardPage } from "./views";
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/forget-password" element={<FogetPasswordPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

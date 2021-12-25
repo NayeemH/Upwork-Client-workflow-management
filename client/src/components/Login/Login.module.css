@@ -16,6 +16,7 @@
 
 .crd {
   width: 22rem;
+  background: var(--dark) !important;
 }
 
 .btn {
