@@ -34,7 +34,7 @@ app.use(helmet());
 
 
 // Routers
-app.use(router);
+app.use('/api', router);
 
 
 // Error Handling
