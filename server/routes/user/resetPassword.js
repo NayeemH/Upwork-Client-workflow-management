@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
             msg: "Please conferm your email." 
         });
 
-        const user = await User({_id: emailPass.userId});
+        const user = await User.findOne({_id: emailPass.userId});
 
         try{
             const activateToken = `${user._id}.${token.token}`;
@@ -43,12 +43,12 @@ router.post('/', async (req, res, next) => {
             const emailResult = await sendMail({
                 to: emailPass.email,
                 subject: 'Verification mail',
-                text: `Click on the given link ${HOST_URL}/user/resetPassword/${activateToken}`,
+                text: `Click on the given link ${HOST_URL}/api/user/resetPassword/${activateToken}`,
                 template: 'reset',
                 context: {
                     username: user.username,
                     email: emailPass.email,
-                    link: `${HOST_URL}/user/resetPassword/${activateToken}`
+                    link: `${HOST_URL}/api/user/resetPassword/${activateToken}`
                 }
             });
         }

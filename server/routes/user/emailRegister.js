@@ -23,24 +23,26 @@ router.post('/', async (req, res, next) => {
 
         
         // Creating user
-        const newUser = new User({ username, email, password });
+        const newUser = new User({ username, email});
         // Save User data to database
         const newData = await newUser.save();
 
         // Create Refresh and Access Token
-        const refreshToken = await issueToken({userId: newData._id, tokenType: "refresh"}, '180d');
+        const refreshToken = await issueToken({userId: newData._id, userType: "admin", tokenType: "refresh"}, '180d');
         
 
         // Store data to Auth database
         const auth = new EmailAuth({
-            userId: newUser._id,
+            userId: newData._id,
             email,
             password
         });
 
         // Setup settings in database
         const setting = new Settings({
-            userId: newUser._id,
+            userId: newData._id,
+            userType: "admin",
+            verified: true,
             sessions: {
                 sessionId: 1,
                 refreshToken,
@@ -60,16 +62,16 @@ router.post('/', async (req, res, next) => {
             maxAge: 15552000000, 
             httpOnly: true,
         //  secure: true,  // This will be in production
-            path: '/user'
+            path: '/api/user'
         });
 
         // Send the response with the access Token
         res.json({
             success: true, 
-            msg: "Your account is created successfully. Please conferm your email." 
+            msg: "Your account is created successfully. Please confirm your email." 
         });
 
-
+return;
         try{
             // Sending JSON response
             const activateToken = await issueToken({userId: newData._id, tokenType: "emailVerify"});
@@ -77,12 +79,12 @@ router.post('/', async (req, res, next) => {
             const emailResult = await sendMail({
                 to: newData.email,
                 subject: 'Verification mail',
-                text: `Click on the given link ${HOST_URL}/user/activate/${activateToken}`,
+                text: `Click on the given link ${HOST_URL}/api/user/activate/${activateToken}`,
                 template: 'email',
                 context: {
                     username: newData.username,
                     email: newData.email,
-                    link: `${HOST_URL}/user/activate/${activateToken}`
+                    link: `${HOST_URL}/api/user/activate/${activateToken}`
                 }
             });
         }

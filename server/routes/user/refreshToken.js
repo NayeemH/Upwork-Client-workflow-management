@@ -34,22 +34,22 @@ router.post('/', async (req, res, next) => {
 
 
             // Create Refresh and Access Token
-            const newRefreshToken = await issueToken({userId: user.userId, tokenType: "refresh"}, '180d');
-            const newAccessToken = await issueToken({userId: user.userId, tokenType: "access"}, '5m');
+            const newRefreshToken = await issueToken({userId: user.userId, userType: user.userType, tokenType: "refresh"}, '180d');
+            const newAccessToken = await issueToken({userId: user.userId, userType: user.userType, tokenType: "access"}, '5m');
 
             // Setting refresh token to cookie
             res.cookie('refreshToken', newRefreshToken, {
                 maxAge: 15552000000, 
                 httpOnly: true,
             //  secure: true,  // This will be in production
-               path: '/user'
+               path: '/api/user'
             });
 
             // Send the response with the access Token
             res.json({
                 success: true, 
                 accessToken: `Bearer ${newAccessToken}`, 
-                msg: "Your account is created successfully" 
+                msg: "Access Token is given." 
             });
 
             // Store refresh token in DB

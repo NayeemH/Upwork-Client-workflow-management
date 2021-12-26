@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
     try {
         const auth = await EmailAuth.findOne({email});
 
+
         // Check the email
         if(!auth) throw Error('Invalid Email');
 
@@ -22,18 +23,19 @@ router.post('/', async (req, res, next) => {
         // If password don't matched
         if(!check) throw Error('Invalid Password');
 
+        // Fetching the setting
+        const setting = await Settings.findOne({userId: auth.userId});
+
         // Create Refresh and Access Token
-        const refreshToken = await issueToken({userId: auth.userId, tokenType: "refresh"}, '180d');
+        const refreshToken = await issueToken({userId: auth.userId, userType: setting.userType, tokenType: "refresh"}, '180d');
 
         // Setting refresh token to cookie
         res.cookie('refreshToken', refreshToken, {
             maxAge: 15552000000, 
             httpOnly: true,
         //  secure: true,  // This will be in production
-            path: '/user'
+            path: '/api/user'
         });
-
-        const setting = await Settings.findOne({userId: auth.userId});
 
         res.json({
             success: true, 

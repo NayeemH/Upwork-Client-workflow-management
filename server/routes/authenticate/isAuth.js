@@ -21,10 +21,11 @@ const authenticate = async (req, res, next) => {
              // check if the token is expired
             if(payload.exp * 1000 >= Date.now()) {
                 req.user = {
-                    userId: payload.userId
+                    userId: payload.userId,
+                    userType: payload.userType
                 }
 
-                next();
+                return next();
             }
             else throw Error('Your token expired');
         }

@@ -21,7 +21,7 @@ const settingsSchema = Schema({
         required: true,
         ref: "users"
     },
-    admin: {
+    userType: {
         type: String,
         default: "user"
     },

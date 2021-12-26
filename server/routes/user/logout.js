@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
        
         // Clear the cookie
         res.clearCookie('refreshToken', {
-            path: '/user'
+            path: '/api/user'
         });
 
         // check if the token is expired

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const {verifyToken} = require('./../../lib/JWTUtils');
 const Settings = require('../../models/settings');
 
-router.get('/:code', async (req, res, next) => {
+router.get('/:code', async (req, res) => {
     const {code} = req.params;
 
     try {
