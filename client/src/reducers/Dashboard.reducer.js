@@ -1,16 +1,17 @@
 import { DASHBOARD_PROJECT_LIST_GRID } from "../constants/Type";
 
 const initialState = {
-  projectListGrid: true,
+  projectListGrid: "grid",
   loading: true,
 };
 
 const dashboardReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case DASHBOARD_PROJECT_LIST_GRID:
       return {
         ...state,
-        projectListGrid: !state.projectListGrid,
+        projectListGrid: payload,
         loading: false,
       };
     default:

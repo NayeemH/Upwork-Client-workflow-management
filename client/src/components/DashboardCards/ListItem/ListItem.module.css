@@ -54,3 +54,25 @@
 .star:hover {
   color: var(--primary);
 }
+
+@media screen and (max-width: 768px) {
+  .img_wrapper {
+    height: auto;
+    width: 40% !important;
+    margin: auto 0;
+  }
+
+  .down,
+  .id {
+    font-size: 14px;
+    margin-right: 0 !important;
+  }
+
+  .star {
+    flex-direction: column;
+  }
+
+  .body {
+    padding: 5px !important;
+  }
+}

@@ -10,14 +10,36 @@ const DashboardCards = () => {
   const listGrid = useSelector((state) => state.dashboard.projectListGrid);
   return (
     <Container fluid className={styles.wrapper}>
-      {listGrid ? (
-        <Row xs={1} md={4} lg={5} className="g-4 py-4">
-          {data.map((item) => (
-            <GridItem item={item} key={item.id} />
-          ))}
+      {data.filter((item) => item.stared).length > 0 && (
+        <>
+          {listGrid === "grid" ? (
+            <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+              {data
+                .filter((item) => item.stared)
+                .map((item) => (
+                  <GridItem item={item} key={item.id} />
+                ))}
+            </Row>
+          ) : (
+            data
+              .filter((item) => item.stared)
+              .map((item) => <ListItem key={item.id} item={item} />)
+          )}
+          <hr className={styles.hr} />
+        </>
+      )}
+      {listGrid === "grid" ? (
+        <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+          {data
+            .filter((item) => !item.stared)
+            .map((item) => (
+              <GridItem item={item} key={item.id} />
+            ))}
         </Row>
       ) : (
-        data.map((item) => <ListItem key={item.id} item={item} />)
+        data
+          .filter((item) => !item.stared)
+          .map((item) => <ListItem key={item.id} item={item} />)
       )}
     </Container>
   );
