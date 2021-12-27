@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { BsGridFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import styles from "./FilterDashboard.module.css";
+import { toogleDashboardProjectStyle } from "../../actions/Dashboard.action";
 
 const FilterDashboard = () => {
   const [selectedFilter, setSelectedFilter] = useState("active");
-  const [gridstyle, setGridstyle] = useState("grid");
+  const listStyleGrid = useSelector((state) => state.dashboard.projectListGrid);
+  const dispatch = useDispatch();
   return (
     <>
       <div className={styles.wrapper}>
@@ -35,14 +38,18 @@ const FilterDashboard = () => {
           <ButtonGroup className="" aria-label="First group">
             {/* TODO::: FETCH PROJECT DATA DEPENDING ON THE SELECTED FILTER   */}
             <Button
-              className={gridstyle === "grid" ? styles.active_btn : styles.btn}
-              onClick={() => setGridstyle("grid")}
+              className={
+                listStyleGrid === true ? styles.active_btn : styles.btn
+              }
+              onClick={() => dispatch(toogleDashboardProjectStyle())}
             >
               <BsGridFill />
             </Button>
             <Button
-              className={gridstyle === "list" ? styles.active_btn : styles.btn}
-              onClick={() => setGridstyle("list")}
+              className={
+                listStyleGrid === false ? styles.active_btn : styles.btn
+              }
+              onClick={() => dispatch(toogleDashboardProjectStyle())}
             >
               <FaThList />
             </Button>
