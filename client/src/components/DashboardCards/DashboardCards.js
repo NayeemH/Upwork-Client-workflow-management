@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Row, Container } from "react-bootstrap";
+import { Row, Container, Col } from "react-bootstrap";
 import styles from "./DashboardCards.module.css";
 import data from "../../stub/projects/dashboardProjectList.js";
 import GridItem from "./GridItem/GridItem";
@@ -12,14 +12,23 @@ const DashboardCards = () => {
     <Container fluid className={styles.wrapper}>
       {data.filter((item) => item.stared).length > 0 && (
         <>
-          {listGrid === "grid" ? (
-            <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
-              {data
-                .filter((item) => item.stared)
-                .map((item) => (
-                  <GridItem item={item} key={item.id} />
-                ))}
+          {data.filter((item) => item.stared).length > 0 && (
+            <Row className="pt-3 text-light text-center">
+              <Col xs={12}>
+                <span className={styles.border_bottom}>Favorites</span>
+              </Col>
             </Row>
+          )}
+          {listGrid === "grid" ? (
+            <>
+              <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+                {data
+                  .filter((item) => item.stared)
+                  .map((item) => (
+                    <GridItem item={item} key={item.id} />
+                  ))}
+              </Row>
+            </>
           ) : (
             data
               .filter((item) => item.stared)

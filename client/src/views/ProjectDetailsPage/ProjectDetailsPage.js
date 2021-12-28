@@ -13,7 +13,7 @@ const ProjectDetailsPage = () => {
   const project = useSelector((state) => state.project.selected_project);
   useEffect(() => {
     dispatch(getProjectDetails(id));
-  }, []);
+  }, [dispatch, id]);
   return (
     <div className={`bg-dark text-light`}>
       <Topbar />

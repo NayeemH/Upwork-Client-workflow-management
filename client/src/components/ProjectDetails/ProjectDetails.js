@@ -3,7 +3,7 @@ import styles from "./ProjectDetails.module.css";
 
 const ProjectDetails = ({ project }) => {
   return (
-    <div>
+    <div className={styles.wrapper}>
       PROJECT: {project.id}
       <br />
       Project Name : {project.name}
