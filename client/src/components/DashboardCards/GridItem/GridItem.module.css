@@ -1,0 +1,50 @@
+.crd {
+  background: var(--dark-bg) !important;
+  border: 1px solid var(--secondary-500) !important;
+  min-height: 300px;
+  transition: 0.3s all ease-in-out;
+}
+
+.crd:hover {
+  border: 1px solid var(--primary) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.down {
+  font-size: 14px;
+  color: var(--primary) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.down:hover {
+  cursor: pointer;
+  color: var(--light) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.id {
+  font-size: 14px;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.star {
+  height: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.star:hover {
+  color: var(--primary);
+}

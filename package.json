@@ -8,6 +8,7 @@
     "dev": "nodemon server/index.js",
     "client": "npm start --prefix client",
     "start": "concurrently \"npm run dev\" \" npm run client \""
+
   },
   "keywords": [],
   "author": "",

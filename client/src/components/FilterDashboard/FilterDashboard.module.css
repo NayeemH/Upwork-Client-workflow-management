@@ -13,6 +13,7 @@
   height: 1px;
   width: calc(100% - 5rem);
   margin: 0 auto;
+  opacity: 0.4;
   background: var(--secondary);
 }
 
@@ -36,4 +37,12 @@
 .btn:focus,
 .active_btn:focus {
   box-shadow: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    flex-direction: column !important;
+    height: auto !important;
+    padding: 0 0.5rem !important;
+  }
 }
