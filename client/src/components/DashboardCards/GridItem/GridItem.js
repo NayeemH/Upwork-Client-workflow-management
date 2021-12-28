@@ -1,13 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, Col } from "react-bootstrap";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { MdDownload } from "react-icons/md";
 import styles from "./GridItem.module.css";
 
 const GridItem = ({ item }) => {
+  const navigate = useNavigate();
   return (
     <Col>
-      <Card bg="dark" text="light" className={styles.crd}>
+      <Card
+        bg="dark"
+        text="light"
+        className={styles.crd}
+        onClick={() => navigate(`/project/${item.id}`)}
+      >
         <Card.Img variant="top" src={item.image} />
         <Card.Body>
           <Card.Title>{item.name}</Card.Title>
