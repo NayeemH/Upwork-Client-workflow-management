@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./ProjectInvitation.module.css";
 import { getInvitedProjectDetails } from "../../actions/Project.action";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const ProjectInvitation = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const project = useSelector((state) => state.project.invited_project);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const ProjectInvitation = () => {
   const onAcceptHandeler = () => {
     toast.success("Project Accepted");
     //REDUX TODO
-    console.log("Accepted");
+    navigate(`/create-account/${id}`);
   };
   const onRejectHandeler = () => {
     toast.error("Project Rejected");
