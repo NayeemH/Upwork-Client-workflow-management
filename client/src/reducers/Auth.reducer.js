@@ -6,7 +6,7 @@ import {
 } from "../constants/Type";
 
 const initialState = {
-  token: localStorage.getItem("token"),
+  token: "",
   isAuthenticated: false,
   user: {},
   loading: false,
@@ -19,7 +19,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: action.payload,
+        token: action.payload,
       };
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:

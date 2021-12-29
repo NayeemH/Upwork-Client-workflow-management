@@ -15,7 +15,7 @@ const ProjectInvitation = () => {
 
   useEffect(() => {
     dispatch(getInvitedProjectDetails(id));
-  }, []);
+  });
 
   const onAcceptHandeler = () => {
     toast.success("Project Accepted");

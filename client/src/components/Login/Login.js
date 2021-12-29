@@ -11,10 +11,13 @@ import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
+import { useDispatch } from "react-redux";
+import { login } from "../../actions/Dashboard.action";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    dispatch(login(values));
   };
 
   let initVals = {

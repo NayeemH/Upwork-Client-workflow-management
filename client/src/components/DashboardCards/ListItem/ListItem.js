@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { MdDownload } from "react-icons/md";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import styles from "./ListItem.module.css";
 
 const ListItem = ({ item }) => {
