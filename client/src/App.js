@@ -10,9 +10,10 @@ import {
   DashboardPage,
   ProjectDetailsPage,
   ProjectInvitationPage,
+  AddUserPage,
+  NewAccountPage,
 } from "./views";
 import { ToastContainer } from "react-toastify";
-import NewAccountPage from "./views/NewAccountPage/NewAccountPage";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="/project/:id" element={<ProjectDetailsPage />} />
           <Route path="/invited/:id" element={<ProjectInvitationPage />} />
           <Route path="/create-account/:id" element={<NewAccountPage />} />
-          <Route path="//add-user" element={<NewAccountPage />} />
+          <Route path="/add-user" element={<AddUserPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

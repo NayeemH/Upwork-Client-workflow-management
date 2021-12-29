@@ -24,3 +24,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+select.form-select option:hover {
+  background-color: var(--primary) !important;
+}
