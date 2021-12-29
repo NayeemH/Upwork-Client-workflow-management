@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 
@@ -19,6 +20,16 @@ const app = express();
 
 // Cookie Parser
 app.use(cookieParser());
+
+
+// Cors
+server.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    })
+);
+  
 
 // JSON and URL pareser
 app.use(express.json());
