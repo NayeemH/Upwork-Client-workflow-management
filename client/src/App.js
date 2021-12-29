@@ -25,7 +25,10 @@ function App() {
           <Route path="/forget-password" element={<FogetPasswordPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/project/:id" element={<ProjectDetailsPage />} />
-          <Route path="/invited/:id" element={<ProjectInvitationPage />} />
+          <Route
+            path="/activate/loginMail/:status/:id"
+            element={<ProjectInvitationPage />}
+          />
           <Route path="/create-account/:id" element={<NewAccountPage />} />
           <Route path="/add-user" element={<AddUserPage />} />
         </Routes>

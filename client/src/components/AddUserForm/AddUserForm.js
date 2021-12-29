@@ -10,10 +10,13 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./AddUserForm.module.scss";
+import { useDispatch } from "react-redux";
+import { sendInvitation } from "../../actions/Project.action";
 
 const AddUserForm = () => {
+  const dispatch = useDispatch();
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    dispatch(sendInvitation(values));
   };
 
   let initVals = {
