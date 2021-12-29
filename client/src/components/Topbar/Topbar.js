@@ -1,15 +1,17 @@
 import React from "react";
 import { GoThreeBars } from "react-icons/go";
 import styles from "./Topbar.module.css";
-
-//TODO::::: LOGO should be dynamic
-import logoImg from "../../assets/Logo.png";
 import UserInfoTopbar from "./UserInfoTopbar/UserInfoTopbar";
 import { useDispatch } from "react-redux";
 import { toogleSidebarVisibility } from "../../actions/Dashboard.action";
+import { useNavigate } from "react-router-dom";
+
+//TODO::::: LOGO should be dynamic
+import logoImg from "../../assets/Logo.png";
 
 const Topbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <nav className={styles.wrapper}>
       <span
@@ -18,7 +20,12 @@ const Topbar = () => {
       >
         <GoThreeBars />
       </span>
-      <img src={logoImg} className={styles.logo} alt="company" />
+      <img
+        src={logoImg}
+        className={styles.logo}
+        alt="company"
+        onClick={() => navigate("/dashboard")}
+      />
       <UserInfoTopbar />
     </nav>
   );
