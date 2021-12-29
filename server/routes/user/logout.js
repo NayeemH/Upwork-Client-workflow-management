@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const User = require('../../models/user');
 const Settings = require('../../models/settings');
 const {verifyToken} = require('../../lib/JWTUtils');
 const {error} = require('../../lib/error');

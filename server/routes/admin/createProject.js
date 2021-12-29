@@ -1,19 +1,16 @@
 const router = require('express').Router();
-const isAuth = require('../authenticate/isAuth');
-const isAdmin = require('../authenticate/isAdmin');
-const {Project, ProjectValidator} = require('../../models/project');
+const {Project, projectValidator} = require('../../models/project');
 const {handleErrors} = require('../../lib/error');
 
 
 
-
-router.post('/', isAuth, isAdmin, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const {name, description} = req.body;
         const {userId: adminId} = req.user;
 
         // Validate the input
-        await ProjectValidator({name, description});
+        await projectValidator({name, description});
 
 
         const project = new Project({adminId, name, description});
@@ -25,7 +22,7 @@ router.post('/', isAuth, isAdmin, async (req, res, next) => {
         // Send the response
         res.json({
             success: true, 
-            msg: `Email is send to the ${userType}` 
+            msg: `This project is created. The project id is ${project._id}`
         });
     }
     catch (err) {

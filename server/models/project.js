@@ -1,7 +1,20 @@
+const Joi = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Project Users data
+const projectUserSchema = Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    userType: {
+        type: String,
+        required: true
+    }
+});
 
+// Actual project schema
 const projectSchema = Schema({
     adminId: {
         type: Schema.Types.ObjectId,
@@ -20,15 +33,19 @@ const projectSchema = Schema({
     },
     productList: {
         type: Array
+    }, 
+    projectUser: {
+        type: [projectUserSchema]
     }
 }, {timestamps: true});
 
 
+// Creating the project model
 const Project = mongoose.model('projects', projectSchema);
 
 
 // Joi validator
-const ProjectTokenValidator = async (data) => {
+const projectValidator = async (data) => {
     const schema = Joi.object({
         name: Joi.string()
         .max(30)
@@ -43,4 +60,4 @@ const ProjectTokenValidator = async (data) => {
 }
 
 
-module.exports = {Project, ProjectTokenValidator};
+module.exports = {Project, projectValidator};
