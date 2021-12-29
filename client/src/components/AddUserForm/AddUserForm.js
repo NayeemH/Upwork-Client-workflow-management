@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Card,
-  Col,
   Form as BootstrapForm,
   InputGroup,
-  Row,
   Button,
 } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
@@ -15,6 +13,7 @@ import { sendInvitation } from "../../actions/Project.action";
 
 const AddUserForm = () => {
   const dispatch = useDispatch();
+
   const onSubmitHandeler = async (values) => {
     dispatch(sendInvitation(values));
   };
@@ -28,7 +27,7 @@ const AddUserForm = () => {
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
       .matches(
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         "Provide valid email"
       )
       .required("Username is required!"),
@@ -79,8 +78,10 @@ const AddUserForm = () => {
                   >
                     <option value="select">Select Project</option>
 
-                    <option value="dream_home">Dream Home</option>
-                    <option value="test">Test Project</option>
+                    <option value="61cc7afbe41ff0214bf46fa1">Dream Home</option>
+                    <option value="61cc7afbe41ff0214bf46fa1">
+                      Test Project
+                    </option>
                   </Field>
                 </InputGroup>
                 <InputGroup className="mb-3 d-flex flex-column">
@@ -101,7 +102,7 @@ const AddUserForm = () => {
                   >
                     <option value="select">Select Role</option>
 
-                    <option value="project_manager">Project Manager</option>
+                    <option value="manager">Project Manager</option>
                     <option value="developer">Developer</option>
                     <option value="client">Client</option>
                   </Field>

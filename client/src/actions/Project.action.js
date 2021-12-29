@@ -32,8 +32,8 @@ export const getProjectDetails = (id) => (dispatch) => {
 // SEND INVITATION LINK TO PROJECT
 export const sendInvitation = (values) => async (dispatch) => {
   let formData = {
-    project: values.project,
-    role: values.role,
+    projectId: values.project,
+    userType: values.role,
     email: values.email,
   };
 
@@ -49,6 +49,7 @@ export const sendInvitation = (values) => async (dispatch) => {
       JSON.stringify(formData),
       config
     );
+    console.log(res);
     if (res.status === 200) {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,

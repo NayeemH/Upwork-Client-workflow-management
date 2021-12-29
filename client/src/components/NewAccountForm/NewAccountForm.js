@@ -6,13 +6,18 @@ import {
   Form as BootstrapForm,
   Card,
 } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import styles from "./NewAccountForm.module.css";
+const queryString = require("query-string");
 
 const NewAccountForm = () => {
   const onSubmitHandeler = async (values) => {
     console.log(values);
   };
+
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
 
   let initVals = {
     username: "",
@@ -43,6 +48,20 @@ const NewAccountForm = () => {
           >
             {({ errors, touched }) => (
               <Form>
+                <InputGroup className="mb-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center pb-2">
+                    <label htmlFor="email" className="d-block">
+                      Email
+                    </label>
+                  </div>
+                  <BootstrapForm.Control
+                    as={BootstrapForm.Control}
+                    name="email"
+                    type="email"
+                    value={parsed.email}
+                    className={`${styles.input} w-100`}
+                  />
+                </InputGroup>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="username" className="d-block">
