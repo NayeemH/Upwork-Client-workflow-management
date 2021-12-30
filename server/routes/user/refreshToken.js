@@ -43,7 +43,7 @@ router.post("/", async (req, res, next) => {
       );
       const newAccessToken = await issueToken(
         { userId: user.userId, userType: user.userType, tokenType: "access" },
-        "5m"
+        "300m"
       );
 
       // Setting refresh token to cookie
