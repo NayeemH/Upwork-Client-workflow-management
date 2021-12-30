@@ -1,7 +1,8 @@
-import { DASHBOARD_PROJECT_LIST_GRID } from "../constants/Type";
+import { DASHBOARD_PROJECT_LIST_GRID, SIDEBAR_TOGGLE } from "../constants/Type";
 
 const initialState = {
   projectListGrid: "grid",
+  sidebar_visible: false,
   loading: true,
 };
 
@@ -12,6 +13,12 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         projectListGrid: payload,
+        loading: false,
+      };
+    case SIDEBAR_TOGGLE:
+      return {
+        ...state,
+        sidebar_visible: payload,
         loading: false,
       };
     default:

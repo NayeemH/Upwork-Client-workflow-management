@@ -32,15 +32,13 @@ const projectTokenSchema = Schema({
     }
 }, {timestamps: true});
 
-// Setting the expires time       // index({ createdAt: 1 }, { expires: '7d' });
-//tokenSchema.index({createdAt: 1}, {expires: 60});
 
 
 const ProjectToken = mongoose.model('projectToken', projectTokenSchema);
 
 
 // Joi validator
-const EmailValidator = async (data) => {
+const ProjectTokenValidator = async (data) => {
     const schema = Joi.object({
         projectId: Joi.string()
         .required(),
@@ -61,4 +59,4 @@ const EmailValidator = async (data) => {
 
 
 
-module.exports = {ProjectToken, EmailValidator};
+module.exports = {ProjectToken, ProjectTokenValidator};

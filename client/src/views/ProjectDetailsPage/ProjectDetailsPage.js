@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
 import ProjectDetails from "../../components/ProjectDetails/ProjectDetails";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./ProjectDetailsPage.module.css";
 
@@ -17,6 +18,7 @@ const ProjectDetailsPage = () => {
   return (
     <div className={`bg-dark text-light`}>
       <Topbar />
+      <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>
           <Link to="/dashboard" className={styles.bc_home}>

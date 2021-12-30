@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
         lowercase: true,
         validate: [isEmail, 'Please enter valid email'],
         maxlength: [254, 'Maximum email length is 254 characters']
+    },
+    projects: {
+        type: Array,
+        default: []
     }
 });
 
