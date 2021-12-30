@@ -4,14 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./ProjectInvitation.module.css";
 import { getInvitedProjectDetails } from "../../actions/Project.action";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+const queryString = require("query-string");
 
 const ProjectInvitation = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const project = useSelector((state) => state.project.invited_project);
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
 
   useEffect(() => {
     dispatch(getInvitedProjectDetails(id));
@@ -20,7 +23,7 @@ const ProjectInvitation = () => {
   const onAcceptHandeler = () => {
     toast.success("Project Accepted");
     //REDUX TODO
-    navigate(`/create-account/${id}`);
+    navigate(`/create-account/${id}?email=${parsed.email}`);
   };
   const onRejectHandeler = () => {
     toast.error("Project Rejected");

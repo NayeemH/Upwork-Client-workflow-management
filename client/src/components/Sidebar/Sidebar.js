@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineClose, MdSpaceDashboard } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { FiLogOut, FiUserPlus } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { toogleSidebarVisibility } from "../../actions/Dashboard.action";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  logout,
+  toogleSidebarVisibility,
+} from "../../actions/Dashboard.action";
 import styles from "./Sidebar.module.scss";
 import { BsFillFolderFill } from "react-icons/bs";
+import { navigateToRoot } from "../../actions/Navigate.action";
 
 const Sidebar = () => {
   let { sidebar_visible } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const redirect = useSelector((state) => state.redirect.redirectTo);
+
+  useEffect(() => {
+    if (redirect === "/") {
+      navigate(redirect);
+      dispatch(navigateToRoot(""));
+    }
+  }, [redirect]);
   return (
     <div className={`${styles.wrapper} ${sidebar_visible && styles.active}`}>
       <div className="text-end">
@@ -73,7 +86,7 @@ const Sidebar = () => {
             </div>
             <div className={styles.link_base}>
               <div></div>
-              <NavLink to="/dashboard">
+              <NavLink to="/" onClick={() => dispatch(logout())}>
                 <span>
                   <FiLogOut />
                 </span>

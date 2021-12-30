@@ -6,12 +6,14 @@ import {
   DASHBOARD_PROJECT_LIST_GRID,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT_FAIL,
+  LOGOUT_SUCCESS,
   REFRESH_TOKEN_GENARATED,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
-import { navigateToDashboard } from "./Navigate.action";
+import { navigateToDashboard, navigateToRoot } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -116,6 +118,36 @@ export const getRefreshToken = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ACCESS_TOKEN_ERROR,
+      payload: error.response.data.msg[0],
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//LOGOUT ACTION
+export const logout = () => async (dispatch) => {
+  try {
+    const refreshRes = await axios.post(
+      `${BASE_URL}/api/user/logout`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    if (refreshRes.status === 200) {
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      });
+      toast.success("Logout successfully");
+      dispatch(navigateToRoot());
+      //console.log(res.data);
+    }
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_FAIL,
       payload: error.response.data.msg[0],
     });
     error.response.data.msg.map((msg) => toast.error(msg));
