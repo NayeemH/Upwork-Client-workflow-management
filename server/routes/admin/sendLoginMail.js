@@ -5,7 +5,7 @@ const {ProjectToken, ProjectTokenValidator }= require('../../models/projectLogin
 const {EmailAuth} = require('../../models/emailAuth');
 const {sendMail} = require('../user/sendMail');
 const {handleErrors} = require('../../lib/error');
-const {HOST_URL} = process.env;
+const {CLIENT_URL} = process.env;
 
 
 
@@ -52,10 +52,10 @@ router.post('/', async (req, res, next) => {
         let activateURL = '/activate/loginMail';
 
         if(user) {
-            activateURL += `/user/${projectId}.${projectToken.token}` // This is frantend link
+            activateURL += `/user/${projectId}.${projectToken.token}?email=${encodeURI(email)}` // This is frantend link
         }
         else {
-            activateURL += `/notuser/${projectId}.${projectToken.token}`; // This is frantend link
+            activateURL += `/notuser/${projectId}.${projectToken.token}?email=${encodeURI(email)}`; // This is frantend link
         }
 
 
@@ -64,11 +64,11 @@ router.post('/', async (req, res, next) => {
             const emailResult = await sendMail({
                 to: email,
                 subject: 'Login to the Project',
-                text: `Click on the given link ${HOST_URL}${activateURL}`,
+                text: `Click on the given link ${CLIENT_URL}${activateURL}`,
                 template: 'loginmail',
                 context: {
                     email: email,
-                    link: `${HOST_URL}${activateURL}` // Create this link to react router
+                    link: `${CLIENT_URL}${activateURL}` // Create this link to react router
                 }
             });
         }
