@@ -37,8 +37,8 @@ export const login = (values) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      credentials: "include",
     },
+    withCredentials: true,
   };
   try {
     // TODO ::: API CALL
@@ -53,10 +53,15 @@ export const login = (values) => async (dispatch) => {
         type: REFRESH_TOKEN_GENARATED,
       });
       try {
-        const refreshRes = axios.post(
+        const refreshRes = await axios.post(
           `${BASE_URL}/api/user/refreshToken`,
           {},
-          { credentials: "include" }
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
         );
         if (refreshRes.status === 200) {
           dispatch({
@@ -65,8 +70,7 @@ export const login = (values) => async (dispatch) => {
           });
           setAuthToken(res.data.accessToken);
           toast.success("Login successfully");
-          const navigate = useNavigate();
-          navigate("/dashboard");
+          return true;
         }
       } catch (error) {
         toast.error("Error in refreshing token");
@@ -79,4 +83,5 @@ export const login = (values) => async (dispatch) => {
     toast.error("Something went wrong");
     return false;
   }
+  return false;
 };

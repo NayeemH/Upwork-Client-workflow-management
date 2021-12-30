@@ -17,7 +17,7 @@ import { login } from "../../actions/Dashboard.action";
 const Login = () => {
   const dispatch = useDispatch();
   const onSubmitHandeler = async (values) => {
-    dispatch(login(values));
+    console.log(dispatch(login(values)));
   };
 
   let initVals = {
