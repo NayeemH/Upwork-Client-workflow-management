@@ -19,10 +19,17 @@ app.use(cookieParser());
 
 // Cors
 app.use(
+<<<<<<< HEAD
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
+=======
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    })
+>>>>>>> e3f2d9d922b9732f04e05091aee2e3bef6507377
 );
 
 // JSON and URL pareser
