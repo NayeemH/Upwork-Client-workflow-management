@@ -1,23 +1,40 @@
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
   InputGroup,
   Form as BootstrapForm,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/Dashboard.action";
+import { navigateToDashboard } from "../../actions/Navigate.action";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const onSubmitHandeler = async (values) => {
-    console.log(dispatch(login(values)));
+  const navigate = useNavigate();
+  const redirect = useSelector((state) => state.redirect.redirectTo);
+  const loginError = useSelector((state) => state.auth.err);
+
+  useEffect(() => {
+    if (redirect === "/dashboard") {
+      navigate(redirect);
+      dispatch(navigateToDashboard(""));
+    }
+    if (loginError !== "") {
+      setLoading(false);
+    }
+  }, [redirect, loginError]);
+
+  const onSubmitHandeler = (values) => {
+    setLoading(true);
+    dispatch(login(values));
   };
 
   let initVals = {
@@ -100,8 +117,9 @@ const Login = () => {
                       variant="primary"
                       type="submit"
                       className={styles.btn}
+                      disabled={loading}
                     >
-                      Login
+                      {loading ? "Loading..." : "Login"}
                     </Button>
                   </div>
                 </Form>

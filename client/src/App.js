@@ -1,7 +1,4 @@
-import { Provider } from "react-redux";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import store from "./store/Store";
-
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -17,7 +14,7 @@ import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
-    <Provider store={store}>
+    <>
       <ToastContainer newestOnTop theme="dark" />
       <BrowserRouter>
         <Routes>
@@ -33,7 +30,7 @@ function App() {
           <Route path="/add-user" element={<AddUserPage />} />
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </>
   );
 }
 

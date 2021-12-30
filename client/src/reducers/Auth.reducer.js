@@ -9,6 +9,7 @@ const initialState = {
   token: "",
   isAuthenticated: false,
   user: {},
+  err: "",
   loading: false,
 };
 
@@ -31,6 +32,7 @@ const authReducer = (state = initialState, action) => {
         user: {},
         isAuthenticated: false,
         loading: false,
+        err: action.payload ? action.payload : "",
       };
     default:
       return state;

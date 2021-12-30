@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   DASHBOARD_PROJECT_LIST_GRID,
@@ -10,6 +9,7 @@ import {
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { navigateToDashboard } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -70,18 +70,21 @@ export const login = (values) => async (dispatch) => {
           });
           setAuthToken(res.data.accessToken);
           toast.success("Login successfully");
-          return true;
+          dispatch(navigateToDashboard());
         }
       } catch (error) {
-        toast.error("Error in refreshing token");
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: error.response.data.msg[0],
+        });
+        error.response.data.msg.map((msg) => toast.error(msg));
       }
     }
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
+      payload: err.response.data.msg[0],
     });
-    toast.error("Something went wrong");
-    return false;
+    err.response.data.msg.map((msg) => toast.error(msg));
   }
-  return false;
 };

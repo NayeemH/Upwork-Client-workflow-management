@@ -56,13 +56,11 @@ export const sendInvitation = (values) => async (dispatch) => {
         payload: res.data,
       });
       toast.success("Invitation sent successfully");
-      return true;
     }
   } catch (err) {
     dispatch({
       type: PROJECT_INVITATION_ERROR,
     });
     toast.error("Something went wrong");
-    return false;
   }
 };
