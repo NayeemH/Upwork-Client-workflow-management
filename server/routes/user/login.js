@@ -32,9 +32,9 @@ router.post("/", async (req, res, next) => {
     // Setting refresh token to cookie
     res.cookie("refreshToken", refreshToken, {
       maxAge: 15552000000,
-      //httpOnly: true,
+      httpOnly: true,
       //  secure: true,  // This will be in production
-      //path: '/api/user'
+      path: '/api/user'
     });
 
     res.json({
