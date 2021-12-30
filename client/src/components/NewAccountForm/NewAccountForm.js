@@ -1,20 +1,36 @@
+import React, { useEffect } from "react";
 import { Field, Formik, Form } from "formik";
-import React from "react";
 import {
   Button,
   InputGroup,
   Form as BootstrapForm,
   Card,
 } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import { navigateToDashboard } from "../../actions/Navigate.action";
+import { createAccount } from "../../actions/Project.action";
 import styles from "./NewAccountForm.module.css";
 const queryString = require("query-string");
 
 const NewAccountForm = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const onSubmitHandeler = async (values) => {
-    console.log(values);
+    dispatch(createAccount({ ...values, id }));
   };
+
+  const navigate = useNavigate();
+  const redirect = useSelector((state) => state.redirect.redirectTo);
+  const projError = useSelector((state) => state.project.err);
+
+  useEffect(() => {
+    if (redirect === "/dashboard") {
+      navigate(redirect);
+      dispatch(navigateToDashboard(""));
+    }
+  }, [redirect, projError]);
 
   const location = useLocation();
   const parsed = queryString.parse(location.search);
@@ -59,6 +75,7 @@ const NewAccountForm = () => {
                     name="email"
                     type="email"
                     value={parsed.email}
+                    disabled
                     className={`${styles.input} w-100`}
                   />
                 </InputGroup>

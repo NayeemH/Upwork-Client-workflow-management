@@ -30,7 +30,7 @@ const AddUserForm = () => {
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         "Provide valid email"
       )
-      .required("Username is required!"),
+      .required("Email is required!"),
     role: Yup.string()
       .test(
         "Is selected?",

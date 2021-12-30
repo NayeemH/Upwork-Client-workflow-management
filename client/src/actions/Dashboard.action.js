@@ -1,15 +1,19 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
+  ACCESS_TOKEN_ERROR,
+  ACCESS_TOKEN_SUCCESS,
   DASHBOARD_PROJECT_LIST_GRID,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT_FAIL,
+  LOGOUT_SUCCESS,
   REFRESH_TOKEN_GENARATED,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { navigateToDashboard, navigateToRoot } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -37,8 +41,8 @@ export const login = (values) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      credentials: "include",
     },
+    withCredentials: true,
   };
   try {
     // TODO ::: API CALL
@@ -53,30 +57,99 @@ export const login = (values) => async (dispatch) => {
         type: REFRESH_TOKEN_GENARATED,
       });
       try {
-        const refreshRes = axios.post(
+        const refreshRes = await axios.post(
           `${BASE_URL}/api/user/refreshToken`,
           {},
-          { credentials: "include" }
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
         );
         if (refreshRes.status === 200) {
           dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data.accessToken,
+            payload: refreshRes.data.accessToken,
           });
-          setAuthToken(res.data.accessToken);
+          //console.log(res.data);
+          setAuthToken(refreshRes.data.accessToken);
           toast.success("Login successfully");
-          const navigate = useNavigate();
-          navigate("/dashboard");
+          dispatch(navigateToDashboard());
         }
       } catch (error) {
-        toast.error("Error in refreshing token");
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: error.response.data.msg[0],
+        });
+        error.response.data.msg.map((msg) => toast.error(msg));
       }
     }
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
+      payload: err.response.data.msg[0],
     });
-    toast.error("Something went wrong");
-    return false;
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET REFRESH TOKEN
+export const getRefreshToken = () => async (dispatch) => {
+  try {
+    const refreshRes = await axios.post(
+      `${BASE_URL}/api/user/refreshToken`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    if (refreshRes.status === 200) {
+      dispatch({
+        type: ACCESS_TOKEN_SUCCESS,
+        payload: refreshRes.data.accessToken,
+      });
+      //console.log(res.data);
+      setAuthToken(refreshRes.data.accessToken);
+    }
+  } catch (error) {
+    dispatch({
+      type: ACCESS_TOKEN_ERROR,
+      payload: error.response.data.msg[0],
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//LOGOUT ACTION
+export const logout = () => async (dispatch) => {
+  try {
+    const refreshRes = await axios.post(
+      `${BASE_URL}/api/user/logout`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    if (refreshRes.status === 200) {
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      });
+      toast.success("Logout successfully");
+      dispatch(navigateToRoot());
+      //console.log(res.data);
+    }
+  } catch (error) {
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.response.data.msg[0],
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
   }
 };
