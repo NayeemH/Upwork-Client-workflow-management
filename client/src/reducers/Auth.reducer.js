@@ -3,6 +3,8 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL,
+  ACCESS_TOKEN_SUCCESS,
+  ACCESS_TOKEN_ERROR,
 } from "../constants/Type";
 
 const initialState = {
@@ -22,6 +24,17 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         token: action.payload,
       };
+    case ACCESS_TOKEN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload,
+      };
+    case ACCESS_TOKEN_ERROR:
+      return {
+        ...state,
+        err: action.payload,
+      };
+
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case LOGOUT_FAIL:

@@ -1,4 +1,6 @@
 import {
+  ACCOUNT_CREATE_ERROR,
+  ACCOUNT_CREATE_SUCCESS,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
 } from "../constants/Type";
@@ -6,6 +8,7 @@ import {
 const initialState = {
   selected_project: {},
   invited_project: {},
+  err: "",
   loading: false,
 };
 
@@ -22,6 +25,17 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         invited_project: { ...payload },
+        loading: false,
+      };
+    case ACCOUNT_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ACCOUNT_CREATE_ERROR:
+      return {
+        ...state,
+        err: payload ? payload : "",
         loading: false,
       };
     default:

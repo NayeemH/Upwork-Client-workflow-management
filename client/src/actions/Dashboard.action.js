@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
+  ACCESS_TOKEN_ERROR,
+  ACCESS_TOKEN_SUCCESS,
   DASHBOARD_PROJECT_LIST_GRID,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -66,9 +68,10 @@ export const login = (values) => async (dispatch) => {
         if (refreshRes.status === 200) {
           dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data.accessToken,
+            payload: refreshRes.data.accessToken,
           });
-          setAuthToken(res.data.accessToken);
+          //console.log(res.data);
+          setAuthToken(refreshRes.data.accessToken);
           toast.success("Login successfully");
           dispatch(navigateToDashboard());
         }
@@ -86,5 +89,35 @@ export const login = (values) => async (dispatch) => {
       payload: err.response.data.msg[0],
     });
     err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET REFRESH TOKEN
+export const getRefreshToken = () => async (dispatch) => {
+  try {
+    const refreshRes = await axios.post(
+      `${BASE_URL}/api/user/refreshToken`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    if (refreshRes.status === 200) {
+      dispatch({
+        type: ACCESS_TOKEN_SUCCESS,
+        payload: refreshRes.data.accessToken,
+      });
+      //console.log(res.data);
+      setAuthToken(refreshRes.data.accessToken);
+    }
+  } catch (error) {
+    dispatch({
+      type: ACCESS_TOKEN_ERROR,
+      payload: error.response.data.msg[0],
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
   }
 };

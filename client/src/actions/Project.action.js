@@ -1,5 +1,8 @@
 import { toast } from "react-toastify";
 import {
+  ACCESS_TOKEN_SUCCESS,
+  ACCOUNT_CREATE_ERROR,
+  ACCOUNT_CREATE_SUCCESS,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
   PROJECT_INVITATION_ERROR,
@@ -11,6 +14,8 @@ import axios from "axios";
 // TODO::: DUMMY DATA IMPORTS
 import data from "../stub/projects/dashboardProjectList.js";
 import invited from "../stub/projects/projectDetails";
+import { getRefreshToken } from "./Dashboard.action";
+import { navigateToDashboard } from "./Navigate.action";
 
 //GET PROJECT DETAILS FOR INVITED USER
 export const getInvitedProjectDetails = (id) => (dispatch) => {
@@ -41,6 +46,7 @@ export const sendInvitation = (values) => async (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   };
   try {
     // TODO ::: API CALL
@@ -53,7 +59,6 @@ export const sendInvitation = (values) => async (dispatch) => {
     if (res.status === 200) {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,
-        payload: res.data,
       });
       toast.success("Invitation sent successfully");
     }
@@ -61,6 +66,43 @@ export const sendInvitation = (values) => async (dispatch) => {
     dispatch({
       type: PROJECT_INVITATION_ERROR,
     });
-    toast.error("Something went wrong");
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+// CREATE ACCOUNT
+export const createAccount = (values) => async (dispatch) => {
+  let formData = {
+    username: values.username,
+    password: values.password,
+  };
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/activate/loginMail/notuser/${values.id}`,
+      JSON.stringify(formData),
+      config
+    );
+    console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ACCOUNT_CREATE_SUCCESS,
+      });
+      dispatch(getRefreshToken());
+      dispatch(navigateToDashboard());
+      toast.success("Account created successfully");
+    }
+  } catch (err) {
+    dispatch({
+      type: ACCOUNT_CREATE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
   }
 };
