@@ -34,3 +34,25 @@
   background: var(--primary-hover) !important;
   color: var(--light) !important;
 }
+
+.button {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-bottom: 20px !important;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem !important;
+}
+
+.button:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.plus {
+  padding-right: 5px;
+}

@@ -1,15 +1,16 @@
-import Steps, { Step } from "rc-steps";
 import React from "react";
+import Steps, { Step } from "rc-steps";
+import { BiPlus } from "react-icons/bi";
+import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
-import { Button } from "react-bootstrap";
 
 const ProjectDetails = ({ project }) => {
   return (
     <div className={styles.wrapper}>
-      PROJECT: {project.id}
-      <br />
-      Project Name : {project.name}
+      <Button variant="primary" className={styles.button}>
+        Add New Task
+      </Button>
       <div className={styles.steps_wrapper}>
         {project.tasks &&
           project.tasks.map((task, index) => (
