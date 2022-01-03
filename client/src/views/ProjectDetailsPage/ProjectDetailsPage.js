@@ -16,7 +16,7 @@ const ProjectDetailsPage = () => {
     dispatch(getProjectDetails(id));
   }, [dispatch, id]);
   return (
-    <div className={`bg-dark text-light`}>
+    <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>

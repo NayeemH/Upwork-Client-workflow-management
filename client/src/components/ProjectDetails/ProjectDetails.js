@@ -2,6 +2,7 @@ import Steps, { Step } from "rc-steps";
 import React from "react";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
+import { Button } from "react-bootstrap";
 
 const ProjectDetails = ({ project }) => {
   return (
@@ -24,6 +25,15 @@ const ProjectDetails = ({ project }) => {
                       <Step title={step.name} key={i} />
                     ))}
                 </Steps>
+              </div>
+              <div className="d-flex justify-content-center align-items-center">
+                <Button
+                  variant="outline-primary"
+                  disabled={!task.compeleted}
+                  className={styles.btn}
+                >
+                  Download Resource
+                </Button>
               </div>
             </div>
           ))}

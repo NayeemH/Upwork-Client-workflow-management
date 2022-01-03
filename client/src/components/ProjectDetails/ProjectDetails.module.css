@@ -9,16 +9,28 @@
 
 .task {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 220px 1fr 200px;
   background: var(--dark-bg);
   margin-bottom: 20px;
-}
-
-.step {
-  color: red !important;
 }
 
 .name {
   color: var(--light) !important;
   margin-left: 1.5rem;
+}
+
+.btn:disabled {
+  border: 1px dashed var(--primary) !important;
+  background: none !important;
+  color: var(--primary) !important;
+}
+.btn {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  color: var(--light) !important;
 }

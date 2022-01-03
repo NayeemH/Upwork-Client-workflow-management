@@ -32,8 +32,8 @@ const data = [
             viewed: false,
           },
         ],
-        currentStep: 3,
-        compeleted: false,
+        currentStep: 4,
+        compeleted: true,
       },
       {
         id: 2,

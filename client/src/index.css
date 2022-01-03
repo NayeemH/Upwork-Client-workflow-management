@@ -34,15 +34,37 @@ select.form-select option:hover {
 }
 
 /* STEPS STYLES */
+.rc-steps-item-process .rc-steps-item-icon {
+  background: var(--primary) !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  border-color: var(--primary) !important;
+}
+
 .rc-steps-item-title {
   color: var(--light) !important;
 }
 
+.rc-steps-item-finish .rc-steps-item-icon > .rc-steps-icon {
+  color: var(--primary) !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon .rc-steps-icon {
+  color: #fff !important;
+  font-weight: bold;
+}
+
 .rc-steps-item-finish .rc-steps-item-icon {
-  background: none !important;
+  background: var(--primary) !important;
+  color: var(--light) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon .rc-steps-icon {
+  color: var(--light) !important;
 }
 
 .rc-steps-item-wait .rc-steps-item-icon {
-  background: var(--primary) !important;
+  background: var(--dark) !important;
 }
 /* STEPS STYLES END*/
