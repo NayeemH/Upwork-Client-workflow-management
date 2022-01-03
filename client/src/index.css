@@ -32,3 +32,17 @@ code {
 select.form-select option:hover {
   background-color: var(--primary) !important;
 }
+
+/* STEPS STYLES */
+.rc-steps-item-title {
+  color: var(--light) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon {
+  background: none !important;
+}
+
+.rc-steps-item-wait .rc-steps-item-icon {
+  background: var(--primary) !important;
+}
+/* STEPS STYLES END*/

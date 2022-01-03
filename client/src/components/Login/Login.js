@@ -1,5 +1,5 @@
+import React from "react";
 import { Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -11,30 +11,19 @@ import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/Dashboard.action";
-import { navigateToDashboard } from "../../actions/Navigate.action";
+import { connect } from "react-redux";
 
-const Login = () => {
-  const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+const Login = ({ login, loading }) => {
   const navigate = useNavigate();
-  const redirect = useSelector((state) => state.redirect.redirectTo);
-  const loginError = useSelector((state) => state.auth.err);
 
-  useEffect(() => {
-    if (redirect === "/dashboard") {
-      navigate(redirect);
-      dispatch(navigateToDashboard(""));
+  const onSubmitHandeler = async (values) => {
+    let check = await login(values);
+    if (check === true) {
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     }
-    if (loginError !== "") {
-      setLoading(false);
-    }
-  }, [redirect, loginError]);
-
-  const onSubmitHandeler = (values) => {
-    setLoading(true);
-    dispatch(login(values));
   };
 
   let initVals = {
@@ -132,4 +121,8 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  loading: state.auth.loading,
+});
+
+export default connect(mapStateToProps, { login })(Login);

@@ -1,3 +1,24 @@
 .wrapper {
   background: var(--dark);
+  padding: 0 2.5rem;
+}
+
+.steps_wrapper {
+  color: var(--light) !important;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  background: var(--dark-bg);
+  margin-bottom: 20px;
+}
+
+.step {
+  color: red !important;
+}
+
+.name {
+  color: var(--light) !important;
+  margin-left: 1.5rem;
 }

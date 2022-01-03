@@ -11,6 +11,7 @@ import {
   NewAccountPage,
 } from "./views";
 import { ToastContainer } from "react-toastify";
+import PrivateOutlet from "./utils/PrivateOutlet";
 
 function App() {
   return (
@@ -20,14 +21,18 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/forget-password" element={<FogetPasswordPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="/project/:id" element={<ProjectDetailsPage />} />
           <Route
             path="/activate/loginMail/:status/:id"
             element={<ProjectInvitationPage />}
           />
           <Route path="/create-account/:id" element={<NewAccountPage />} />
-          <Route path="/add-user" element={<AddUserPage />} />
+          <Route path="/*" element={<PrivateOutlet />}>
+            <>
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="project/:id" element={<ProjectDetailsPage />} />
+              <Route path="add-user" element={<AddUserPage />} />
+            </>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
