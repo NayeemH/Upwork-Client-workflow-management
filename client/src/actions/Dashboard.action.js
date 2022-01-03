@@ -13,7 +13,7 @@ import {
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
-import { navigateToDashboard, navigateToRoot } from "./Navigate.action";
+import { navigateToRoot } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -75,14 +75,14 @@ export const login = (values) => async (dispatch) => {
           //console.log(res.data);
           setAuthToken(refreshRes.data.accessToken);
           toast.success("Login successfully");
-          dispatch(navigateToDashboard());
+          return true;
         }
       } catch (error) {
         dispatch({
           type: LOGIN_FAIL,
-          payload: error.response.data.msg[0],
         });
         error.response.data.msg.map((msg) => toast.error(msg));
+        return false;
       }
     }
   } catch (err) {
@@ -91,6 +91,7 @@ export const login = (values) => async (dispatch) => {
       payload: err.response.data.msg[0],
     });
     err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
   }
 };
 

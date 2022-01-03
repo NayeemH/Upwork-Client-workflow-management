@@ -12,6 +12,7 @@ const data = [
     tasks: [
       {
         id: 1,
+        name: "Task 1",
         image: img1,
         steps: [
           {
@@ -31,11 +32,12 @@ const data = [
             viewed: false,
           },
         ],
-        currentStep: 3,
-        compeleted: false,
+        currentStep: 4,
+        compeleted: true,
       },
       {
         id: 2,
+        name: "Task 2",
         image: img2,
         steps: [
           {
@@ -67,6 +69,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -91,6 +94,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",
@@ -121,6 +125,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -145,6 +150,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",
@@ -175,6 +181,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -199,6 +206,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",
@@ -229,6 +237,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -253,6 +262,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",
@@ -283,6 +293,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -307,6 +318,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",
@@ -337,6 +349,7 @@ const data = [
       {
         id: 1,
         image: img1,
+        name: "Task 1",
         steps: [
           {
             name: "Planing",
@@ -361,6 +374,7 @@ const data = [
       {
         id: 2,
         image: img2,
+        name: "Task 2",
         steps: [
           {
             name: "Planing",

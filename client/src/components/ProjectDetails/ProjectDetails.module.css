@@ -1,3 +1,58 @@
 .wrapper {
   background: var(--dark);
+  padding: 0 2.5rem;
+}
+
+.steps_wrapper {
+  color: var(--light) !important;
+}
+
+.task {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px;
+  background: var(--dark-bg);
+  margin-bottom: 20px;
+}
+
+.name {
+  color: var(--light) !important;
+  margin-left: 1.5rem;
+}
+
+.btn:disabled {
+  border: 1px dashed var(--primary) !important;
+  background: none !important;
+  color: var(--primary) !important;
+}
+.btn {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  color: var(--light) !important;
+}
+
+.button {
+  outline: none !important;
+  border: none !important;
+  padding: 8px 26px;
+  margin-bottom: 20px !important;
+  background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem !important;
+}
+
+.button:hover {
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.plus {
+  padding-right: 5px;
 }
