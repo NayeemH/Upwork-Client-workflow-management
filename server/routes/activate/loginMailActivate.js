@@ -89,18 +89,31 @@ router.post('/:user/:token', async (req, res, next) => {
             // Checking if the project is exists
             const project = await Project.findById(projectId);
 
+            // Project not found
+            if(!project) return console.log('Something went wrong');
+
             // Adding him to the projects
-            if(project) {
+            project.projectUser.push({
+                userId: newData._id,
+                userType
+            });
+            project.markModified("projectUser");
+
+            // Adding porject id to him
+            newData.projects.push({
+                projectId
+            });
+            newData.markModified('projects');
+
+            try {
                 await Promise.all([
-                    project.projectUser.push({
-                        userId: newData._id,
-                        userType
-                    }).save(),
-                    newData.projects.push({
-                        projectId
-                    }).save()
+                    project.save(),
+                    newData.save()
                 ]);
             }
+            catch(error) {
+                console.log(error);
+            }            
         }
         else if(user === 'user') {
             // Adding him to the projects
@@ -111,28 +124,39 @@ router.post('/:user/:token', async (req, res, next) => {
                 User.findOne({email})
             ]);
 
-            // Adding him to the projects
-            if(project) {
-                await Promise.all([
-                    project.projectUser.push({
-                        userId: newData._id,
-                        userType
-                    }).save(),
-                    newData.projects.push({
-                        projectId
-                    }).save()
-                ]);
-            }
-
-
             // Send the response
             res.json({
                 success: true, 
                 msg: "Your project is added successfully" 
             });
 
-            // Remove the token
-            await projectToken.delete();
+            // Project not found
+            if(!project) return console.log('Something went wrong');
+
+            // Adding him to the projects
+            project.projectUser.push({
+                userId: newData._id,
+                userType
+            });
+            project.markModified("projectUser");
+
+            // Adding porject id to him
+            newData.projects.push({
+                projectId
+            });
+            newData.markModified('projects');
+
+            try {
+                await Promise.all([
+                    project.save(),
+                    newData.save(),
+                    projectToken.delete()
+                ]);
+            }
+            catch(error) {
+                console.log(error);
+            }  
+
         }
         else if(user === 'reject') {
             // Send the response
