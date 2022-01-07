@@ -13,7 +13,7 @@ import {
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
-import { navigateToDashboard, navigateToRoot } from "./Navigate.action";
+import { navigateToRoot } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -75,14 +75,14 @@ export const login = (values) => async (dispatch) => {
           //console.log(res.data);
           setAuthToken(refreshRes.data.accessToken);
           toast.success("Login successfully");
-          dispatch(navigateToDashboard());
+          return true;
         }
       } catch (error) {
         dispatch({
           type: LOGIN_FAIL,
-          payload: error.response.data.msg[0],
         });
         error.response.data.msg.map((msg) => toast.error(msg));
+        return false;
       }
     }
   } catch (err) {
@@ -91,6 +91,7 @@ export const login = (values) => async (dispatch) => {
       payload: err.response.data.msg[0],
     });
     err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
   }
 };
 
@@ -107,14 +108,14 @@ export const getRefreshToken = () => async (dispatch) => {
         withCredentials: true,
       }
     );
-    if (refreshRes.status === 200) {
-      dispatch({
-        type: ACCESS_TOKEN_SUCCESS,
-        payload: refreshRes.data.accessToken,
-      });
-      //console.log(res.data);
-      setAuthToken(refreshRes.data.accessToken);
-    }
+    //if (refreshRes.status === 200) {
+    dispatch({
+      type: ACCESS_TOKEN_SUCCESS,
+      payload: refreshRes.data.accessToken,
+    });
+    //console.log(res.data);
+    setAuthToken(refreshRes.data.accessToken);
+    //}
   } catch (error) {
     dispatch({
       type: ACCESS_TOKEN_ERROR,
@@ -142,7 +143,7 @@ export const logout = () => async (dispatch) => {
         type: LOGOUT_SUCCESS,
       });
       toast.success("Logout successfully");
-      dispatch(navigateToRoot());
+      return true;
       //console.log(res.data);
     }
   } catch (error) {
@@ -151,5 +152,6 @@ export const logout = () => async (dispatch) => {
       payload: error.response.data.msg[0],
     });
     error.response.data.msg.map((msg) => toast.error(msg));
+    return false;
   }
 };
