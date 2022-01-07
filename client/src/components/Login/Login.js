@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
   Card,
   InputGroup,
   Form as BootstrapForm,
+  Spinner,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -12,10 +13,17 @@ import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
 import { login } from "../../actions/Dashboard.action";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 const Login = ({ login, loading }) => {
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
     let check = await login(values);
