@@ -54,23 +54,25 @@ router.post("/", async (req, res, next) => {
 				path: '/api/user'
 			});
 
+			
+
+			// Store refresh token in DB
+			//user.sessions[index].refreshToken = newRefreshToken;
+
+			// Update refresh token of that sessions
+			await Settings.findOneAndUpdate({userId: user.userId} , { $set: { [`sessions.${index}.refreshToken`] : newRefreshToken }})
+
 			// Send the response with the access Token
 			res.json({
 				success: true,
 				accessToken: `Bearer ${newAccessToken}`,
 				msg: "Access Token is given.",
 			});
-
-			// Store refresh token in DB
-			user.sessions[index].refreshToken = newRefreshToken;
-
-			// Tell the mongoose that sessions array is changed
-			user.markModified("sessions");
-			await user.save();
 		} 
 		else throw Error("Token Expired");
 	} 
 	catch (err) {
+		console.log('Error In refresh Token : \n\n\n',err);
 		const errors = {
 			status: 403,
 			message: [err.message],
