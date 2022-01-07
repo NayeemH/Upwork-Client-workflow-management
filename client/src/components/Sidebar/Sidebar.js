@@ -2,8 +2,9 @@ import React from "react";
 import { MdOutlineClose, MdSpaceDashboard } from "react-icons/md";
 import { AiFillHome } from "react-icons/ai";
 import { FiLogOut, FiUserPlus } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { BiLayerPlus } from "react-icons/bi";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   logout,
   toogleSidebarVisibility,
@@ -11,12 +12,21 @@ import {
 import styles from "./Sidebar.module.scss";
 import { BsFillFolderFill } from "react-icons/bs";
 
-const Sidebar = () => {
+const Sidebar = ({ logout }) => {
   let { sidebar_visible } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handeleClick = () => {
     dispatch(toogleSidebarVisibility(false));
+  };
+
+  const logoutHandeler = async () => {
+    handeleClick();
+    let check = await logout();
+    if (check === true) {
+      navigate("/");
+    }
   };
   return (
     <div className={`${styles.wrapper} ${sidebar_visible && styles.active}`}>
@@ -80,6 +90,15 @@ const Sidebar = () => {
 
             <div className={styles.link_base}>
               <div></div>
+              <NavLink to="/add-project" onClick={handeleClick}>
+                <span>
+                  <BiLayerPlus />
+                </span>
+                Add Project
+              </NavLink>
+            </div>
+            <div className={styles.link_base}>
+              <div></div>
               <NavLink to="/add-user" onClick={handeleClick}>
                 <span>
                   <FiUserPlus />
@@ -92,8 +111,7 @@ const Sidebar = () => {
               <NavLink
                 to="/"
                 onClick={() => {
-                  dispatch(logout());
-                  handeleClick();
+                  logoutHandeler();
                 }}
               >
                 <span>
@@ -109,4 +127,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default connect(null, { logout })(Sidebar);

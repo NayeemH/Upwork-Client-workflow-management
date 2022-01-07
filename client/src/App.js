@@ -12,8 +12,16 @@ import {
 } from "./views";
 import { ToastContainer } from "react-toastify";
 import PrivateOutlet from "./utils/PrivateOutlet";
+import AddProjectPage from "./views/AddProjectPage/AddProjectPage";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getRefreshToken } from "./actions/Dashboard.action";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRefreshToken());
+  }, []);
   return (
     <>
       <ToastContainer newestOnTop theme="dark" />
@@ -31,6 +39,7 @@ function App() {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="project/:id" element={<ProjectDetailsPage />} />
               <Route path="add-user" element={<AddUserPage />} />
+              <Route path="add-project" element={<AddProjectPage />} />
             </>
           </Route>
         </Routes>

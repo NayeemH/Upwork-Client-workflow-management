@@ -12,7 +12,7 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   err: "",
-  loading: false,
+  loading: true,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -28,11 +28,15 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+        isAuthenticated: true,
+        loading: false,
       };
     case ACCESS_TOKEN_ERROR:
       return {
         ...state,
         err: action.payload,
+        isAuthenticated: false,
+        loading: false,
       };
 
     case LOGIN_FAIL:

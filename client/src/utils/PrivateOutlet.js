@@ -1,10 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+import { getRefreshToken } from "../actions/Dashboard.action";
 
 const PrivateOutlet = () => {
   const auth = useSelector((state) => state.auth.isAuthenticated);
-  return auth === true ? <Outlet /> : <Navigate to="/" />;
+  const loading = useSelector((state) => state.auth.loading);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!auth) {
+      dispatch(getRefreshToken());
+    }
+  }, []);
+  return auth === true && loading === false ? <Outlet /> : null;
 };
 
 export default PrivateOutlet;
