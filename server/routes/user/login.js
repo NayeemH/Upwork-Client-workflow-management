@@ -37,10 +37,6 @@ router.post("/", async (req, res, next) => {
       path: '/api/user'
     });
 
-    res.json({
-      success: true,
-      msg: ["You are logged in successfully"],
-    });
 
     // Saving the refreshToken and It's number
     const session = {
@@ -53,6 +49,13 @@ router.post("/", async (req, res, next) => {
 
     // Saving to database
     await setting.save();
+
+
+    // Send the response
+    res.json({
+      success: true,
+      msg: ["You are logged in successfully"],
+    });
   } catch (err) {
     err.status = 400;
     next(err);
