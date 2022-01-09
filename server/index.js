@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Static files
-//app.use(express.static(path.resolve('public')));
+app.use(express.static(path.resolve('data')));
 
 // Routers
 app.use("/api", router);

@@ -100,9 +100,7 @@ router.post('/:user/:token', async (req, res, next) => {
             project.markModified("projectUser");
 
             // Adding porject id to him
-            newData.projects.push({
-                projectId
-            });
+            newData.projects.push(projectId);
             newData.markModified('projects');
 
             try {
@@ -141,9 +139,7 @@ router.post('/:user/:token', async (req, res, next) => {
             project.markModified("projectUser");
 
             // Adding porject id to him
-            newData.projects.push({
-                projectId
-            });
+            newData.projects.push(projectId);
             newData.markModified('projects');
 
             try {
