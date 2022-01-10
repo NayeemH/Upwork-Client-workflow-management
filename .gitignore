@@ -3,5 +3,5 @@ node_modules
 id_ec_priv.pem
 id_ec_priv.pem
 docker_data
-data/image/original/*
-data/image/small/*
+# data/image/original/*
+# data/image/small/*
