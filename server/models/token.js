@@ -8,12 +8,6 @@ const tokenSchema = Schema({
         required: true,
         ref: "users"
     },
-    password: {
-        type: String,
-        required: [true, 'Please enter a password'],
-        minlength: [10, 'Minimum password length is 10 characters'],
-        maxlength: [127, 'Maximum password length is 100 characters']
-    },
     token: {
         type: String,
         required: true
@@ -25,8 +19,6 @@ const tokenSchema = Schema({
     }
 }, {timestamps: true});
 
-// Setting the expires time       // index({ createdAt: 1 }, { expires: '7d' });
-//tokenSchema.index({createdAt: 1}, {expires: 60});
 
 
 const Token = mongoose.model('token', tokenSchema);
