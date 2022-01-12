@@ -22,17 +22,19 @@ router.post('/:param', async (req, res, next) => {
 
         if (!token) throw Error("Invalid link or expired");
         
-        const emailAuth = await EmailAuth({userId: info[0]});
+        const emailAuth = await EmailAuth.findOne({userId: info[0]});
+        
         emailAuth.password = password;
-
+        
+        
         await Promise.all([
             emailAuth.save(),
             token.delete()
         ]);
-
+        
         res.json({
             success: true,
-            msg: "Password is reseted"
+            msg: "Password reset successfully"
         });
     }
     catch (err) {
