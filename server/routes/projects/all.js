@@ -16,6 +16,30 @@ router.post('/', async (req, res, next) => {
             {image: 1, name: 1, description: 1, _id: 1, projectUser: 1}
         );
 
+        const userIds = [];
+
+        projectsInfo.forEach(project => {
+            project.projectUser.forEach(({userId}) => {
+                userIds.push(userId);
+            });
+        });
+
+        const uniqueUserIds = [... new Set(userIds)];
+
+        // Find data from the data
+        const userData = await User.find(
+            {_id: {$in: uniqueUserIds }}, 
+            {username: 1, email: 1, image: 1, _id: 1}
+        );
+
+        // Assigning user data to the project data
+        projectsInfo.forEach(project => {
+            project.projectUser.forEach(user => {
+                const info = userData.find(value => value._id.toString() === user.userId.toString());
+                Object.assign(user, info);
+            });
+        });
+        
         res.json(projectsInfo);
     }
     catch(err) {

@@ -8,12 +8,6 @@ const projectUserSchema = Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    name: {
-        type: String
-    },
-    image: {
-        type: String
-    },
     userType: {
         type: String,
         required: true
