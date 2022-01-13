@@ -75,7 +75,7 @@ router.post("/", async (req, res, next) => {
 	catch (err) {
 		const errors = {
 			status: 403,
-			message: [err.message],
+			message: err.message,
 		};
 		return next(errors);
 	}

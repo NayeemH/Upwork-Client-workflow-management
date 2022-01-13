@@ -19,7 +19,7 @@ const emailSchema = Schema({
     password: {
         type: String,
         required: [true, 'Please enter a password'],
-        minlength: [10, 'Minimum password length is 10 characters'],
+        minlength: [6, 'Minimum password length is 6 characters'],
         maxlength: [127, 'Maximum password length is 100 characters']
     }
 });
@@ -41,7 +41,7 @@ const EmailAuthValidator = async (data) => {
         .required(),
 
         password: Joi.string()
-        .min(10)
+        .min(6)
         .max(127)
         .required()
     });

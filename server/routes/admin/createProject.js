@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const {Project, projectValidator} = require('../../models/project');
-const {handleErrors} = require('../../lib/error');
 const {saveImage, fileFetch} = require('../../lib/imageConverter');
 const User = require('../../models/user');
 
@@ -34,8 +33,7 @@ router.post('/', fileFetch.single('image'), async (req, res, next) => {
         });
     }
     catch (err) {
-        const errors = handleErrors(err);
-        next(errors);
+        next(err);
     }
 });
 

@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Settings = require('../../models/settings');
 const {verifyToken} = require('../../lib/JWTUtils');
-const {error} = require('../../lib/error');
 
 router.post('/', async (req, res, next) => {
     
