@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const queryString = require("query-string");
 
 const ProjectInvitation = () => {
-  const { id } = useParams();
+  const { id, status } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const project = useSelector((state) => state.project.invited_project);
@@ -23,7 +23,11 @@ const ProjectInvitation = () => {
   const onAcceptHandeler = () => {
     toast.success("Project Accepted");
     //REDUX TODO
-    navigate(`/create-account/${id}?email=${parsed.email}`);
+    if (status === "user") {
+      navigate(`/?email=${parsed.email}`);
+    } else {
+      navigate(`/create-account/${id}?email=${parsed.email}`);
+    }
   };
   const onRejectHandeler = () => {
     toast.error("Project Rejected");

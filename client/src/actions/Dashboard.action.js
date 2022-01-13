@@ -8,12 +8,15 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  PASSWORD_CHANGE,
+  PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
+  RESET_LINK_SEND,
+  RESET_LINK_SEND_ERROR,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
-import { navigateToRoot } from "./Navigate.action";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
@@ -121,7 +124,7 @@ export const getRefreshToken = () => async (dispatch) => {
       type: ACCESS_TOKEN_ERROR,
       payload: error.response.data.msg[0],
     });
-    error.response.data.msg.map((msg) => toast.error(msg));
+    error.response.data.msg.map((msg) => console.log(msg));
   }
 };
 
@@ -150,6 +153,60 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: LOGOUT_FAIL,
       payload: error.response.data.msg[0],
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+//RESET PASSWORD ACTION
+export const resetPassword = (email) => async (dispatch) => {
+  try {
+    await axios.post(
+      `${BASE_URL}/api/user/resetPassword`,
+      JSON.stringify({ email }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: RESET_LINK_SEND,
+    });
+    toast.success("Reset password link sent to your email");
+    return true;
+  } catch (error) {
+    dispatch({
+      type: RESET_LINK_SEND_ERROR,
+    });
+    error.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+//PASSWORD CHANGE ACTION
+export const passwordChange = (password, email, id) => async (dispatch) => {
+  try {
+    await axios.post(
+      `${BASE_URL}/api/activate/resetpassword/${id}?email=${email}`,
+      JSON.stringify({ password }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: PASSWORD_CHANGE,
+    });
+    toast.success("Password changed successfully");
+    return true;
+  } catch (error) {
+    dispatch({
+      type: PASSWORD_CHANGE_ERROR,
     });
     error.response.data.msg.map((msg) => toast.error(msg));
     return false;

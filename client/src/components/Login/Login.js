@@ -5,19 +5,23 @@ import {
   Card,
   InputGroup,
   Form as BootstrapForm,
-  Spinner,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
 import { login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
+const queryString = require("query-string");
 
 const Login = ({ login, loading }) => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -26,16 +30,20 @@ const Login = ({ login, loading }) => {
   }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
+    setIsLoading(true);
     let check = await login(values);
     if (check === true) {
       setTimeout(() => {
+        setIsLoading(false);
         navigate("/dashboard");
       }, 1000);
+    } else {
+      setIsLoading(false);
     }
   };
 
   let initVals = {
-    email: "",
+    email: parsed.email,
     password: "",
   };
 
@@ -90,7 +98,7 @@ const Login = ({ login, loading }) => {
                     </div>
                     <Field
                       as={BootstrapForm.Control}
-                      placeholder="Create your own password"
+                      placeholder="Type your password"
                       name="password"
                       isValid={!errors.password && touched.password}
                       type="password"
@@ -114,9 +122,9 @@ const Login = ({ login, loading }) => {
                       variant="primary"
                       type="submit"
                       className={styles.btn}
-                      disabled={loading}
+                      disabled={isLoading}
                     >
-                      {loading ? "Loading..." : "Login"}
+                      {isLoading ? "Loading..." : "Login"}
                     </Button>
                   </div>
                 </Form>

@@ -16,6 +16,7 @@ import AddProjectPage from "./views/AddProjectPage/AddProjectPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getRefreshToken } from "./actions/Dashboard.action";
+import PasswordChangePage from "./views/PasswordChangePage/PasswordChangePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ function App() {
             element={<ProjectInvitationPage />}
           />
           <Route path="/create-account/:id" element={<NewAccountPage />} />
+          <Route
+            path="/activate/resetPassword/:id"
+            element={<PasswordChangePage />}
+          />
           <Route path="/*" element={<PrivateOutlet />}>
             <>
               <Route path="dashboard" element={<DashboardPage />} />

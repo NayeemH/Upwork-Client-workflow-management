@@ -8,21 +8,29 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./AddProjectForm.module.scss";
-import { useDispatch } from "react-redux";
-import { sendInvitation } from "../../actions/Project.action";
+import { connect } from "react-redux";
+import { createProject } from "../../actions/Project.action";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { ImUpload } from "react-icons/im";
 
-const AddProjectForm = () => {
-  const dispatch = useDispatch();
+const AddProjectForm = ({ createProject }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const navigate = useNavigate();
 
   const fileRef = useRef();
 
   const onSubmitHandeler = async (values) => {
-    dispatch(sendInvitation(values));
+    if (selectedFile) {
+      let check = await createProject(values, selectedFile);
+      if (check) {
+        navigate("/dashboard");
+      }
+    } else {
+      toast.error("Please select a file");
+    }
   };
 
   useEffect(() => {
@@ -62,7 +70,7 @@ const AddProjectForm = () => {
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Project name is required!"),
-    image: Yup.string().required("Image is required!"),
+    image: Yup.string().nullable(),
     description: Yup.string().required("Description is required!"),
   });
   return (
@@ -184,4 +192,4 @@ const AddProjectForm = () => {
   );
 };
 
-export default AddProjectForm;
+export default connect(null, { createProject })(AddProjectForm);

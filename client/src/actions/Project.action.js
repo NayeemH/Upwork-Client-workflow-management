@@ -1,10 +1,11 @@
 import { toast } from "react-toastify";
 import {
-  ACCESS_TOKEN_SUCCESS,
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
+  PROJECT_CREATE_ERROR,
+  PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
 } from "../constants/Type";
@@ -105,4 +106,44 @@ export const createAccount = (values) => async (dispatch) => {
     });
     err.response.data.msg.map((msg) => toast.error(msg));
   }
+};
+
+// CREATE PROJECT
+export const createProject = (values, file) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("description", values.name);
+  formData.append("name", values.description);
+  formData.append("image", file);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/admin/createProject`,
+      formData,
+      config
+    );
+    console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: PROJECT_CREATE_SUCCESS,
+      });
+      toast.success("Project created successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: PROJECT_CREATE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
 };
