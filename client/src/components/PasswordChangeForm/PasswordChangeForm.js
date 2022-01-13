@@ -11,11 +11,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import styles from "./PasswordChangeForm.module.css";
 import { passwordChange } from "../../actions/Dashboard.action";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 const queryString = require("query-string");
 
 const PasswordChangeForm = ({ passwordChange }) => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -76,15 +79,13 @@ const PasswordChangeForm = ({ passwordChange }) => {
                     className={`${styles.input} w-100`}
                   />
                 </InputGroup>
-                <InputGroup className=" d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="password" className="">
+                <InputGroup className="mb-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <label htmlFor="password" className="d-block">
                       Password
                     </label>
                     {errors.password && touched.password ? (
-                      <small className="text-danger pt-2">
-                        {errors.password}
-                      </small>
+                      <small className="text-danger">{errors.password}</small>
                     ) : null}
                   </div>
                   <Field
@@ -92,31 +93,54 @@ const PasswordChangeForm = ({ passwordChange }) => {
                     placeholder="Create your own password"
                     name="password"
                     isValid={!errors.password && touched.password}
-                    type="password"
-                    className={`${styles.input} w-100`}
+                    type={isPasswordVisible ? "text" : "password"}
+                    className={`${styles.input} w-100 icon-hidden`}
                     isInvalid={errors.password && touched.password}
+                    style={{ position: "relative" }}
                   />
+                  {!isPasswordVisible ? (
+                    <AiOutlineEye
+                      className={styles.eyeIcon}
+                      color="black"
+                      onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                    />
+                  ) : (
+                    <AiOutlineEyeInvisible
+                      className={styles.eyeIcon}
+                      onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                    />
+                  )}
                 </InputGroup>
-                <InputGroup className=" d-flex flex-column py-3">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="password2" className="">
-                      Retype Password
+                <InputGroup className="mb-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <label htmlFor="password2" className="d-block">
+                      Re-type Password
                     </label>
                     {errors.password2 && touched.password2 ? (
-                      <small className="text-danger pt-2">
-                        {errors.password2}
-                      </small>
+                      <small className="text-danger">{errors.password2}</small>
                     ) : null}
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Retype your password"
+                    placeholder="Re-type to confirm password"
                     name="password2"
                     isValid={!errors.password2 && touched.password2}
-                    type="password"
-                    className={`${styles.input} w-100`}
+                    type={isPasswordVisible2 ? "text" : "password"}
+                    className={`${styles.input} w-100 icon-hidden`}
                     isInvalid={errors.password2 && touched.password2}
+                    style={{ position: "relative" }}
                   />
+                  {!isPasswordVisible2 ? (
+                    <AiOutlineEye
+                      className={styles.eyeIcon}
+                      onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
+                    />
+                  ) : (
+                    <AiOutlineEyeInvisible
+                      className={styles.eyeIcon}
+                      onClick={() => setIsPasswordVisible2(!isPasswordVisible2)}
+                    />
+                  )}
                 </InputGroup>
 
                 <div className="pt-3">

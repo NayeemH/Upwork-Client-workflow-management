@@ -68,3 +68,9 @@ select.form-select option:hover {
   background: var(--dark) !important;
 }
 /* STEPS STYLES END*/
+
+.icon-hidden.form-control.is-invalid,
+.icon-hidden.form-control.is-valid,
+.icon-hidden .was-validated .form-control:invalid {
+  background-image: none !important;
+}

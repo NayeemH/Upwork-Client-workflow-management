@@ -16,7 +16,6 @@ import axios from "axios";
 import data from "../stub/projects/dashboardProjectList.js";
 import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
-import { navigateToDashboard } from "./Navigate.action";
 
 //GET PROJECT DETAILS FOR INVITED USER
 export const getInvitedProjectDetails = (id) => (dispatch) => {
@@ -91,20 +90,20 @@ export const createAccount = (values) => async (dispatch) => {
       JSON.stringify(formData),
       config
     );
-    console.log(res);
     if (res.status === 200) {
       dispatch({
         type: ACCOUNT_CREATE_SUCCESS,
       });
       dispatch(getRefreshToken());
-      dispatch(navigateToDashboard());
       toast.success("Account created successfully");
+      return true;
     }
   } catch (err) {
     dispatch({
       type: ACCOUNT_CREATE_ERROR,
     });
     err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
   }
 };
 
