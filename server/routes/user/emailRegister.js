@@ -4,7 +4,6 @@ const {EmailAuth, EmailAuthValidator} = require('../../models/emailAuth');
 const Settings = require('../../models/settings');
 const {sendMail} = require('./sendMail');
 const {issueToken} = require('../../lib/JWTUtils');
-const {handleErrors} = require('../../lib/error');
 const {HOST_URL} = process.env;
 
 
@@ -93,8 +92,7 @@ return;
         }
     }
     catch (err) {
-        const errors = handleErrors(err);
-        next(errors);
+        next(err);
     }
 });
 

@@ -12,7 +12,7 @@ const projectUserSchema = Schema({
         type: String,
         required: true
     }
-});
+}); 
 
 // Actual project schema
 const projectSchema = Schema({

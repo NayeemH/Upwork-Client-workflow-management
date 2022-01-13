@@ -20,7 +20,7 @@ app.use(cookieParser());
 // Cors
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -53,13 +53,6 @@ app.use((error, req, res, next) => {
   res.json({ success: false, msg: [error.message] });
 });
 
-// HOST REACT SITE
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, "../client/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-  });
-}
 
 // Listening port
 const PORT = process.env.PORT || 5001;

@@ -4,7 +4,6 @@ const User = require('../../models/user');
 const {EmailAuth} = require('../../models/emailAuth');
 const Token = require('../../models/token');
 const {sendMail} = require('./sendMail');
-const {handleErrors} = require('../../lib/error');
 const {CLIENT_URL} = process.env;
 
 
@@ -54,8 +53,7 @@ router.post('/', async (req, res, next) => {
         }
     }
     catch (err) {
-        const errors = handleErrors(err);
-        next(errors);
+        next(err);
     }
 });
 
