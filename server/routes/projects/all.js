@@ -16,10 +16,6 @@ router.post('/', async (req, res, next) => {
             {image: 1, name: 1, description: 1, _id: 1, projectUser: 1}
         );
 
-        const userIds = projectsInfo.map(project => {
-            
-        });
-
         res.json(projectsInfo);
     }
     catch(err) {

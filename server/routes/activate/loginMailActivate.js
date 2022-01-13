@@ -95,6 +95,8 @@ router.post('/:user/:token', async (req, res, next) => {
             // Adding him to the projects
             project.projectUser.push({
                 userId: newData._id,
+                name: newData.username,
+                image: newData.image,
                 userType
             });
             project.markModified("projectUser");
@@ -134,6 +136,8 @@ router.post('/:user/:token', async (req, res, next) => {
             // Adding him to the projects
             project.projectUser.push({
                 userId: newData._id,
+                name: newData.username,
+                image: newData.image,
                 userType
             });
             project.markModified("projectUser");
