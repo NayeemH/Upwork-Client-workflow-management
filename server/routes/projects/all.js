@@ -33,14 +33,31 @@ router.post('/', async (req, res, next) => {
         );
 
         // Assigning user data to the project data
-        projectsInfo.forEach(project => {
-            project.projectUser.forEach(user => {
+        const newProjectInfo = projectsInfo.map(project => {
+            const newProjectUser = project.projectUser.map(user => {
+                
                 const info = userData.find(value => value._id.toString() === user.userId.toString());
-                Object.assign(user, info);
+                
+                return {
+                    userId: user.userId,
+                    username: info && info.username,
+                    email: info && info.email,
+                    userType: user.userType,
+                    image: info && info.image
+                }
             });
+
+            return {
+                id: project._id,
+                name: project.name,
+                description: project.description,
+                image: project.image,
+                projectUser: newProjectUser
+            }
         });
-        
-        res.json(projectsInfo);
+
+
+        res.json(newProjectInfo);
     }
     catch(err) {
         next(err);
