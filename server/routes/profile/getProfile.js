@@ -4,7 +4,7 @@ const User = require('../../models/user');
 
 
 
-router.post('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
         const {userId} = req.user;
         

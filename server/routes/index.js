@@ -7,6 +7,7 @@ const isAuth = require('./authenticate/isAuth');
 const isAdmin = require('./authenticate/isAdmin');
 const activate = require('./activate');
 const project = require('./projects');
+const profile = require('./profile');
 
 // User Register and login function 
 router.use('/user', user);
@@ -19,5 +20,8 @@ router.use('/activate', activate);
 
 // Projects routes
 router.use('/project',isAuth, project);
+
+// Profile Info
+router.use('/profile', isAuth, profile);
 
 module.exports = router;
