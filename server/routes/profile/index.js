@@ -5,7 +5,7 @@ const getProfile = require('./getProfile');
 const updateProfile = require('./updateProfile');
 
 // Routes
-router.use('/getProfile',getProfile);
-router.use('/updateProfile', updateProfile);
+router.use('/',getProfile);
+router.use('/', updateProfile);
 
 module.exports = router;

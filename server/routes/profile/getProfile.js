@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     try {
         const {userId} = req.user;
         
-        const user = await User.findOne({_id: userId});
+        const user = await User.findOne({_id: userId}, {username: 1, email: 1, _id: 1, image: 1});
 
         res.json({
             success: true,

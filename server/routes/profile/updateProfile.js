@@ -4,7 +4,7 @@ const {saveImage, fileFetch} = require('../../lib/imageConverter');
 
 
 
-router.post('/', fileFetch.single('image'), async (req, res, next) => {
+router.patch('/', fileFetch.single('image'), async (req, res, next) => {
     try {
         const {userId} = req.user;
         const {username, description} = req.body;
