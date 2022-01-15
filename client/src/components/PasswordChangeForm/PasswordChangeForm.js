@@ -9,36 +9,40 @@ import {
 import { connect } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import { createAccount } from "../../actions/Project.action";
-import styles from "./NewAccountForm.module.css";
+import styles from "./PasswordChangeForm.module.css";
+import { passwordChange } from "../../actions/Dashboard.action";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 const queryString = require("query-string");
 
-const NewAccountForm = ({ createAccount }) => {
+const PasswordChangeForm = ({ passwordChange }) => {
   const { id } = useParams();
-  const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
-
-  const onSubmitHandeler = async (values) => {
-    let check = createAccount({ ...values, id });
-    if (check === true) {
-      navigate("/dashboard");
-    }
-  };
+  const navigate = useNavigate();
 
   const location = useLocation();
   const parsed = queryString.parse(location.search);
 
+  const onSubmitHandeler = async (values) => {
+    setLoading(true);
+    let check = await passwordChange(values.password, parsed.email, id);
+    if (check === true) {
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/");
+      }, 500);
+    } else {
+      setLoading(false);
+    }
+  };
+
   let initVals = {
-    username: "",
     password: "",
     password2: "",
   };
 
   const SignupSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required!"),
     password: Yup.string()
       .required("Password is required!")
       .min(6, "Password is too short!"),
@@ -50,7 +54,7 @@ const NewAccountForm = ({ createAccount }) => {
     <div className={styles.wrapper}>
       <Card bg="dark" text="light" className={styles.crd}>
         <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Create Account</span>
+          <span className={styles.heading}>Password Change</span>
         </Card.Header>
         <Card.Body>
           <Formik
@@ -75,28 +79,6 @@ const NewAccountForm = ({ createAccount }) => {
                     className={`${styles.input} w-100`}
                   />
                 </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="username" className="d-block">
-                      Username
-                    </label>
-                    {errors.username && touched.username ? (
-                      <small className="text-danger pt-2">
-                        {errors.username}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type your username"
-                    name="username"
-                    isValid={!errors.username && touched.username}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.username && touched.username}
-                  />
-                </InputGroup>
-
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="password" className="d-block">
@@ -166,8 +148,9 @@ const NewAccountForm = ({ createAccount }) => {
                     variant="primary"
                     type="submit"
                     className={styles.btn}
+                    disabled={loading}
                   >
-                    Create Account
+                    {loading ? "Loading..." : "Change Password"}
                   </Button>
                 </div>
               </Form>
@@ -179,4 +162,4 @@ const NewAccountForm = ({ createAccount }) => {
   );
 };
 
-export default connect(null, { createAccount })(NewAccountForm);
+export default connect(null, { passwordChange })(PasswordChangeForm);

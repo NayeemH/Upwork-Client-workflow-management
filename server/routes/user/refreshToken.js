@@ -3,9 +3,10 @@ const Settings = require("../../models/settings");
 const { verifyToken, issueToken } = require("../../lib/JWTUtils");
 
 router.post("/", async (req, res, next) => {
-	const { refreshToken } = req.cookies;
 
 	try {
+		const { refreshToken } = req.cookies;
+
 		if (!refreshToken) throw Error("Refresh Token Required");
 
 		const payload = await verifyToken(refreshToken);
@@ -72,10 +73,9 @@ router.post("/", async (req, res, next) => {
 		else throw Error("Token Expired");
 	} 
 	catch (err) {
-		console.log('Error In refresh Token : \n\n\n',err);
 		const errors = {
 			status: 403,
-			message: [err.message],
+			message: err.message,
 		};
 		return next(errors);
 	}

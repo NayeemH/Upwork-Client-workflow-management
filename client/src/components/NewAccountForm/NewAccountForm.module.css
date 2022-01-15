@@ -36,6 +36,15 @@
   color: var(--primary) !important;
 }
 
+.eyeIcon {
+  position: absolute;
+  right: 5px;
+  top: 58%;
+  cursor: pointer;
+  color: var(--dark) !important;
+  z-index: 99;
+}
+
 @media screen and (max-width: 768px) {
   .crd {
     width: 90%;

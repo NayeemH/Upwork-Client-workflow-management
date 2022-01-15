@@ -20,7 +20,7 @@ app.use(cookieParser());
 // Cors
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -33,7 +33,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Static files
-app.use(express.static(path.resolve('data')));
+//app.use(express.static(path.resolve('data')));
+
+app.use(express.static(path.resolve('client/build')));
 
 // Routers
 app.use("/api", router);
@@ -50,6 +52,7 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({ success: false, msg: [error.message] });
 });
+
 
 // Listening port
 const PORT = process.env.PORT || 5001;

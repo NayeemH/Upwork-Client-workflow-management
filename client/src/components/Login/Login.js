@@ -1,23 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
   Card,
   InputGroup,
   Form as BootstrapForm,
-  Spinner,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
 import { login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+const queryString = require("query-string");
 
 const Login = ({ login, loading }) => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -26,16 +33,20 @@ const Login = ({ login, loading }) => {
   }, [isAuthenticated]);
 
   const onSubmitHandeler = async (values) => {
+    setIsLoading(true);
     let check = await login(values);
     if (check === true) {
       setTimeout(() => {
+        setIsLoading(false);
         navigate("/dashboard");
       }, 1000);
+    } else {
+      setIsLoading(false);
     }
   };
 
   let initVals = {
-    email: "",
+    email: parsed.email,
     password: "",
   };
 
@@ -82,26 +93,37 @@ const Login = ({ login, loading }) => {
                     ) : null}
                   </InputGroup>
 
-                  <InputGroup className=" d-flex flex-column">
-                    <div className="d-flex justify-content-between align-items-center pb-2">
-                      <label htmlFor="password" className="">
+                  <InputGroup className="mb-3 d-flex flex-column">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <label htmlFor="password" className="d-block">
                         Password
                       </label>
+                      {errors.password && touched.password ? (
+                        <small className="text-danger">{errors.password}</small>
+                      ) : null}
                     </div>
                     <Field
                       as={BootstrapForm.Control}
                       placeholder="Create your own password"
                       name="password"
                       isValid={!errors.password && touched.password}
-                      type="password"
-                      className={`${styles.input} w-100`}
+                      type={isPasswordVisible ? "text" : "password"}
+                      className={`${styles.input} w-100 icon-hidden`}
                       isInvalid={errors.password && touched.password}
+                      style={{ position: "relative" }}
                     />
-                    {errors.password && touched.password ? (
-                      <small className="text-danger pt-2">
-                        {errors.password}
-                      </small>
-                    ) : null}
+                    {!isPasswordVisible ? (
+                      <AiOutlineEye
+                        className={styles.eyeIcon}
+                        color="black"
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                      />
+                    ) : (
+                      <AiOutlineEyeInvisible
+                        className={styles.eyeIcon}
+                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                      />
+                    )}
                   </InputGroup>
                   <div className="text-end">
                     <Link to="/forget-password" className={styles.link}>
@@ -114,9 +136,9 @@ const Login = ({ login, loading }) => {
                       variant="primary"
                       type="submit"
                       className={styles.btn}
-                      disabled={loading}
+                      disabled={isLoading}
                     >
-                      {loading ? "Loading..." : "Login"}
+                      {isLoading ? "Loading..." : "Login"}
                     </Button>
                   </div>
                 </Form>

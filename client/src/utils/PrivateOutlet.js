@@ -8,10 +8,10 @@ const PrivateOutlet = () => {
   const loading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!auth) {
+    if (auth === false) {
       dispatch(getRefreshToken());
     }
-  }, []);
+  }, [auth]);
   return auth === true && loading === false ? <Outlet /> : null;
 };
 

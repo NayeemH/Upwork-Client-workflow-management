@@ -1,21 +1,32 @@
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
-import React from "react";
 import {
   Button,
   Card,
   InputGroup,
   Form as BootstrapForm,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./ForgetPassword.module.css";
 import logoImg from "../../assets/Logo.png";
+import { resetPassword } from "../../actions/Dashboard.action";
+import { connect } from "react-redux";
 
-const ForgetPassword = () => {
+const ForgetPassword = ({ resetPassword }) => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const onSubmitHandeler = async (values) => {
-    //REDUX TODO
-    console.log(values);
+    setLoading(true);
+    let check = await resetPassword(values.email);
+    if (check === true) {
+      setLoading(false);
+      navigate("/");
+    } else {
+      setLoading(false);
+    }
   };
 
   let initVals = {
@@ -31,7 +42,7 @@ const ForgetPassword = () => {
       <div className={styles.wrapper}>
         <Card bg="dark" text="light" className={styles.crd}>
           <Card.Header className="d-flex justify-content-between align-items-center">
-            <span className={styles.heading}>Login</span>
+            <span className={styles.heading}>Reset Password</span>
             <img src={logoImg} className={styles.logo} alt="" />
           </Card.Header>
           <Card.Body>
@@ -70,14 +81,16 @@ const ForgetPassword = () => {
                       variant="primary"
                       type="submit"
                       className={styles.btn}
+                      disabled={loading}
                     >
-                      Submit
+                      {loading ? "Sending..." : "Submit"}
                     </Button>
                     <Button
                       variant="primary"
                       as={Link}
                       to="/"
                       className={styles.btn}
+                      disabled={loading}
                     >
                       Cancel
                     </Button>
@@ -92,4 +105,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default connect(null, { resetPassword })(ForgetPassword);
