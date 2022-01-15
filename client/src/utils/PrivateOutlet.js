@@ -1,18 +1,26 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { connect } from "react-redux";
+import { Outlet, Navigate, useNavigate } from "react-router-dom";
 import { getRefreshToken } from "../actions/Dashboard.action";
 
-const PrivateOutlet = () => {
-  const auth = useSelector((state) => state.auth.isAuthenticated);
-  const loading = useSelector((state) => state.auth.loading);
-  const dispatch = useDispatch();
+const PrivateOutlet = ({ getRefreshToken, auth, loading }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     if (auth === false) {
-      dispatch(getRefreshToken());
+      let check = getRefreshToken();
+      if (check === true) {
+        return <Outlet />;
+      } else {
+        navigate("/");
+      }
     }
-  }, [auth]);
+  }, [auth, getRefreshToken]);
   return auth === true && loading === false ? <Outlet /> : null;
 };
 
-export default PrivateOutlet;
+const mapStateToProps = (state) => ({
+  auth: state.auth.isAuthenticated,
+  loading: state.auth.loading,
+});
+
+export default connect(mapStateToProps, { getRefreshToken })(PrivateOutlet);

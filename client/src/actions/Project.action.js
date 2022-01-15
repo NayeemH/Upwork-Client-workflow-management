@@ -2,6 +2,9 @@ import { toast } from "react-toastify";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
+  ADD_FAVORITE_PROJECT,
+  FETCH_DASHBOARD_PROJECT,
+  FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
   PROJECT_CREATE_ERROR,
@@ -111,8 +114,8 @@ export const createAccount = (values) => async (dispatch) => {
 export const createProject = (values, file) => async (dispatch) => {
   let formData = new FormData();
 
-  formData.append("description", values.name);
-  formData.append("name", values.description);
+  formData.append("description", values.description);
+  formData.append("name", values.name);
   formData.append("image", file);
 
   const config = {
@@ -145,4 +148,61 @@ export const createProject = (values, file) => async (dispatch) => {
   }
 
   return false;
+};
+
+// FETCH PROJECTS FOR DASHBOARD
+export const fetchProjects = () => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(`${BASE_URL}/api/project/all`, {}, config);
+    if (res.status === 200) {
+      dispatch({
+        type: FETCH_DASHBOARD_PROJECT,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: FETCH_DASHBOARD_PROJECT_ERROR,
+    });
+  }
+};
+
+// ADD FAVORITE PROJECT IN LOCAL STORAGE
+export const addFavoriteProject = (id) => (dispatch) => {
+  let saved = localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(" ")
+    : [];
+  if (!saved.includes(id)) {
+    saved.push(id);
+    localStorage.setItem("fav_projects", saved.join(" "));
+  }
+
+  dispatch({
+    type: ADD_FAVORITE_PROJECT,
+    payload: saved,
+  });
+};
+
+// REMOVE FAVORITE PROJECT IN LOCAL STORAGE
+export const removeFavoriteProject = (id) => (dispatch) => {
+  let saved = localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(" ")
+    : [];
+
+  localStorage.setItem(
+    "fav_projects",
+    saved.filter((item) => item !== id).join(" ")
+  );
+
+  dispatch({
+    type: ADD_FAVORITE_PROJECT,
+    payload: saved.filter((item) => item !== id).join(" "),
+  });
 };

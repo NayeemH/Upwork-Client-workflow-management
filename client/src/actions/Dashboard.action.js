@@ -118,6 +118,7 @@ export const getRefreshToken = () => async (dispatch) => {
     });
     //console.log(res.data);
     setAuthToken(refreshRes.data.accessToken);
+    return true;
     //}
   } catch (error) {
     dispatch({
@@ -125,6 +126,7 @@ export const getRefreshToken = () => async (dispatch) => {
       payload: error.response.data.msg[0],
     });
     error.response.data.msg.map((msg) => console.log(msg));
+    return false;
   }
 };
 

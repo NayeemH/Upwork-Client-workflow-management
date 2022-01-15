@@ -18,16 +18,20 @@ const AddProjectForm = ({ createProject }) => {
   //STATES
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const fileRef = useRef();
 
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
+      setIsLoading(true);
       let check = await createProject(values, selectedFile);
       if (check) {
+        setIsLoading(false);
         navigate("/dashboard");
       }
+      setIsLoading(false);
     } else {
       toast.error("Please select a file");
     }
@@ -171,8 +175,9 @@ const AddProjectForm = ({ createProject }) => {
                     variant="primary"
                     type="submit"
                     className={styles.btn}
+                    disabled={isLoading}
                   >
-                    Save
+                    {isLoading ? "Loading..." : "Add Project"}
                   </Button>
                   <Button
                     variant="primary"
