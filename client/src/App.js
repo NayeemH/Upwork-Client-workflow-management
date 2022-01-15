@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getRefreshToken } from "./actions/Dashboard.action";
 import PasswordChangePage from "./views/PasswordChangePage/PasswordChangePage";
+import SettingsPage from "./views/SettingsPage/SettingsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
               <Route path="project/:id" element={<ProjectDetailsPage />} />
               <Route path="add-user" element={<AddUserPage />} />
               <Route path="add-project" element={<AddProjectPage />} />
+              <Route path="settings" element={<SettingsPage />} />
             </>
           </Route>
         </Routes>

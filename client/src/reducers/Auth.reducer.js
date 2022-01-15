@@ -5,6 +5,7 @@ import {
   LOGOUT_FAIL,
   ACCESS_TOKEN_SUCCESS,
   ACCESS_TOKEN_ERROR,
+  AUTH_USER_LOAD,
 } from "../constants/Type";
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   err: "",
-  loading: true,
+  loading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -50,6 +51,12 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         err: action.payload ? action.payload : "",
+      };
+    case AUTH_USER_LOAD:
+      return {
+        ...state,
+        user: action.payload,
+        loading: false,
       };
     default:
       return state;
