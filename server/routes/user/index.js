@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const isAuth = require('../authenticate/isAuth');
 
 // Import routes
 const login = require('./login');
@@ -13,6 +14,5 @@ router.use('/emailRegister', emailRegister);
 router.use('/refreshToken', refreshToken);
 router.use('/resetPassword',resetPassword);
 router.use('/logout', logout);
-
 
 module.exports = router;
