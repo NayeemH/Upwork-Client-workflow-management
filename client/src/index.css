@@ -1,5 +1,13 @@
 :root {
-  --blue: #0d6efd;
+  --primary: #0d6efd;
+  --primary-hover: #014bb9;
+  --secondary: rgb(211, 211, 211);
+  --secondary-500: rgba(211, 211, 211, 0.5);
+  --danger: #dc3545;
+  --danger-hover: #a52734;
+  --dark: #212529;
+  --dark-bg: #1d2024;
+  --light: #fff;
 }
 
 body {
@@ -9,9 +17,60 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.form-control {
+  border-radius: 0 !important;
+}
+
+select.form-select option:hover {
+  background-color: var(--primary) !important;
+}
+
+/* STEPS STYLES */
+.rc-steps-item-process .rc-steps-item-icon {
+  background: var(--primary) !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  border-color: var(--primary) !important;
+}
+
+.rc-steps-item-title {
+  color: var(--light) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon > .rc-steps-icon {
+  color: var(--primary) !important;
+}
+
+.rc-steps-item-process .rc-steps-item-icon .rc-steps-icon {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-icon .rc-steps-icon {
+  color: var(--light) !important;
+}
+
+.rc-steps-item-wait .rc-steps-item-icon {
+  background: var(--dark) !important;
+}
+/* STEPS STYLES END*/
+
+.icon-hidden.form-control.is-invalid,
+.icon-hidden.form-control.is-valid,
+.icon-hidden .was-validated .form-control:invalid {
+  background-image: none !important;
 }
