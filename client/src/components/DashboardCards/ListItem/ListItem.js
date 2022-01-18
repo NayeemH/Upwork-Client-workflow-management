@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { MdDownload } from "react-icons/md";
+import { IMAGE_PATH } from "../../../constants/URL";
 import styles from "./ListItem.module.css";
 
 const ListItem = ({ item }) => {
@@ -10,7 +11,11 @@ const ListItem = ({ item }) => {
       <Card.Body className={styles.body}>
         <Row>
           <div className={styles.img_wrapper}>
-            <img src={item.image} className={styles.img} alt={item.name} />
+            <img
+              src={`${IMAGE_PATH}small/${item.image}`}
+              className={styles.img}
+              alt={item.name}
+            />
           </div>
           <Col className="d-flex justify-content-between flex-column">
             <div className="d-flex justify-content-between align-items-center">
@@ -29,7 +34,7 @@ const ListItem = ({ item }) => {
                 <span className={styles.notification}>{item.notification}</span>
               )}
               <div className="d-flex justify-content-between align-items-center">
-                <span className={styles.id}>ID: {item.id}</span>
+                <span className={styles.id}>ID: {item.id.substring(0, 6)}</span>
               </div>
             </div>
           </Col>

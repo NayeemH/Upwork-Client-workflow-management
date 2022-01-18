@@ -10,7 +10,9 @@ import {
 
 const initialState = {
   projects: [],
-  fav_projects: localStorage.getItem("fav_projects").split(",") || [],
+  fav_projects: localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(",")
+    : [],
   selected_project: {},
   invited_project: {},
   err: "",
