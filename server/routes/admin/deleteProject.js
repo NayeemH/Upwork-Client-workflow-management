@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const {Project} = require('../../models/project');
-
+const User = require('../../models/user');
 
 
 router.post('/', async (req, res, next) => {
@@ -8,9 +8,11 @@ router.post('/', async (req, res, next) => {
         const {projectId} = req.body;
         const {userId: adminId} = req.user;
 
-        const project = await Project.findOne({_id: projectId, adminId});            
+        const project = await Project.findOne({_id: projectId, adminId});
 
         if (!project) throw Error("Project not found");
+
+        await User.updateMany({_id: {$in: [adminId, ...project.projectUser]}}, {$pull: {projects: projectId}});
 
         await project.delete();
 
