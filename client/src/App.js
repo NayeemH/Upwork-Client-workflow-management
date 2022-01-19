@@ -46,7 +46,7 @@ function App() {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="project/:id" element={<ProjectDetailsPage />} />
-              <Route path="project/:id/add-task" element={<AddTaskPage />} />
+              <Route path="project/add-task/:id" element={<AddTaskPage />} />
               <Route path="add-user" element={<AddUserPage />} />
               <Route path="add-project" element={<AddProjectPage />} />
               <Route path="settings" element={<SettingsPage />} />

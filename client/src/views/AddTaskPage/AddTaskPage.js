@@ -1,5 +1,6 @@
 import React from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import AddTaskForm from "../../components/AddTaskForm/AddTaskForm";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -8,6 +9,9 @@ import styles from "./AddTaskPage.module.css";
 
 const AddTaskPage = () => {
   const { id } = useParams();
+  const selectedProject = useSelector(
+    (state) => state.project.selected_project
+  );
   return (
     <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
@@ -20,14 +24,14 @@ const AddTaskPage = () => {
         </Breadcrumb.Item>
         <Breadcrumb.Item>
           <Link to={`/project/${id}`} className={styles.bc_home}>
-            {id.substring(0, 6)}
+            {selectedProject.name}
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
           Add Task
         </Breadcrumb.Item>
       </Breadcrumb>
-      <AddTaskForm />
+      <AddTaskForm id={id} />
     </div>
   );
 };

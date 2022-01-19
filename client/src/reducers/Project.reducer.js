@@ -16,7 +16,7 @@ const initialState = {
   selected_project: {},
   invited_project: {},
   err: "",
-  loading: false,
+  loading: true,
 };
 
 const projectReducer = (state = initialState, action) => {

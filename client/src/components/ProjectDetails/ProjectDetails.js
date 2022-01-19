@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
 import { Link, useParams } from "react-router-dom";
+import { IMAGE_PATH } from "../../constants/URL";
 
 const ProjectDetails = ({ project }) => {
   const { id } = useParams();
@@ -13,17 +14,21 @@ const ProjectDetails = ({ project }) => {
       <Button
         variant="primary"
         as={Link}
-        to={`/project/${id}/add-task`}
+        to={`/project/add-task/${id}`}
         className={styles.button}
       >
         Add New Task
       </Button>
       <div className={styles.steps_wrapper}>
-        {project.tasks &&
-          project.tasks.map((task, index) => (
+        {project.productList &&
+          project.productList.map((task, index) => (
             <div className={styles.task} key={index}>
               <div className="p-3">
-                <img src={task.image} className="img-fluid" alt="" />
+                <img
+                  src={`${IMAGE_PATH}small/${task.image}`}
+                  className="img-fluid"
+                  alt=""
+                />
               </div>
               <div className="d-flex flex-column  justify-content-center">
                 <h4 className={styles.name}>{task.name}</h4>

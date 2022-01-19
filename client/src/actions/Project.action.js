@@ -11,6 +11,8 @@ import {
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  TASK_ADDED,
+  TASK_ADDED_ERROR,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
@@ -29,12 +31,18 @@ export const getInvitedProjectDetails = (id) => (dispatch) => {
 };
 
 //GET PROJECT DETAILS WITH TASKS
-export const getProjectDetails = (id) => (dispatch) => {
-  const project = data.filter((project) => project.id === parseInt(id));
-  dispatch({
-    type: GET_PROJECT_DETAILS,
-    payload: project[0],
-  });
+export const getProjectDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/one/${id}`);
+    console.log(res);
+
+    dispatch({
+      type: GET_PROJECT_DETAILS,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
 };
 
 // SEND INVITATION LINK TO PROJECT
@@ -206,3 +214,48 @@ export const removeFavoriteProject = (id) => (dispatch) => {
     payload: saved.filter((item) => item !== id).join(" "),
   });
 };
+
+// CREATE PROJECT TASK
+export const createProjectTask =
+  (values, file, id, steps) => async (dispatch) => {
+    let formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("image", file);
+    formData.append("projectId", id);
+    steps.map((step, i) => {
+      formData.append(`steps[${i}]`, step.name);
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.post(
+        `${BASE_URL}/api/project/addProduct`,
+        formData,
+        config
+      );
+      console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: TASK_ADDED,
+        });
+        dispatch(getProjectDetails(id));
+        toast.success("TASK created successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: TASK_ADDED_ERROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
+
+    return false;
+  };

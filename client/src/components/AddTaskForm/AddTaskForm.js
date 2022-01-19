@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import {
   Card,
+  Row,
+  Col,
   Form as BootstrapForm,
   InputGroup,
   Button,
@@ -9,32 +11,44 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./AddTaskForm.module.scss";
 import { connect } from "react-redux";
-import { createProject } from "../../actions/Project.action";
+import { createProjectTask } from "../../actions/Project.action";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ImUpload } from "react-icons/im";
+import { BsTrash, BsPlusCircle } from "react-icons/bs";
 
-const AddTaskForm = ({ createProject }) => {
-  //STATES
+const AddTaskForm = ({ createProjectTask, id }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState([]);
   const navigate = useNavigate();
 
   const fileRef = useRef();
 
   const onSubmitHandeler = async (values) => {
+    if (input.length === 0) {
+      toast.error("Please add atleast one step");
+      return;
+    }
     if (selectedFile) {
       setIsLoading(true);
-      let check = await createProject(values, selectedFile);
+      let check = await createProjectTask(values, selectedFile, id, input);
       if (check) {
         setIsLoading(false);
-        navigate("/dashboard");
+        navigate(`/project/${id}`);
       }
       setIsLoading(false);
     } else {
       toast.error("Please select a file");
     }
+  };
+  const addHandeler = () => {
+    setInput([...input, { id: input.length, name: "" }]);
+  };
+
+  const deleteHandeler = (id) => {
+    setInput([...input.filter((item) => item.id !== id)]);
   };
 
   useEffect(() => {
@@ -66,6 +80,18 @@ const AddTaskForm = ({ createProject }) => {
     setSelectedFile(e.target.files[0]);
   };
 
+  const handelChange = (e, id) => {
+    setInput(
+      input.map((item, i) => {
+        if (id === item.id) {
+          return { id: i, name: e.target.value };
+        } else {
+          return item;
+        }
+      })
+    );
+  };
+
   let initVals = {
     name: "",
     image: "",
@@ -75,7 +101,6 @@ const AddTaskForm = ({ createProject }) => {
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Project name is required!"),
     image: Yup.string().nullable(),
-    description: Yup.string().required("Description is required!"),
   });
   return (
     <div className={styles.wrapper}>
@@ -110,27 +135,51 @@ const AddTaskForm = ({ createProject }) => {
                     isInvalid={errors.name && touched.name}
                   />
                 </InputGroup>
-                <InputGroup className="mb-3 d-flex flex-column">
-                  <div className="d-flex justify-content-between align-items-center pb-2">
-                    <label htmlFor="description" className="d-block">
-                      Description
-                    </label>
-                    {errors.description && touched.description ? (
-                      <small className="text-danger pt-2">
-                        {errors.description}
-                      </small>
-                    ) : null}
-                  </div>
-                  <Field
-                    as={BootstrapForm.Control}
-                    placeholder="Type project description"
-                    name="description"
-                    isValid={!errors.description && touched.description}
-                    type="text"
-                    className={`${styles.input} w-100`}
-                    isInvalid={errors.description && touched.description}
-                  />
-                </InputGroup>
+                <span>Steps of Task</span>
+                {input.map((inputText) => (
+                  <Row className="mt-2" key={inputText.id}>
+                    <Col xs={11}>
+                      <input
+                        key={inputText.id}
+                        type="text"
+                        value={inputText.name}
+                        onChange={(e) => handelChange(e, inputText.id)}
+                        className="form-control"
+                        placeholder="Step Name"
+                        required
+                      />
+                    </Col>
+                    <Col
+                      xs={1}
+                      className="d-flex justify-content-end align-items-center"
+                    >
+                      <span
+                        style={{
+                          color: "#dc3545",
+                          cursor: "pointer",
+                          fontSize: "20px",
+                        }}
+                        onClick={() => deleteHandeler(inputText.id)}
+                      >
+                        <BsTrash />
+                      </span>
+                    </Col>
+                  </Row>
+                ))}
+                <div className={`text-center pt-4 ${styles.subcat_plus}`}>
+                  <BsPlusCircle
+                    onClick={addHandeler}
+                    style={{ cursor: "pointer" }}
+                  />{" "}
+                  <span
+                    onClick={addHandeler}
+                    style={{ cursor: "pointer" }}
+                    className="ml-2"
+                  >
+                    Add Step
+                  </span>
+                </div>
+
                 <div className="">
                   <div className={styles.preview}>
                     {selectedFile ? (
@@ -197,4 +246,4 @@ const AddTaskForm = ({ createProject }) => {
   );
 };
 
-export default connect(null, { createProject })(AddTaskForm);
+export default connect(null, { createProjectTask })(AddTaskForm);
