@@ -21,7 +21,7 @@ router.patch('/', fileFetch.single('image'), async (req, res, next) => {
             const user = await EmailAuth.findOne({userId});
             
             const valid = await bcrypt.compare(password, user.password);
-            console.log(valid);
+
             if(!valid) throw Error('Invalid Password');
 
             user.password = newPassword;

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {Project} = require('../../models/project');
 const User = require('../../models/user');
-
+const hexToObjectId = require('mongoose').Types.ObjectId;
 
 router.post('/', async (req, res, next) => {
     try {
@@ -12,7 +12,12 @@ router.post('/', async (req, res, next) => {
 
         if (!project) throw Error("Project not found");
 
-        await User.updateMany({_id: {$in: [adminId, ...project.projectUser]}}, {$pull: {projects: projectId}});
+
+        const allUser = [adminId, ...[...project.projectUser].map(({userId}) => userId)];
+
+        await User.updateMany(
+            {_id: {$in: allUser}}, 
+            {$pull: {projects: hexToObjectId(projectId)}});
 
         await project.delete();
 
