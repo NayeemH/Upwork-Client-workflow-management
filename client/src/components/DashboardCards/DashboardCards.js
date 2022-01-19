@@ -15,6 +15,7 @@ const DashboardCards = () => {
   useEffect(() => {
     dispatch(fetchProjects());
   }, []);
+
   return (
     <Container fluid className={styles.wrapper}>
       {data.filter((item) => saved.includes(item.id)).length > 0 && (
@@ -39,7 +40,7 @@ const DashboardCards = () => {
           ) : (
             data
               .filter((item) => saved.includes(item.id))
-              .map((item) => <ListItem key={item.id} item={item} />)
+              .map((item) => <ListItem key={item.id} item={item} star />)
           )}
           <hr className={styles.hr} />
         </>

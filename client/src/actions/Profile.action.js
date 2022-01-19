@@ -60,3 +60,41 @@ export const updateProfile = (username, file) => async (dispatch) => {
 
   return false;
 };
+
+// UPDATE PROFILE ACTION
+export const updatePasswordProfile =
+  (password, newPassword) => async (dispatch) => {
+    let formData = new FormData();
+    formData.append("password", password);
+    formData.append("newPassword", newPassword);
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.patch(
+        `${BASE_URL}/api/profile/`,
+        formData,
+        config
+      );
+      if (res.status === 200) {
+        dispatch({
+          type: PROFILE_UPDATE,
+        });
+        toast.success("Password Changed Successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: PROFILE_UPDATE_ERROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
+
+    return false;
+  };

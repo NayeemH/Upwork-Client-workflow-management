@@ -2,10 +2,16 @@ import React from "react";
 import { Card, Col, Row } from "react-bootstrap";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { MdDownload } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import {
+  addFavoriteProject,
+  removeFavoriteProject,
+} from "../../../actions/Project.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import styles from "./ListItem.module.css";
 
-const ListItem = ({ item }) => {
+const ListItem = ({ item, star = false }) => {
+  const dispatch = useDispatch();
   return (
     <Card text="light" bg="dark" className={styles.crd}>
       <Card.Body className={styles.body}>
@@ -21,7 +27,15 @@ const ListItem = ({ item }) => {
             <div className="d-flex justify-content-between align-items-center">
               <h3>{item.name}</h3>
               <span className={`${styles.star} d-md-block d-none`}>
-                {item.stared ? <BsStarFill /> : <BsStar />}
+                {star ? (
+                  <BsStarFill
+                    onClick={() => dispatch(removeFavoriteProject(item.id))}
+                  />
+                ) : (
+                  <BsStar
+                    onClick={() => dispatch(addFavoriteProject(item.id))}
+                  />
+                )}
               </span>
             </div>
             <p>{item.description}</p>

@@ -4,11 +4,18 @@ import { BiPlus } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
+import { Link, useParams } from "react-router-dom";
 
 const ProjectDetails = ({ project }) => {
+  const { id } = useParams();
   return (
     <div className={styles.wrapper}>
-      <Button variant="primary" className={styles.button}>
+      <Button
+        variant="primary"
+        as={Link}
+        to={`/project/${id}/add-task`}
+        className={styles.button}
+      >
         Add New Task
       </Button>
       <div className={styles.steps_wrapper}>
