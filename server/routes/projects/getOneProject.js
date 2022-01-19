@@ -15,7 +15,11 @@ router.get('/:projectId', async (req, res, next) => {
 
         if(!project) throw Error('Project not found');
 
-        // TODO: Check for valid user access
+        // Check for valid user access
+        const checkUser = project.projectUser.find((user) => user.userId.toString() === userId);
+
+        if(!(project.adminId.toString() === userId || checkUser)) throw Error("Can not access this project");
+
 
         const products = await Product.find({projectId}, {__v: 0});
 

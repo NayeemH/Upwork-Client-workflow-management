@@ -9,16 +9,23 @@ const User = require('../../models/user');
 
 router.post('/', fileFetch.single('image'), async (req, res, next) => {
     try {
-        const {userId} = req.user;
+        const {userId, userType} = req.user;
         const {projectId, name, steps} = req.body;
         const {buffer, mimetype} = req.file;
 
+        // Check if this user is manager or admin
+        if(!((userType === 'manager') || (userType === 'admin'))) throw Error('You are not authorized. Only admin and manager can use this');
 
         const project = await Project.findOne({_id: projectId});
 
         if(!project) throw Error('Project not found');
 
-        // TODO: Check for valid user
+        // Check for valid user
+        const checkUser = project.projectUser.find((user) => user.userId.toString() === userId);
+
+        if(!(project.adminId.toString() === userId || checkUser)) throw Error("Can not access this project");
+
+
 
         // Save the image        
         const images = await saveImage(buffer, mimetype);
