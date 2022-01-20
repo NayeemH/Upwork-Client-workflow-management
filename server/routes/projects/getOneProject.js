@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Project } = require('../../models/project');
 const Product = require('../../models/product');
 const User = require('../../models/user');
+const Step = require('../../models/step');
 
 
 
@@ -23,7 +24,29 @@ router.get('/:projectId', async (req, res, next) => {
 
         const products = await Product.find({projectId}, {__v: 0});
 
+        // Find all the steps
+        const querySteps = [];
 
+        products.forEach(product => {
+            querySteps.push(...product.steps);
+        });
+
+        const steps = await Step.find({_id: {$in: querySteps}}, {_id: 1, name: 1, viewed: 1});
+
+
+        const newProducts = products.map(product => {
+            const newSteps = product.steps.map(step => {
+                const newStep = steps.find(({_id}) => _id.toString() === step.toString());
+                const {_id, name, viewed} = newStep;
+
+                return {_id, name, viewed};
+            });
+            const {_id, name, image, currentStep, completed} = product;
+            return {_id, name, image, steps: newSteps, currentStep, completed};
+        });
+
+
+        // Find all User information
         const userIds = [];
 
         project.projectUser.forEach(({userId}) => {
@@ -37,7 +60,7 @@ router.get('/:projectId', async (req, res, next) => {
         );
 
 
-        project.productList = products;
+        project.productList = newProducts;
         project.projectUser = userData;
 
 
