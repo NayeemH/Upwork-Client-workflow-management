@@ -13,6 +13,13 @@ const feedbackSchema = Schema({
 
 // Project Users data
 const collectionSchema = Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+    },
     image: {
         type: String,
         required: true
@@ -42,6 +49,10 @@ const stepSchema = Schema({
     },
     collections: {
         type: [collectionSchema]
+    },
+    finalCollection: {
+        type: Schema.Types.ObjectId,
+        default: null
     }
 }, {timestamps: true});
 

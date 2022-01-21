@@ -9,7 +9,7 @@ router.get('/:stepId', async (req, res, next) => {
         const {userId, userType} = req.user;
         const {stepId} = req.params;
 
-        const step = await Step.findOne({_id: stepId}, {__v: 0});
+        const step = await Step.findOne({_id: stepId}, {__v: 0, finalCollection: 0});
 
         if(!step) throw Error('Step not found');
 
