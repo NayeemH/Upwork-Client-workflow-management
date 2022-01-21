@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {saveImage, fileFetch} = require('../../lib/imageConverter');
 const { Project } = require('../../models/project');
 const Step = require('../../models/step');
+const Collection = require('../../models/collection');
 
 
 
@@ -35,13 +36,17 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
         // Save the image        
         const images = await saveImage(buffer, mimetype);
 
+        const collection = new Collection({
+            projectId: project._id,
+            title,
+            description,
+            image: images[0],
+        });
+        const newCollection = await collection.save();
+
         await Step.findOneAndUpdate(
             {_id: stepId}, 
-            {$push: {collections: {
-                title,
-                description,
-                image: images[0],
-            }}}
+            {$push: {collections: newCollection._id}}
         );
         
 

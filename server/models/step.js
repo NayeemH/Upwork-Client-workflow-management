@@ -1,37 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const feedbackSchema = Schema({
-    message: {
-        type: String,
-        required: true
-    },
-    points: {
-        type: Array,
-    }
-})
 
-// Project Users data
-const collectionSchema = Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    description: {
-        type: String,
-    },
-    image: {
-        type: String,
-        required: true
-    },
-    feedbacks: {
-        type: [feedbackSchema]
-    },
-    createAt: {
-        type: Date,
-        default: Date.now()
-    }
-}); 
 
 const stepSchema = Schema({
     projectId: {
@@ -48,7 +18,7 @@ const stepSchema = Schema({
         default: true
     },
     collections: {
-        type: [collectionSchema]
+        type: Array
     },
     finalCollection: {
         type: Schema.Types.ObjectId,

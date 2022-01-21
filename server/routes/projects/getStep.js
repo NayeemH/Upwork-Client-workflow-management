@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Project } = require('../../models/project');
-const Product = require('../../models/product');
 const Step = require('../../models/step');
+const Collection = require('../../models/collection');
 
 
 router.get('/:stepId', async (req, res, next) => {
@@ -27,6 +27,9 @@ router.get('/:stepId', async (req, res, next) => {
             await Step.findOneAndUpdate({_id: stepId}, {$set: {viewed: true}});
         }
 
+        const collections = await Collection.find({_id: {$in: step.collections}}, {projectId: 0, __v: 0});
+
+        step.collections = collections;
 
         res.json(step);
     }
