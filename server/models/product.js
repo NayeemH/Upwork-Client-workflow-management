@@ -1,17 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Project Users data
-const stepSchema = Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    viewed: {
-        type: Boolean,
-        default: true
-    }
-}); 
 
 const productSchema = Schema({
     projectId: {
@@ -27,7 +16,8 @@ const productSchema = Schema({
         type: String
     },
     steps: {
-        type: [stepSchema]
+        type: Array,
+        default: []
     },
     currentStep: {
         type: Number,
