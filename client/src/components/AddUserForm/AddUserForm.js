@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   Form as BootstrapForm,
@@ -8,15 +8,22 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styles from "./AddUserForm.module.scss";
-import { useDispatch } from "react-redux";
-import { sendInvitation } from "../../actions/Project.action";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects, sendInvitation } from "../../actions/Project.action";
 
 const AddUserForm = () => {
   const dispatch = useDispatch();
+  const projects = useSelector((state) => state.project.projects);
 
   const onSubmitHandeler = async (values) => {
     dispatch(sendInvitation(values));
   };
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      dispatch(fetchProjects());
+    }
+  }, [fetchProjects]);
 
   let initVals = {
     email: "",
@@ -77,11 +84,12 @@ const AddUserForm = () => {
                     className={` form-control w-100`}
                   >
                     <option value="select">Select Project</option>
-
-                    <option value="61dec84308ff4c30e5c2bc99">Dream Home</option>
-                    <option value="61dec84308ff4c30e5c2bc99">
-                      Test Project
-                    </option>
+                    {projects !== [] &&
+                      projects.map((project) => (
+                        <option key={project.id} value={project.id}>
+                          {project.name}
+                        </option>
+                      ))}
                   </Field>
                 </InputGroup>
                 <InputGroup className="mb-3 d-flex flex-column">

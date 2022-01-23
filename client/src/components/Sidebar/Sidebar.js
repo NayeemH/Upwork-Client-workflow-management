@@ -60,10 +60,10 @@ const Sidebar = ({ logout }) => {
               <NavLink to="/dashboard" onClick={handeleClick}>
                 All Projects
               </NavLink>
-              <NavLink to="/dashboard" onClick={handeleClick}>
+              <NavLink to="/manager-list" onClick={handeleClick}>
                 Manager list
               </NavLink>
-              <NavLink to="/dashboard" onClick={handeleClick}>
+              <NavLink to="/client-list" onClick={handeleClick}>
                 Client list
               </NavLink>
             </div>

@@ -4,20 +4,28 @@ import { Card, Col } from "react-bootstrap";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { MdDownload } from "react-icons/md";
 import styles from "./GridItem.module.css";
+import { IMAGE_PATH } from "../../../constants/URL";
+import { useDispatch } from "react-redux";
+import {
+  addFavoriteProject,
+  removeFavoriteProject,
+} from "../../../actions/Project.action";
 
-const GridItem = ({ item }) => {
+const GridItem = ({ item, star = false }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <Col>
-      <Card
-        bg="dark"
-        text="light"
-        className={styles.crd}
-        onClick={() => navigate(`/project/${item.id}`)}
-      >
-        <Card.Img variant="top" src={item.image} />
+      <Card bg="dark" text="light" className={styles.crd}>
+        <Card.Img variant="top" src={`${IMAGE_PATH}small/${item.image}`} />
         <Card.Body>
-          <Card.Title>{item.name}</Card.Title>
+          <Card.Title
+            onClick={() => navigate(`/project/${item.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            {item.name}
+          </Card.Title>
           <Card.Text>{item.description}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-between align-items-center">
@@ -28,9 +36,15 @@ const GridItem = ({ item }) => {
             <span className={styles.notification}>{item.notification}</span>
           )}
           <div className="d-flex justify-content-between align-items-center">
-            <span className={styles.id}>ID: {item.id}</span>
+            <span className={styles.id}>ID: {item.id.substring(0, 6)}</span>
             <span className={styles.star}>
-              {item.stared ? <BsStarFill /> : <BsStar />}
+              {star ? (
+                <BsStarFill
+                  onClick={() => dispatch(removeFavoriteProject(item.id))}
+                />
+              ) : (
+                <BsStar onClick={() => dispatch(addFavoriteProject(item.id))} />
+              )}
             </span>
           </div>
         </Card.Footer>

@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthUser } from "../../../actions/Profile.action";
+import { IMAGE_PATH } from "../../../constants/URL";
 import styles from "./UserInfoTopbar.module.css";
 
 const UserInfoTopbar = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    dispatch(getAuthUser());
+  }, []);
   return (
     <div className={styles.wrapper}>
-      <span className={styles.name}>John Doe</span>
+      <span className={styles.name}>{user.username}</span>
       <img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+        src={`${IMAGE_PATH}small/${user?.image}`}
         className={styles.image}
-        alt=""
+        alt={`${user?.username}'s profile`}
       />
     </div>
   );

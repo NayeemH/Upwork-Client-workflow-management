@@ -1,15 +1,24 @@
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
+  ADD_FAVORITE_PROJECT,
+  FETCH_DASHBOARD_PROJECT,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
+  GET_STEP,
+  REMOVE_FAVORITE_PROJECT,
 } from "../constants/Type";
 
 const initialState = {
+  projects: [],
+  fav_projects: localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(",")
+    : [],
   selected_project: {},
   invited_project: {},
+  selected_step: {},
   err: "",
-  loading: false,
+  loading: true,
 };
 
 const projectReducer = (state = initialState, action) => {
@@ -36,6 +45,24 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         err: payload ? payload : "",
+        loading: false,
+      };
+    case FETCH_DASHBOARD_PROJECT:
+      return {
+        ...state,
+        loading: false,
+        projects: payload,
+      };
+    case ADD_FAVORITE_PROJECT:
+    case REMOVE_FAVORITE_PROJECT:
+      return {
+        ...state,
+        fav_projects: payload,
+      };
+    case GET_STEP:
+      return {
+        ...state,
+        selected_step: { ...payload },
         loading: false,
       };
     default:

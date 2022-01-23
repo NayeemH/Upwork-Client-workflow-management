@@ -4,26 +4,47 @@ import { BiPlus } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IMAGE_PATH } from "../../constants/URL";
 
 const ProjectDetails = ({ project }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <Button variant="primary" className={styles.button}>
+      <Button
+        variant="primary"
+        as={Link}
+        to={`/project/add-task/${id}`}
+        className={styles.button}
+      >
         Add New Task
       </Button>
       <div className={styles.steps_wrapper}>
-        {project.tasks &&
-          project.tasks.map((task, index) => (
+        {project.productList &&
+          project.productList.map((task, index) => (
             <div className={styles.task} key={index}>
               <div className="p-3">
-                <img src={task.image} className="img-fluid" alt="" />
+                <img
+                  src={`${IMAGE_PATH}small/${task.image}`}
+                  className="img-fluid"
+                  alt=""
+                />
               </div>
               <div className="d-flex flex-column  justify-content-center">
                 <h4 className={styles.name}>{task.name}</h4>
                 <Steps labelPlacement="vertical" current={task.currentStep - 1}>
                   {task.steps &&
                     task.steps.map((step, i) => (
-                      <Step title={step.name} key={i} />
+                      <Step
+                        {...(step.viewed === false && { status: "error" })}
+                        title={step.name}
+                        key={i}
+                        className={styles.stp}
+                        onClick={() =>
+                          navigate(`/project/${project._id}/step/${step._id}`)
+                        }
+                      />
                     ))}
                 </Steps>
               </div>

@@ -2,18 +2,22 @@ import { toast } from "react-toastify";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
+  ADD_FAVORITE_PROJECT,
+  FETCH_DASHBOARD_PROJECT,
+  FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
+  GET_STEP,
+  GET_STEP_ERROR,
   PROJECT_CREATE_ERROR,
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  TASK_ADDED,
+  TASK_ADDED_ERROR,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
-
-// TODO::: DUMMY DATA IMPORTS
-import data from "../stub/projects/dashboardProjectList.js";
 import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
 
@@ -26,12 +30,18 @@ export const getInvitedProjectDetails = (id) => (dispatch) => {
 };
 
 //GET PROJECT DETAILS WITH TASKS
-export const getProjectDetails = (id) => (dispatch) => {
-  const project = data.filter((project) => project.id === parseInt(id));
-  dispatch({
-    type: GET_PROJECT_DETAILS,
-    payload: project[0],
-  });
+export const getProjectDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/one/${id}`);
+    // console.log(res);
+
+    dispatch({
+      type: GET_PROJECT_DETAILS,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
 };
 
 // SEND INVITATION LINK TO PROJECT
@@ -55,7 +65,7 @@ export const sendInvitation = (values) => async (dispatch) => {
       JSON.stringify(formData),
       config
     );
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,
@@ -111,8 +121,8 @@ export const createAccount = (values) => async (dispatch) => {
 export const createProject = (values, file) => async (dispatch) => {
   let formData = new FormData();
 
-  formData.append("description", values.name);
-  formData.append("name", values.description);
+  formData.append("description", values.description);
+  formData.append("name", values.name);
   formData.append("image", file);
 
   const config = {
@@ -128,7 +138,7 @@ export const createProject = (values, file) => async (dispatch) => {
       formData,
       config
     );
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       dispatch({
         type: PROJECT_CREATE_SUCCESS,
@@ -145,4 +155,125 @@ export const createProject = (values, file) => async (dispatch) => {
   }
 
   return false;
+};
+
+// FETCH PROJECTS FOR DASHBOARD
+export const fetchProjects = () => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(`${BASE_URL}/api/project/all`, {}, config);
+    if (res.status === 200) {
+      dispatch({
+        type: FETCH_DASHBOARD_PROJECT,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: FETCH_DASHBOARD_PROJECT_ERROR,
+    });
+  }
+};
+
+// ADD FAVORITE PROJECT IN LOCAL STORAGE
+export const addFavoriteProject = (id) => (dispatch) => {
+  let saved = localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(" ")
+    : [];
+  if (!saved.includes(id)) {
+    saved.push(id);
+    localStorage.setItem("fav_projects", saved.join(" "));
+  }
+
+  dispatch({
+    type: ADD_FAVORITE_PROJECT,
+    payload: saved,
+  });
+};
+
+// REMOVE FAVORITE PROJECT IN LOCAL STORAGE
+export const removeFavoriteProject = (id) => (dispatch) => {
+  let saved = localStorage.getItem("fav_projects")
+    ? localStorage.getItem("fav_projects").split(" ")
+    : [];
+
+  localStorage.setItem(
+    "fav_projects",
+    saved.filter((item) => item !== id).join(" ")
+  );
+
+  dispatch({
+    type: ADD_FAVORITE_PROJECT,
+    payload: saved.filter((item) => item !== id).join(" "),
+  });
+};
+
+// CREATE PROJECT TASK
+export const createProjectTask =
+  (values, file, id, steps) => async (dispatch) => {
+    let formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("image", file);
+    formData.append("projectId", id);
+    steps.map((step, i) => {
+      formData.append(`steps[${i}]`, step.name);
+    });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    };
+    try {
+      // TODO ::: API CALL
+      const res = await axios.post(
+        `${BASE_URL}/api/project/addProduct`,
+        formData,
+        config
+      );
+      // console.log(res);
+      if (res.status === 200) {
+        dispatch({
+          type: TASK_ADDED,
+        });
+        dispatch(getProjectDetails(id));
+        toast.success("TASK created successfully");
+        return true;
+      }
+    } catch (err) {
+      dispatch({
+        type: TASK_ADDED_ERROR,
+      });
+      err.response.data.msg.map((msg) => toast.error(msg));
+      return false;
+    }
+
+    return false;
+  };
+
+//GET STEP DATA
+export const getStepDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/step/${id}`);
+    //console.log(res);
+
+    dispatch({
+      type: GET_STEP,
+      payload: res.data,
+    });
+    console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_STEP_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
 };
