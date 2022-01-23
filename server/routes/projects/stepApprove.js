@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const {saveImage, fileFetch} = require('../../lib/imageConverter');
 const { Project } = require('../../models/project');
 const Step = require('../../models/step');
 const Collection = require('../../models/collection');
@@ -7,11 +6,9 @@ const Collection = require('../../models/collection');
 
 
 
-router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
+router.post('/:stepId', async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
-        const {title, description} = req.body;
-        const {buffer, mimetype} = req.file;
         const {stepId} = req.params;
 
         const step = await Step.findOne({_id: stepId}, {__v: 0});
@@ -24,7 +21,7 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
 
 
         // Check if this user is manager or admin
-        if(!((userType === 'manager') || (userType === 'admin' || userType === 'developer'))) throw Error('You are not authorized. Only admin and manager can use this');
+        if(!((userType === 'manager') || (userType === 'admin' || userType === 'client'))) throw Error('You are not authorized. Only admin and manager can use this');
 
 
         // Check for valid user
@@ -32,30 +29,20 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
 
         if(!(project.adminId.toString() === userId || checkUser)) throw Error("Can not access this project");
 
-        // Check if this step is approved
-        if(step.finalImage) throw Error('This step is already approved');
+        const lastCollectionId = step.collections[step.collections.length - 1];
+
+        const collection = await Collection.findOne({_id: lastCollectionId});
 
         
-        // Save the image        
-        const images = await saveImage(buffer, mimetype);
-
-        const collection = new Collection({
-            projectId: project._id,
-            title,
-            description,
-            image: images[0],
-        });
-        const newCollection = await collection.save();
-
         await Step.findOneAndUpdate(
             {_id: stepId}, 
-            {$push: {collections: newCollection._id}}
+            {$set: {finalImage: collection.image}}
         );
         
 
         res.json({
             success: true,
-            msg: 'Collection is added'
+            msg: 'Step is approved'
         });
     }
     catch(err) {

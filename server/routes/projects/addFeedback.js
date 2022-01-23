@@ -21,7 +21,7 @@ router.post('/:collectionId', async (req, res, next) => {
 
 
         // Check if this user is manager or admin
-        if(!((userType === 'client') || (userType === 'admin'))) throw Error('You are not authorized. Only admin and manager can use this');
+        if(!((userType === 'client') || (userType === 'admin' || userType === 'developer'))) throw Error('You are not authorized. Only admin and manager can use this');
 
 
         // Check for valid user

@@ -18,14 +18,6 @@ const productSchema = Schema({
     steps: {
         type: Array,
         default: []
-    },
-    currentStep: {
-        type: Number,
-        default: 0
-    },
-    completed: {
-        type: Boolean,
-        default: false
     }
 }, {timestamps: true});
 

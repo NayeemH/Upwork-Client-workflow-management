@@ -20,8 +20,8 @@ const stepSchema = Schema({
     collections: {
         type: Array
     },
-    finalCollection: {
-        type: Schema.Types.ObjectId,
+    finalImage: {
+        type: String,
         default: null
     }
 }, {timestamps: true});
