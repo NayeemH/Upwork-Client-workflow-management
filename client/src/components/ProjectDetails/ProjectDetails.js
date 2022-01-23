@@ -4,11 +4,12 @@ import { BiPlus } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IMAGE_PATH } from "../../constants/URL";
 
 const ProjectDetails = ({ project }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
       <Button
@@ -35,7 +36,15 @@ const ProjectDetails = ({ project }) => {
                 <Steps labelPlacement="vertical" current={task.currentStep - 1}>
                   {task.steps &&
                     task.steps.map((step, i) => (
-                      <Step title={step.name} key={i} />
+                      <Step
+                        {...(step.viewed === false && { status: "error" })}
+                        title={step.name}
+                        key={i}
+                        className={styles.stp}
+                        onClick={() =>
+                          navigate(`/project/${project._id}/step/${step._id}`)
+                        }
+                      />
                     ))}
                 </Steps>
               </div>

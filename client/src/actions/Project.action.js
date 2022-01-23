@@ -7,6 +7,8 @@ import {
   FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
+  GET_STEP,
+  GET_STEP_ERROR,
   PROJECT_CREATE_ERROR,
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
@@ -16,9 +18,6 @@ import {
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import axios from "axios";
-
-// TODO::: DUMMY DATA IMPORTS
-import data from "../stub/projects/dashboardProjectList.js";
 import invited from "../stub/projects/projectDetails";
 import { getRefreshToken } from "./Dashboard.action";
 
@@ -34,7 +33,7 @@ export const getInvitedProjectDetails = (id) => (dispatch) => {
 export const getProjectDetails = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`${BASE_URL}/api/project/one/${id}`);
-    console.log(res);
+    // console.log(res);
 
     dispatch({
       type: GET_PROJECT_DETAILS,
@@ -66,7 +65,7 @@ export const sendInvitation = (values) => async (dispatch) => {
       JSON.stringify(formData),
       config
     );
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       dispatch({
         type: PROJECT_INVITATION_SUCCESS,
@@ -139,7 +138,7 @@ export const createProject = (values, file) => async (dispatch) => {
       formData,
       config
     );
-    console.log(res);
+    // console.log(res);
     if (res.status === 200) {
       dispatch({
         type: PROJECT_CREATE_SUCCESS,
@@ -240,7 +239,7 @@ export const createProjectTask =
         formData,
         config
       );
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         dispatch({
           type: TASK_ADDED,
@@ -259,3 +258,22 @@ export const createProjectTask =
 
     return false;
   };
+
+//GET STEP DATA
+export const getStepDetails = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/step/${id}`);
+    //console.log(res);
+
+    dispatch({
+      type: GET_STEP,
+      payload: res.data,
+    });
+    console.log(res);
+  } catch (err) {
+    dispatch({
+      type: GET_STEP_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};

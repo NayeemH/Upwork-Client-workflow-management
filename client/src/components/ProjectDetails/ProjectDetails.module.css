@@ -57,3 +57,7 @@
 .plus {
   padding-right: 5px;
 }
+
+.stp:hover {
+  cursor: pointer;
+}

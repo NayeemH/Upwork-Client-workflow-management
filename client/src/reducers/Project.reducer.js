@@ -5,6 +5,7 @@ import {
   FETCH_DASHBOARD_PROJECT,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
+  GET_STEP,
   REMOVE_FAVORITE_PROJECT,
 } from "../constants/Type";
 
@@ -15,6 +16,7 @@ const initialState = {
     : [],
   selected_project: {},
   invited_project: {},
+  selected_step: {},
   err: "",
   loading: true,
 };
@@ -57,7 +59,12 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         fav_projects: payload,
       };
-
+    case GET_STEP:
+      return {
+        ...state,
+        selected_step: { ...payload },
+        loading: false,
+      };
     default:
       return state;
   }
