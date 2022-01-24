@@ -2,6 +2,8 @@ import { toast } from "react-toastify";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
+  ADD_COLLECTION_ERROR,
+  ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
@@ -276,4 +278,45 @@ export const getStepDetails = (id) => async (dispatch) => {
     });
     err.response.data.msg.map((msg) => toast.error(msg));
   }
+};
+
+// UPLOAD PROJECT STEP
+export const uploadStep = (values, file, id) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("title", values.title);
+  formData.append("description", values.description);
+  formData.append("image", file);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/collection/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ADD_COLLECTION_SUCCESS,
+      });
+      dispatch(getProjectDetails(id));
+      toast.success("Image uploaded successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: ADD_COLLECTION_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
 };

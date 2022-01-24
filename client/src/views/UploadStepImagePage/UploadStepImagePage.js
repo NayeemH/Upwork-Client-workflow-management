@@ -1,22 +1,17 @@
 import React from "react";
+import { Breadcrumb } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { Breadcrumb, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import StepDetails from "../../components/StepDetails/StepDetails";
 import Topbar from "../../components/Topbar/Topbar";
-import styles from "./StepDetailsPage.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import UploadStepForm from "../../components/UploadStepForm/UploadStepForm";
+import styles from "./UploadStepImagePage.module.css";
 
-const StepDetailsPage = () => {
+const UploadStepImagePage = () => {
   const selectedStep = useSelector((state) => state.project.selected_step);
   const selectedProject = useSelector(
     (state) => state.project.selected_project
   );
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/project/${selectedProject._id}/step/${selectedStep._id}/upload`);
-  };
   return (
     <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
@@ -39,15 +34,9 @@ const StepDetailsPage = () => {
           {selectedStep.name}
         </Breadcrumb.Item>
       </Breadcrumb>
-      <div className="text-end pr-5">
-        <Button onClick={handleClick} className={styles.btn}>
-          Upload Task Image
-        </Button>
-      </div>
-
-      <StepDetails />
+      <UploadStepForm />
     </div>
   );
 };
 
-export default StepDetailsPage;
+export default UploadStepImagePage;
