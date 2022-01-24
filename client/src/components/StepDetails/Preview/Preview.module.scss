@@ -1,3 +1,21 @@
 .img {
   width: 100%;
 }
+
+.nav {
+  color: var(--primary) !important;
+  font-size: 18px;
+  margin-right: 50px;
+}
+
+.nav_right {
+  color: var(--primary) !important;
+  font-size: 18px;
+  margin-left: 50px;
+}
+
+.nav:hover,
+.nav_right:hover {
+  cursor: pointer;
+  color: var(--primary-hover) !important;
+}

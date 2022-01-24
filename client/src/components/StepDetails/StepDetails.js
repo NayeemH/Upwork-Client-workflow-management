@@ -7,13 +7,16 @@ import Overview from "./Overview/Overview";
 import Preview from "./Preview/Preview";
 import styles from "./StepDetails.module.scss";
 
-const StepDetails = ({ step, getStepDetails, loading }) => {
+const StepDetails = ({
+  step,
+  getStepDetails,
+  loading,
+  selectedCollectionIndex,
+}) => {
   const { stepId } = useParams();
-  const [selectedCollection, setSelectedCollection] = useState(
-    step.collections[step.collections.length - 1]
-  );
+
   useEffect(() => {
-    if (step === {} || !stepId || stepId !== step._id) {
+    if (step === {} || stepId !== step._id) {
       // LOAD STEP DATA
       getStepDetails(stepId);
     }
@@ -30,8 +33,16 @@ const StepDetails = ({ step, getStepDetails, loading }) => {
         </div>
       ) : (
         <Row>
-          <Preview preview={selectedCollection.image} />
-          <Overview collection={selectedCollection} />
+          {selectedCollectionIndex >= 0 && (
+            <Preview
+              data={step.collections[selectedCollectionIndex]}
+              length={step.collections.length}
+              index={selectedCollectionIndex}
+            />
+          )}
+          {selectedCollectionIndex >= 0 && (
+            <Overview collection={step.collections[selectedCollectionIndex]} />
+          )}
         </Row>
       )}
     </div>
@@ -40,6 +51,7 @@ const StepDetails = ({ step, getStepDetails, loading }) => {
 
 const mapStateToProps = (state) => ({
   step: state.project.selected_step,
+  selectedCollectionIndex: state.project.selected_collection,
   loading: state.project.loading,
 });
 

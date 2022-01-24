@@ -5,6 +5,8 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  COLLECTION_NEXT,
+  COLLECTION_PREV,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
@@ -276,7 +278,9 @@ export const getStepDetails = (id) => async (dispatch) => {
     dispatch({
       type: GET_STEP_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    if (err.response.data.msg) {
+      err.response.data.msg.map((msg) => toast.error(msg));
+    }
   }
 };
 
@@ -319,4 +323,16 @@ export const uploadStep = (values, file, id) => async (dispatch) => {
   }
 
   return false;
+};
+
+export const selectedCollectionChange = (next) => (dispatch) => {
+  if (next === true) {
+    dispatch({
+      type: COLLECTION_NEXT,
+    });
+  } else {
+    dispatch({
+      type: COLLECTION_PREV,
+    });
+  }
 };
