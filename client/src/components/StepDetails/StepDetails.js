@@ -41,7 +41,10 @@ const StepDetails = ({
             />
           )}
           {selectedCollectionIndex >= 0 && (
-            <Overview collection={step.collections[selectedCollectionIndex]} />
+            <Overview
+              collection={step.collections[selectedCollectionIndex]}
+              final={step.collections.length - 1 === selectedCollectionIndex}
+            />
           )}
         </Row>
       )}

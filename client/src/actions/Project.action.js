@@ -17,6 +17,8 @@ import {
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  STEP_APPROVED,
+  STEP_APPROVE_ERROR,
   TASK_ADDED,
   TASK_ADDED_ERROR,
 } from "../constants/Type";
@@ -335,4 +337,37 @@ export const selectedCollectionChange = (next) => (dispatch) => {
       type: COLLECTION_PREV,
     });
   }
+};
+
+// APPROVE STEP
+export const approveStep = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/stepApprove/${id}`,
+      {},
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: STEP_APPROVED,
+    });
+    dispatch(getProjectDetails(id));
+    toast.success("Step Approved successfully");
+    return true;
+  } catch (err) {
+    dispatch({
+      type: STEP_APPROVE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
 };
