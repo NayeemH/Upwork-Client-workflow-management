@@ -3,6 +3,7 @@ import {
   ACCOUNT_CREATE_SUCCESS,
   ADD_COLLECTION_ERROR,
   ADD_FAVORITE_PROJECT,
+  COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
   FETCH_DASHBOARD_PROJECT,
@@ -87,6 +88,11 @@ const projectReducer = (state = initialState, action) => {
           state.selected_collection > 0
             ? state.selected_collection - 1
             : state.selected_collection,
+      };
+    case COLLECTION_INDEX:
+      return {
+        ...state,
+        selected_collection: payload,
       };
     case ADD_COLLECTION_ERROR:
     case GET_STEP_ERROR:

@@ -38,6 +38,7 @@ const StepDetails = ({
               data={step.collections[selectedCollectionIndex]}
               length={step.collections.length}
               index={selectedCollectionIndex}
+              collections={step.collections}
             />
           )}
           {selectedCollectionIndex >= 0 && (
@@ -46,6 +47,7 @@ const StepDetails = ({
               final={step.collections.length - 1 === selectedCollectionIndex}
             />
           )}
+          {step.collections.length === 0 && <Overview />}
         </Row>
       )}
     </div>

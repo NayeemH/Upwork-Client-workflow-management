@@ -2,6 +2,11 @@
   width: 100%;
 }
 
+.img_wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .nav {
   color: var(--primary) !important;
   font-size: 18px;
@@ -18,4 +23,42 @@
 .nav_right:hover {
   cursor: pointer;
   color: var(--primary-hover) !important;
+}
+
+.icon {
+  color: var(--light) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.icon:hover {
+  color: var(--primary) !important;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.history_wrapper {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  background: var(--dark-bg);
+  color: var(--light);
+  border-radius: 5px !important;
+}
+
+.item {
+  border-bottom: 1px solid var(--dark);
+  padding: 8px 20px !important;
+}
+
+.item:hover {
+  background: var(--primary);
+  cursor: pointer;
+}
+
+.item:last-child {
+  border-bottom: none !important;
 }

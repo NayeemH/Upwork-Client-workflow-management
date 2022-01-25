@@ -5,6 +5,7 @@ import {
   ADD_COLLECTION_ERROR,
   ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
   FETCH_DASHBOARD_PROJECT,
@@ -337,6 +338,13 @@ export const selectedCollectionChange = (next) => (dispatch) => {
       type: COLLECTION_PREV,
     });
   }
+};
+
+export const selectIndex = (index) => (dispatch) => {
+  dispatch({
+    type: COLLECTION_INDEX,
+    payload: index,
+  });
 };
 
 // APPROVE STEP

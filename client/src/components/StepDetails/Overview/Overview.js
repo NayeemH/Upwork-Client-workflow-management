@@ -22,20 +22,24 @@ const Overview = ({
       <Button onClick={handleClick} className={styles.btn}>
         Upload Task Image
       </Button>
-      <h5>{collection.title}</h5>
-      <p className={styles.desc}>{collection.description}</p>
-      {final && (
-        <div className="d-flex justify-content-between align-items-center">
-          <Button
-            onClick={() => approveStep(selectedStep._id)}
-            className={styles.btn}
-          >
-            Approve
-          </Button>
-          <Button onClick={handleClick} className={styles.btn_feedback}>
-            Feedback
-          </Button>
-        </div>
+      {collection && (
+        <>
+          <h5>{collection.title}</h5>
+          <p className={styles.desc}>{collection.description}</p>
+          {final && (
+            <div className="d-flex justify-content-between align-items-center">
+              <Button
+                onClick={() => approveStep(selectedStep._id)}
+                className={styles.btn}
+              >
+                Approve
+              </Button>
+              <Button onClick={handleClick} className={styles.btn_feedback}>
+                Feedback
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </Col>
   );
