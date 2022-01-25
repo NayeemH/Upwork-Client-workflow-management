@@ -28,12 +28,14 @@ const Overview = ({
           <p className={styles.desc}>{collection.description}</p>
           {final && (
             <div className="d-flex justify-content-between align-items-center">
-              <Button
-                onClick={() => approveStep(selectedStep._id)}
-                className={styles.btn}
-              >
-                Approve
-              </Button>
+              {selectedStep.finalImage === null && (
+                <Button
+                  onClick={() => approveStep(selectedStep._id)}
+                  className={styles.btn}
+                >
+                  Approve
+                </Button>
+              )}
               <Button onClick={handleClick} className={styles.btn_feedback}>
                 Feedback
               </Button>
@@ -44,6 +46,7 @@ const Overview = ({
     </Col>
   );
 };
+
 const mapStateToProps = (state) => ({
   selectedStep: state.project.selected_step,
   selectedProject: state.project.selected_project,

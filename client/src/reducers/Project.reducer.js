@@ -1,3 +1,4 @@
+import { Step } from "rc-steps";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
@@ -35,6 +36,9 @@ const projectReducer = (state = initialState, action) => {
       return {
         ...state,
         selected_project: { ...payload },
+        projects: state.projects.map((item) =>
+          item.id === payload._id ? { ...payload, id: payload._id } : item
+        ),
         loading: false,
       };
     case GET_INVITED_PROJECT_DETAILS:

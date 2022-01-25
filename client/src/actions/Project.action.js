@@ -288,7 +288,7 @@ export const getStepDetails = (id) => async (dispatch) => {
 };
 
 // UPLOAD PROJECT STEP
-export const uploadStep = (values, file, id) => async (dispatch) => {
+export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
   let formData = new FormData();
 
   formData.append("title", values.title);
@@ -313,7 +313,7 @@ export const uploadStep = (values, file, id) => async (dispatch) => {
       dispatch({
         type: ADD_COLLECTION_SUCCESS,
       });
-      dispatch(getProjectDetails(id));
+      dispatch(getProjectDetails(projectId));
       toast.success("Image uploaded successfully");
       return true;
     }

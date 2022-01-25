@@ -11,6 +11,7 @@ import {
 } from "../../../actions/Project.action";
 import { IoMdDownload } from "react-icons/io";
 import { saveAs } from "file-saver";
+import Moment from "react-moment";
 
 const Preview = ({ data, length, index, collections }) => {
   const dispatch = useDispatch();
@@ -73,7 +74,10 @@ const Preview = ({ data, length, index, collections }) => {
                   className={`py-1 ${styles.item}`}
                   onClick={() => selectFunc(i)}
                 >
-                  {item.title}
+                  <span className="d-block">{item.title}</span>
+                  <span className={styles.date}>
+                    <Moment format="DD-MM-YYYY">{item.createAt}</Moment>
+                  </span>
                 </div>
               ))}
             </div>

@@ -27,12 +27,10 @@ const UploadStepForm = ({ uploadStep }) => {
   const onSubmitHandeler = async (values) => {
     if (selectedFile) {
       setIsLoading(true);
-      let check = await uploadStep(values, selectedFile, stepId);
-      if (check) {
+      let check = await uploadStep(values, selectedFile, stepId, projectId);
+      if (check === true) {
         setIsLoading(false);
-        setTimeout(() => {
-          navigate(`/project/${projectId}/step/${stepId}`);
-        }, 1000);
+        navigate(`/project/${projectId}`);
       }
       setIsLoading(false);
     } else {
