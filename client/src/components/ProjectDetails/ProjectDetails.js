@@ -1,15 +1,28 @@
 import React from "react";
 import Steps, { Step } from "rc-steps";
-import { BiPlus } from "react-icons/bi";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IMAGE_PATH } from "../../constants/URL";
+import { AiOutlineCheck } from "react-icons/ai";
 
 const ProjectDetails = ({ project }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const currentStepHandeler = (product) => {
+    let current = 0;
+    console.log(product.steps);
+    product.steps.map((item, i) => {
+      if (item.finalImage !== null) {
+        if (current <= i) {
+          current = i + 1;
+        }
+      }
+    });
+
+    return current;
+  };
   return (
     <div className={styles.wrapper}>
       <Button
@@ -33,7 +46,11 @@ const ProjectDetails = ({ project }) => {
               </div>
               <div className="d-flex flex-column  justify-content-center">
                 <h4 className={styles.name}>{task.name}</h4>
-                <Steps labelPlacement="vertical" current={task.currentStep - 1}>
+                <Steps
+                  labelPlacement="vertical"
+                  current={currentStepHandeler(task)}
+                  icons={{ finish: <AiOutlineCheck color="#fff" /> }}
+                >
                   {task.steps &&
                     task.steps.map((step, i) => (
                       <Step

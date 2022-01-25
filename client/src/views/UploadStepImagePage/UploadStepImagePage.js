@@ -1,13 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Breadcrumb } from "react-bootstrap";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import StepDetails from "../../components/StepDetails/StepDetails";
-import Topbar from "../../components/Topbar/Topbar";
-import styles from "./StepDetailsPage.module.css";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Topbar from "../../components/Topbar/Topbar";
+import UploadStepForm from "../../components/UploadStepForm/UploadStepForm";
+import styles from "./UploadStepImagePage.module.css";
 
-const StepDetailsPage = () => {
+const UploadStepImagePage = () => {
   const selectedStep = useSelector((state) => state.project.selected_step);
   const selectedProject = useSelector(
     (state) => state.project.selected_project
@@ -34,9 +34,9 @@ const StepDetailsPage = () => {
           {selectedStep.name}
         </Breadcrumb.Item>
       </Breadcrumb>
-      <StepDetails />
+      <UploadStepForm />
     </div>
   );
 };
 
-export default StepDetailsPage;
+export default UploadStepImagePage;

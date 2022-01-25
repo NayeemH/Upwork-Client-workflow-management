@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const productSchema = Schema({
+
+const stepSchema = Schema({
     projectId: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -12,21 +13,22 @@ const productSchema = Schema({
         type: String,
         required: true,
     },
-    image: {
-        type: String
+    viewed: {
+        type: Boolean,
+        default: true
     },
-    steps: {
-        type: Array,
-        default: []
+    collections: {
+        type: Array
+    },
+    finalImage: {
+        type: String,
+        default: null
     }
 }, {timestamps: true});
 
 
 
+const Step = mongoose.model('step', stepSchema);
 
 
-
-
-const Product = mongoose.model('products', productSchema);
-
-module.exports = Product;
+module.exports = Step;

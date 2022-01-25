@@ -2,7 +2,12 @@ import { toast } from "react-toastify";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
+  ADD_COLLECTION_ERROR,
+  ADD_COLLECTION_SUCCESS,
   ADD_FAVORITE_PROJECT,
+  COLLECTION_INDEX,
+  COLLECTION_NEXT,
+  COLLECTION_PREV,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
@@ -13,6 +18,8 @@ import {
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  STEP_APPROVED,
+  STEP_APPROVE_ERROR,
   TASK_ADDED,
   TASK_ADDED_ERROR,
 } from "../constants/Type";
@@ -274,6 +281,101 @@ export const getStepDetails = (id) => async (dispatch) => {
     dispatch({
       type: GET_STEP_ERROR,
     });
-    err.response.data.msg.map((msg) => toast.error(msg));
+    if (err.response.data.msg) {
+      err.response.data.msg.map((msg) => toast.error(msg));
+    }
   }
+};
+
+// UPLOAD PROJECT STEP
+export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("title", values.title);
+  formData.append("description", values.description);
+  formData.append("image", file);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/collection/${id}`,
+      formData,
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ADD_COLLECTION_SUCCESS,
+      });
+      dispatch(getProjectDetails(projectId));
+      toast.success("Image uploaded successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: ADD_COLLECTION_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
+};
+
+export const selectedCollectionChange = (next) => (dispatch) => {
+  if (next === true) {
+    dispatch({
+      type: COLLECTION_NEXT,
+    });
+  } else {
+    dispatch({
+      type: COLLECTION_PREV,
+    });
+  }
+};
+
+export const selectIndex = (index) => (dispatch) => {
+  dispatch({
+    type: COLLECTION_INDEX,
+    payload: index,
+  });
+};
+
+// APPROVE STEP
+export const approveStep = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/stepApprove/${id}`,
+      {},
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: STEP_APPROVED,
+    });
+    dispatch(getProjectDetails(id));
+    toast.success("Step Approved successfully");
+    return true;
+  } catch (err) {
+    dispatch({
+      type: STEP_APPROVE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
 };

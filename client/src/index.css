@@ -34,9 +34,6 @@ select.form-select option:hover {
 }
 
 /* STEPS STYLES */
-.rc-steps-item-process .rc-steps-item-icon {
-  background: var(--primary) !important;
-}
 
 .rc-steps-item-process .rc-steps-item-icon {
   border-color: var(--primary) !important;
@@ -46,8 +43,9 @@ select.form-select option:hover {
   color: var(--light) !important;
 }
 
-.rc-steps-item-finish .rc-steps-item-icon > .rc-steps-icon {
+.rc-steps-item-finish .rc-steps-item-icon {
   color: var(--primary) !important;
+  background: var(--dark) !important;
 }
 
 .rc-steps-item-process .rc-steps-item-icon .rc-steps-icon {
@@ -57,10 +55,6 @@ select.form-select option:hover {
 
 .rc-steps-item-finish .rc-steps-item-icon {
   background: var(--primary) !important;
-  color: var(--light) !important;
-}
-
-.rc-steps-item-finish .rc-steps-item-icon .rc-steps-icon {
   color: var(--light) !important;
 }
 

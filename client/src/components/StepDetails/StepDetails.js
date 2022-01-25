@@ -1,18 +1,27 @@
-import React, { useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Row, Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getStepDetails } from "../../actions/Project.action";
+import Overview from "./Overview/Overview";
+import Preview from "./Preview/Preview";
 import styles from "./StepDetails.module.scss";
 
-const StepDetails = ({ step, getStepDetails, loading }) => {
+const StepDetails = ({
+  step,
+  getStepDetails,
+  loading,
+  selectedCollectionIndex,
+}) => {
   const { stepId } = useParams();
+
   useEffect(() => {
-    if (step === {} || !stepId || stepId !== step._id) {
+    if (step === {} || stepId !== step._id) {
       // LOAD STEP DATA
       getStepDetails(stepId);
     }
   }, [stepId]);
+
   return (
     <div className={styles.wrapper}>
       {(step === {} || step._id !== stepId) && loading === false ? (
@@ -23,7 +32,23 @@ const StepDetails = ({ step, getStepDetails, loading }) => {
           <Spinner animation="border" variant="light" />
         </div>
       ) : (
-        <h1>{step.name}</h1>
+        <Row>
+          {selectedCollectionIndex >= 0 && (
+            <Preview
+              data={step.collections[selectedCollectionIndex]}
+              length={step.collections.length}
+              index={selectedCollectionIndex}
+              collections={step.collections}
+            />
+          )}
+          {selectedCollectionIndex >= 0 && (
+            <Overview
+              collection={step.collections[selectedCollectionIndex]}
+              final={step.collections.length - 1 === selectedCollectionIndex}
+            />
+          )}
+          {step.collections.length === 0 && <Overview />}
+        </Row>
       )}
     </div>
   );
@@ -31,6 +56,7 @@ const StepDetails = ({ step, getStepDetails, loading }) => {
 
 const mapStateToProps = (state) => ({
   step: state.project.selected_step,
+  selectedCollectionIndex: state.project.selected_collection,
   loading: state.project.loading,
 });
 

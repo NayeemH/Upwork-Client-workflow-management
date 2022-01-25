@@ -23,6 +23,8 @@ import PasswordChangeSettings from "./views/PasswordChangeSettings/PasswordChang
 import ManagerListPage from "./views/ManagerListPage/ManagerListPage";
 import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ClientListPage from "./views/ClientListPage/ClientListPage";
+import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
+import ViewerPage from "./views/ViewerPage/ViewerPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,11 +56,16 @@ function App() {
                 element={<StepDetailsPage />}
               />
               <Route path="project/add-task/:id" element={<AddTaskPage />} />
+              <Route
+                path="project/:projectId/step/:stepId/upload"
+                element={<UploadStepImagePage />}
+              />
               <Route path="add-user" element={<AddUserPage />} />
               <Route path="add-project" element={<AddProjectPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="manager-list" element={<ManagerListPage />} />
               <Route path="client-list" element={<ClientListPage />} />
+              <Route path="viewer" element={<ViewerPage />} />
               <Route
                 path="settings/password"
                 element={<PasswordChangeSettings />}
