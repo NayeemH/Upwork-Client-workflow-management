@@ -3,7 +3,10 @@ import { Button, Card, Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./ProjectInvitation.module.css";
-import { getInvitedProjectDetails } from "../../actions/Project.action";
+import {
+  createAccountExisting,
+  getInvitedProjectDetails,
+} from "../../actions/Project.action";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 const queryString = require("query-string");
@@ -24,6 +27,7 @@ const ProjectInvitation = () => {
     toast.success("Project Accepted");
     //REDUX TODO
     if (status === "user") {
+      dispatch(createAccountExisting(id));
       navigate(`/?email=${parsed.email}`);
     } else {
       navigate(`/create-account/${id}?email=${parsed.email}`);

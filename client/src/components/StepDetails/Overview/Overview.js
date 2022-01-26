@@ -55,7 +55,9 @@ const Overview = ({
             <div className="d-flex justify-content-between align-items-center">
               {selectedStep.finalImage === null && currentStepHandeler() && (
                 <Button
-                  onClick={() => approveStep(selectedStep._id)}
+                  onClick={() =>
+                    approveStep(selectedStep._id, selectedStep.projectId)
+                  }
                   className={styles.btn}
                 >
                   Approve

@@ -1,0 +1,39 @@
+.wrapper {
+  padding: 0 2.5rem;
+}
+
+.steps_wrapper {
+  color: var(--light) !important;
+  background: var(--dark-bg) !important;
+  border: 1px solid var(--dark-bg);
+  padding: 0 0 !important;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.steps_wrapper:hover {
+  border: 1px solid var(--primary);
+}
+
+.img {
+  max-height: 120px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: normal;
+  padding-left: 15px;
+}
+
+.btn {
+  background: var(--primary) !important;
+  color: var(--light) !important;
+  border: none !important;
+  margin-right: 8px;
+}
+
+.btn:hover {
+  background: var(--primary-hover) !important;
+  color: var(--light) !important;
+}

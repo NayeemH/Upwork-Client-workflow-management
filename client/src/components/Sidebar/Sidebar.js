@@ -57,17 +57,17 @@ const Sidebar = ({ logout }) => {
               </h3>
             </div>
             <div className={styles.link_group}>
-              <NavLink to="/dashboard" onClick={handeleClick}>
-                All Projects
-              </NavLink>
               <NavLink to="/manager-list" onClick={handeleClick}>
                 Manager list
+              </NavLink>
+              <NavLink to="/developer-list" onClick={handeleClick}>
+                Developer List
               </NavLink>
               <NavLink to="/client-list" onClick={handeleClick}>
                 Client list
               </NavLink>
             </div>
-            <div className={styles.link_base}>
+            {/* <div className={styles.link_base}>
               <div></div>
               <h3>
                 <span>
@@ -86,7 +86,7 @@ const Sidebar = ({ logout }) => {
               <NavLink to="/admin/add-house" onClick={handeleClick}>
                 Downloads
               </NavLink>
-            </div>
+            </div> */}
 
             <div className={styles.link_base}>
               <div></div>

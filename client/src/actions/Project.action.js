@@ -14,6 +14,8 @@ import {
   GET_PROJECT_DETAILS,
   GET_STEP,
   GET_STEP_ERROR,
+  PROJECT_ACCEPT_EXISTING_USER,
+  PROJECT_ACCEPT_EXISTING_USER_ERROR,
   PROJECT_CREATE_ERROR,
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
@@ -118,6 +120,37 @@ export const createAccount = (values) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: ACCOUNT_CREATE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+// CREATE ACCOUNT EXISTING USER
+export const createAccountExisting = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/activate/loginMail/user/${id}`,
+      {},
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: PROJECT_ACCEPT_EXISTING_USER,
+      });
+      toast.success("Project accepted successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ACCEPT_EXISTING_USER_ERROR,
     });
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
@@ -348,7 +381,7 @@ export const selectIndex = (index) => (dispatch) => {
 };
 
 // APPROVE STEP
-export const approveStep = (id) => async (dispatch) => {
+export const approveStep = (id, projectId) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -366,7 +399,7 @@ export const approveStep = (id) => async (dispatch) => {
     dispatch({
       type: STEP_APPROVED,
     });
-    dispatch(getProjectDetails(id));
+    dispatch(getProjectDetails(projectId));
     toast.success("Step Approved successfully");
     return true;
   } catch (err) {

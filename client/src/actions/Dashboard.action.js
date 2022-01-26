@@ -3,11 +3,14 @@ import { toast } from "react-toastify";
 import {
   ACCESS_TOKEN_ERROR,
   ACCESS_TOKEN_SUCCESS,
+  CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
+  DEVELOPER_LIST_LOAD,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  MANAGER_LIST_LOAD,
   PASSWORD_CHANGE,
   PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
@@ -212,5 +215,50 @@ export const passwordChange = (password, email, id) => async (dispatch) => {
     });
     error.response.data.msg.map((msg) => toast.error(msg));
     return false;
+  }
+};
+
+//GET CLIENT LIST ACTION
+export const getClientList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/one`);
+    // console.log(res);
+
+    dispatch({
+      type: CLIENT_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET DEVELOPER LIST ACTION
+export const getDevList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/one`);
+    // console.log(res);
+
+    dispatch({
+      type: DEVELOPER_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET MANAGER LIST ACTION
+export const getManagerList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/project/one/`);
+    // console.log(res);
+
+    dispatch({
+      type: MANAGER_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
   }
 };

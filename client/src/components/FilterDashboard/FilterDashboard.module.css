@@ -45,4 +45,7 @@
     height: auto !important;
     padding: 0 0.5rem !important;
   }
+  .list__icon {
+    display: none;
+  }
 }

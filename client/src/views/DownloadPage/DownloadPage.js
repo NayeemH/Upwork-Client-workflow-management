@@ -3,12 +3,12 @@ import { Breadcrumb, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
-import ProjectDetails from "../../components/ProjectDetails/ProjectDetails";
+import DownloadList from "../../components/DownloadList/DownloadList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
-import styles from "./ProjectDetailsPage.module.css";
+import styles from "./DownloadPage.module.css";
 
-const ProjectDetailsPage = () => {
+const DownloadPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const project = useSelector((state) => state.project.selected_project);
@@ -40,10 +40,10 @@ const ProjectDetailsPage = () => {
           <Spinner animation="border" variant="light" />
         </div>
       ) : (
-        <ProjectDetails project={project} />
+        <DownloadList project={project} />
       )}
     </div>
   );
 };
 
-export default ProjectDetailsPage;
+export default DownloadPage;

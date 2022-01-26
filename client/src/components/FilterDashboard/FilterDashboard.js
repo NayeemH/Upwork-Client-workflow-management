@@ -46,9 +46,9 @@ const FilterDashboard = () => {
               <BsGridFill />
             </Button>
             <Button
-              className={
+              className={`${
                 listStyleGrid === "list" ? styles.active_btn : styles.btn
-              }
+              } ${styles.list__icon}`}
               onClick={() => dispatch(toogleDashboardProjectStyle("list"))}
             >
               <FaThList />

@@ -25,6 +25,8 @@ import StepDetailsPage from "./views/StepDetailsPage/StepDetailsPage";
 import ClientListPage from "./views/ClientListPage/ClientListPage";
 import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage";
 import ViewerPage from "./views/ViewerPage/ViewerPage";
+import DownloadPage from "./views/DownloadPage/DownloadPage";
+import DeveloperListPage from "./views/DeveloperListPage/DeveloperListPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +53,7 @@ function App() {
             <>
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="project/:id" element={<ProjectDetailsPage />} />
+              <Route path="project/:id/download" element={<DownloadPage />} />
               <Route
                 path="project/:projectId/step/:stepId"
                 element={<StepDetailsPage />}
@@ -64,6 +67,7 @@ function App() {
               <Route path="add-project" element={<AddProjectPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="manager-list" element={<ManagerListPage />} />
+              <Route path="developer-list" element={<DeveloperListPage />} />
               <Route path="client-list" element={<ClientListPage />} />
               <Route path="viewer" element={<ViewerPage />} />
               <Route

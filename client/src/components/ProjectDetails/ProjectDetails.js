@@ -13,7 +13,6 @@ const ProjectDetails = ({ project }) => {
   let width = window.innerWidth;
   const currentStepHandeler = (product) => {
     let current = 0;
-    console.log(product.steps);
     product.steps.map((item, i) => {
       if (item.finalImage !== null) {
         if (current <= i) {
@@ -23,6 +22,13 @@ const ProjectDetails = ({ project }) => {
     });
 
     return current;
+  };
+
+  const downloadButtonHandeler = (task) => {
+    if (task.steps.filter((step) => step.finalImage === null).length > 0) {
+      return false;
+    }
+    return true;
   };
   return (
     <div className={styles.wrapper}>
@@ -38,7 +44,7 @@ const ProjectDetails = ({ project }) => {
         <Button
           variant="primary"
           as={Link}
-          to={`/project/add-task/${id}`}
+          to={`/project/${id}/download`}
           className={styles.button}
         >
           Download
@@ -80,7 +86,7 @@ const ProjectDetails = ({ project }) => {
               <div className="d-flex justify-content-center align-items-center">
                 <Button
                   variant="outline-primary"
-                  disabled={!task.compeleted}
+                  disabled={!downloadButtonHandeler(task)}
                   className={styles.btn}
                 >
                   Download Resource
