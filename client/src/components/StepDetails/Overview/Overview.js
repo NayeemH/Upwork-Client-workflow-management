@@ -11,8 +11,33 @@ const Overview = ({
   selectedProject,
   approveStep,
   final,
+  index,
 }) => {
   const navigate = useNavigate();
+
+  const currentStepHandeler = () => {
+    let current = 0;
+
+    let tempProduct = selectedProject.productList.filter(
+      (p) => p.steps.filter((s) => s._id === selectedStep._id).length > 0
+    )[0];
+    console.log(tempProduct);
+    tempProduct.steps.map((item, i) => {
+      if (item.finalImage !== null) {
+        if (current <= i) {
+          current = i + 1;
+        }
+      }
+    });
+    let finalIndex = 0;
+    tempProduct.steps.map((item, i) => {
+      if (item._id === selectedStep._id) {
+        finalIndex = i;
+      }
+    });
+    console.log("CUR" + current + " INDEX" + finalIndex);
+    return current === finalIndex;
+  };
 
   const handleClick = () => {
     navigate(`/project/${selectedProject._id}/step/${selectedStep._id}/upload`);
@@ -28,7 +53,7 @@ const Overview = ({
           <p className={styles.desc}>{collection.description}</p>
           {final && (
             <div className="d-flex justify-content-between align-items-center">
-              {selectedStep.finalImage === null && (
+              {selectedStep.finalImage === null && currentStepHandeler() && (
                 <Button
                   onClick={() => approveStep(selectedStep._id)}
                   className={styles.btn}

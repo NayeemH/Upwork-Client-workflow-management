@@ -8,9 +8,21 @@
   font-size: 18px;
 }
 
-.image {
+.img_wrapper {
   height: 35px;
   width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   margin-left: 8px;
+  overflow: hidden;
+}
+
+.image {
+  height: 100%;
+}
+
+.image:hover {
+  cursor: pointer;
 }

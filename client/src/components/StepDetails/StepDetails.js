@@ -13,13 +13,10 @@ const StepDetails = ({
   loading,
   selectedCollectionIndex,
 }) => {
-  const { stepId } = useParams();
+  const { stepId, projectId } = useParams();
 
   useEffect(() => {
-    if (step === {} || stepId !== step._id) {
-      // LOAD STEP DATA
-      getStepDetails(stepId);
-    }
+    getStepDetails(stepId);
   }, [stepId]);
 
   return (
@@ -39,12 +36,14 @@ const StepDetails = ({
               length={step.collections.length}
               index={selectedCollectionIndex}
               collections={step.collections}
+              projectId={projectId}
             />
           )}
           {selectedCollectionIndex >= 0 && (
             <Overview
               collection={step.collections[selectedCollectionIndex]}
               final={step.collections.length - 1 === selectedCollectionIndex}
+              index={selectedCollectionIndex}
             />
           )}
           {step.collections.length === 0 && <Overview />}

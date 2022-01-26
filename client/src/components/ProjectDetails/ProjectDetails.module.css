@@ -49,6 +49,10 @@
   font-size: 1rem !important;
 }
 
+.button:first-child {
+  margin-right: 8px !important;
+}
+
 .button:hover {
   background: var(--primary-hover) !important;
   transition: 0.3s all ease-in-out;
@@ -60,4 +64,14 @@
 
 .stp:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0 10px !important;
+  }
+  .task {
+    grid-template-columns: 1fr !important;
+    padding-bottom: 30px;
+  }
 }

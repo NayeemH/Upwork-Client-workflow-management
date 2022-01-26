@@ -8,7 +8,7 @@ const ManagerList = () => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <Table striped bordered hover variant="dark">
+      <Table striped bordered hover responsive variant="dark">
         <thead>
           <tr>
             <th>ID</th>

@@ -12,9 +12,11 @@ import {
 import { IoMdDownload } from "react-icons/io";
 import { saveAs } from "file-saver";
 import Moment from "react-moment";
+import { useNavigate } from "react-router-dom";
 
-const Preview = ({ data, length, index, collections }) => {
+const Preview = ({ data, length, index, collections, projectId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showHistory, setShowHistory] = useState(false);
   const downloadImage = () => {
     saveAs(
@@ -34,7 +36,12 @@ const Preview = ({ data, length, index, collections }) => {
   return (
     <Col md={9}>
       <div className="d-flex  align-items-center  pb-3">
-        <AiOutlineLeft size={20} />
+        <span className={styles.back_icon}>
+          <AiOutlineLeft
+            size={20}
+            onClick={() => navigate(`/project/${projectId}`)}
+          />
+        </span>
         <div className="d-flex justify-content-center align-items-center w-100">
           <span className={styles.nav}>
             <AiOutlineLeft

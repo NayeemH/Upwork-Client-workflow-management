@@ -145,7 +145,7 @@ const AddProjectForm = ({ createProject }) => {
                       <></>
                     )}
                   </div>
-                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex  justify-content-between align-items-center">
                     {" "}
                     <label htmlFor="image" className="d-block">
                       Image
@@ -170,7 +170,7 @@ const AddProjectForm = ({ createProject }) => {
                   </div>
                 </div>
 
-                <div className="pt-3">
+                <div className="pt-3 d-flex flex-column flex-md-row justify-content-start align-items-center">
                   <Button
                     variant="primary"
                     type="submit"
@@ -183,7 +183,7 @@ const AddProjectForm = ({ createProject }) => {
                     variant="primary"
                     type="reset"
                     onClick={resetlHandeler}
-                    className={`${styles.btn_cancel} mx-3`}
+                    className={`${styles.btn_cancel} mx-md-3 mx-0`}
                   >
                     Cancel
                   </Button>

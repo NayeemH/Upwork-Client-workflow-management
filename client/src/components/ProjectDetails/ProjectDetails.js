@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Steps, { Step } from "rc-steps";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
@@ -10,6 +10,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 const ProjectDetails = ({ project }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  let width = window.innerWidth;
   const currentStepHandeler = (product) => {
     let current = 0;
     console.log(product.steps);
@@ -25,14 +26,24 @@ const ProjectDetails = ({ project }) => {
   };
   return (
     <div className={styles.wrapper}>
-      <Button
-        variant="primary"
-        as={Link}
-        to={`/project/add-task/${id}`}
-        className={styles.button}
-      >
-        Add New Task
-      </Button>
+      <div className="d-flex">
+        <Button
+          variant="primary"
+          as={Link}
+          to={`/project/add-task/${id}`}
+          className={styles.button}
+        >
+          Add New Task
+        </Button>
+        <Button
+          variant="primary"
+          as={Link}
+          to={`/project/add-task/${id}`}
+          className={styles.button}
+        >
+          Download
+        </Button>
+      </div>
       <div className={styles.steps_wrapper}>
         {project.productList &&
           project.productList.map((task, index) => (
@@ -50,6 +61,7 @@ const ProjectDetails = ({ project }) => {
                   labelPlacement="vertical"
                   current={currentStepHandeler(task)}
                   icons={{ finish: <AiOutlineCheck color="#fff" /> }}
+                  direction={width > 768 ? "horizontal" : "vertical"}
                 >
                   {task.steps &&
                     task.steps.map((step, i) => (
