@@ -17,6 +17,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "adm-zip": "^0.5.9",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
