@@ -15,6 +15,10 @@ const StepDetails = ({
 }) => {
   const { stepId, projectId } = useParams();
 
+  const [feedbackActive, setFeedbackActive] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [points, setPoints] = useState(null);
+
   useEffect(() => {
     getStepDetails(stepId);
   }, [stepId]);
@@ -37,6 +41,12 @@ const StepDetails = ({
               index={selectedCollectionIndex}
               collections={step.collections}
               projectId={projectId}
+              feedbackActive={feedbackActive}
+              setFeedbackActive={setFeedbackActive}
+              showForm={showForm}
+              setShowForm={setShowForm}
+              points={points}
+              setPoints={setPoints}
             />
           )}
           {selectedCollectionIndex >= 0 && (
@@ -44,6 +54,12 @@ const StepDetails = ({
               collection={step.collections[selectedCollectionIndex]}
               final={step.collections.length - 1 === selectedCollectionIndex}
               index={selectedCollectionIndex}
+              feedbackActive={feedbackActive}
+              setFeedbackActive={setFeedbackActive}
+              showForm={showForm}
+              setShowForm={setShowForm}
+              points={points}
+              setPoints={setPoints}
             />
           )}
           {step.collections.length === 0 && <Overview />}

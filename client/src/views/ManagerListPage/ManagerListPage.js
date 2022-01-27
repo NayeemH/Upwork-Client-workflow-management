@@ -3,7 +3,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getManagerList } from "../../actions/Dashboard.action";
-import ManagerList from "../../components/ManagerList/ManagerList";
+import ClientList from "../../components/ClientList/ClientList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./ManagerListPage.module.css";
@@ -27,7 +27,7 @@ const ManagerListPage = () => {
           Manager List
         </Breadcrumb.Item>
       </Breadcrumb>
-      <ManagerList />
+      <ClientList />
     </div>
   );
 };

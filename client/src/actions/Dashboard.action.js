@@ -221,7 +221,7 @@ export const passwordChange = (password, email, id) => async (dispatch) => {
 //GET CLIENT LIST ACTION
 export const getClientList = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/project/one`);
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/client`);
     // console.log(res);
 
     dispatch({
@@ -236,7 +236,7 @@ export const getClientList = () => async (dispatch) => {
 //GET DEVELOPER LIST ACTION
 export const getDevList = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/project/one`);
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/developer`);
     // console.log(res);
 
     dispatch({
@@ -251,7 +251,7 @@ export const getDevList = () => async (dispatch) => {
 //GET MANAGER LIST ACTION
 export const getManagerList = () => async (dispatch) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/project/one/`);
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/manager`);
     // console.log(res);
 
     dispatch({

@@ -309,7 +309,7 @@ export const getStepDetails = (id) => async (dispatch) => {
       type: GET_STEP,
       payload: res.data,
     });
-    console.log(res);
+    //console.log(res);
   } catch (err) {
     dispatch({
       type: GET_STEP_ERROR,
@@ -388,6 +388,39 @@ export const approveStep = (id, projectId) => async (dispatch) => {
     },
     withCredentials: true,
   };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/stepApprove/${id}`,
+      {},
+      config
+    );
+    // console.log(res);
+    dispatch({
+      type: STEP_APPROVED,
+    });
+    dispatch(getProjectDetails(projectId));
+    toast.success("Step Approved successfully");
+    return true;
+  } catch (err) {
+    dispatch({
+      type: STEP_APPROVE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+// POST REVIEW
+export const postReview = (points, id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+
+  const formData = {};
   try {
     // TODO ::: API CALL
     const res = await axios.post(

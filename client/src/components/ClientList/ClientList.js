@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Badge, Spinner, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { IMAGE_PATH } from "../../constants/URL";
 import styles from "./ClientList.module.scss";
 
 const ClientList = () => {
@@ -30,13 +31,15 @@ const ClientList = () => {
           ) : (
             list.map((item, i) => (
               <tr>
-                <td>{item.id}</td>
+                <td>{i + 1}</td>
                 <td>
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className={styles.img}
-                  />
+                  <div className={styles.img_wrapper}>
+                    <img
+                      src={`${IMAGE_PATH}small/${item.image}`}
+                      alt={item.name}
+                      className={styles.img}
+                    />
+                  </div>
                 </td>
                 <td>{item.name}</td>
                 <td>{item.email}</td>
@@ -46,7 +49,7 @@ const ClientList = () => {
                       key={j}
                       bg="info"
                       className={styles.badge}
-                      onClick={() => navigate(`/project/${projItem.id}`)}
+                      onClick={() => navigate(`/project/${projItem._id}`)}
                     >
                       {projItem.name}
                     </Badge>
