@@ -103,12 +103,14 @@ const Overview = ({
                     </span>
                   </div>
                 ) : (
-                  <Button
-                    onClick={handleClickFeedback}
-                    className={styles.btn_feedback}
-                  >
-                    Feedback
-                  </Button>
+                  selectedStep.finalImage === null && (
+                    <Button
+                      onClick={handleClickFeedback}
+                      className={styles.btn_feedback}
+                    >
+                      Feedback
+                    </Button>
+                  )
                 )}
               </div>
               {points !== null &&

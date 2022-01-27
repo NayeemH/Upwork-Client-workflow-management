@@ -1,7 +1,10 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { IMAGE_PATH } from "../../constants/URL";
+import { toast } from "react-toastify";
+import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import styles from "./DownloadList.module.scss";
+const FileDownload = require("js-file-download");
 
 const DownloadList = ({ project }) => {
   const [selected, setSelected] = useState([]);
@@ -18,6 +21,9 @@ const DownloadList = ({ project }) => {
   const onSelectCheck1 = (id) => {
     if (selected.includes(id)) {
       setSelected(selected.filter((item) => item !== id));
+      if (all1) {
+        setAll1(false);
+      }
     } else {
       setSelected([...selected, id]);
     }
@@ -25,6 +31,9 @@ const DownloadList = ({ project }) => {
   const onSelectCheck2 = (id) => {
     if (selected.includes(id)) {
       setSelected2(selected2.filter((item) => item !== id));
+      if (all2) {
+        setAll2(false);
+      }
     } else {
       setSelected2([...selected2, id]);
     }
@@ -55,7 +64,34 @@ const DownloadList = ({ project }) => {
     setAll2(!all2);
   };
 
-  console.log(selected);
+  const downloadHandeler1 = async () => {
+    if (all1 === true) {
+      try {
+        let res = await axios.get(
+          `${BASE_URL}/api/download/project/${project._id}`,
+          { responseType: "blob" }
+        );
+        if (res.data) {
+          FileDownload(res.data, `${project.name}.zip`);
+          toast.success("Downloading...");
+        }
+      } catch (err) {
+        err.response.data.msg.map((msg) => toast.error(msg));
+      }
+    } else {
+      try {
+        let res = await axios.get(
+          `${BASE_URL}/api/download/project/${project._id}`,
+          { responseType: "blob" }
+        );
+        if (res.data) {
+          FileDownload(res.data, `${project.name}.zip`);
+        }
+      } catch (err) {
+        err.response.data.msg.map((msg) => toast.error(msg));
+      }
+    }
+  };
   return (
     <Form>
       <div className={styles.wrapper}>
@@ -67,6 +103,7 @@ const DownloadList = ({ project }) => {
                 variant="primary"
                 disabled={selected.length <= 0}
                 className={styles.btn}
+                onClick={() => downloadHandeler1()}
               >
                 Download
               </Button>

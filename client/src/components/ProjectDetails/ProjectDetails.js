@@ -4,8 +4,11 @@ import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { IMAGE_PATH } from "../../constants/URL";
+import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import { AiOutlineCheck } from "react-icons/ai";
+import axios from "axios";
+import { toast } from "react-toastify";
+const FileDownload = require("js-file-download");
 
 const ProjectDetails = ({ project }) => {
   const { id } = useParams();
@@ -29,6 +32,20 @@ const ProjectDetails = ({ project }) => {
       return false;
     }
     return true;
+  };
+
+  const downloadProduct = async (task) => {
+    try {
+      let res = await axios.get(
+        `${BASE_URL}/api/download/product/${task._id}`,
+        { responseType: "blob" }
+      );
+      if (res.data) {
+        FileDownload(res.data, `${task.name}.zip`);
+      }
+    } catch (err) {
+      err.response.data.msg.map((msg) => toast.error(msg));
+    }
   };
   return (
     <div className={styles.wrapper}>
@@ -87,6 +104,7 @@ const ProjectDetails = ({ project }) => {
                 <Button
                   variant="outline-primary"
                   disabled={!downloadButtonHandeler(task)}
+                  onClick={() => downloadProduct(task)}
                   className={styles.btn}
                 >
                   Download Resource

@@ -328,6 +328,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
 
   formData.append("title", values.title);
   formData.append("description", values.description);
+  formData.append("imageType", values.type);
   formData.append("image", file);
 
   const config = {
