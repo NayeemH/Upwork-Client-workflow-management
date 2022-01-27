@@ -5,7 +5,7 @@ const Product = require('../../models/product');
 const Step = require('../../models/step');
 const imageZip = require('../../lib/imageZip');
 
-router.get('/:projectId', async (req, res, next) => {
+router.post('/:projectId', async (req, res, next) => {
     try {
         const {userId} = req.user;
         const {projectId} = req.params;
