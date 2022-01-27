@@ -20,6 +20,8 @@ import {
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  REVIEW_ADDED,
+  REVIEW_ADDED_ERROR,
   STEP_APPROVED,
   STEP_APPROVE_ERROR,
   TASK_ADDED,
@@ -412,7 +414,7 @@ export const approveStep = (id, projectId) => async (dispatch) => {
 };
 
 // POST REVIEW
-export const postReview = (points, id) => async (dispatch) => {
+export const postReview = (points, msg, stepId) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -420,28 +422,29 @@ export const postReview = (points, id) => async (dispatch) => {
     withCredentials: true,
   };
 
-  const formData = {};
+  const formData = {
+    message: msg,
+    points: [points.x, points.y],
+  };
   try {
     // TODO ::: API CALL
     const res = await axios.post(
-      `${BASE_URL}/api/project/stepApprove/${id}`,
-      {},
+      `${BASE_URL}/api/project/feedback/${points.stepId}`,
+      JSON.stringify(formData),
       config
     );
-    // console.log(res);
+    //console.log(res);
     dispatch({
-      type: STEP_APPROVED,
+      type: REVIEW_ADDED,
     });
-    dispatch(getProjectDetails(projectId));
-    toast.success("Step Approved successfully");
+    dispatch(getStepDetails(stepId));
+    toast.success("Feedback added successfully");
     return true;
   } catch (err) {
     dispatch({
-      type: STEP_APPROVE_ERROR,
+      type: REVIEW_ADDED_ERROR,
     });
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
   }
-
-  return false;
 };

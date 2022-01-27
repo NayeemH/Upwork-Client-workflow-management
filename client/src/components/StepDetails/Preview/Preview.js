@@ -114,6 +114,19 @@ const Preview = ({
           </div>
         )}
 
+        {data.feedbacks.map((feedback) => (
+          <div
+            className={styles.point}
+            key={feedback._id}
+            style={{
+              left: `${feedback.points[0] - 1}%`,
+              top: `${feedback.points[1] - 1}%`,
+            }}
+          >
+            <BiHelpCircle />
+          </div>
+        ))}
+
         <div
           className={`d-flex justify-content-between align-items-center pt-2 ${styles.history_wrapper}`}
         >

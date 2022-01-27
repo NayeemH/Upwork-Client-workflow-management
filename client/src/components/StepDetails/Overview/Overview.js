@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { approveStep } from "../../../actions/Project.action";
+import { approveStep, postReview } from "../../../actions/Project.action";
 import styles from "./Overview.module.scss";
 
 const Overview = ({
@@ -18,9 +18,11 @@ const Overview = ({
   setShowForm,
   points,
   setPoints,
+  postReview,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [messageLoading, setMessageLoading] = useState(false);
 
   const currentStepHandeler = () => {
     let current = 0;
@@ -54,13 +56,15 @@ const Overview = ({
     setFeedbackActive(true);
   };
 
-  const formSubmitHandeler = (e) => {
+  const formSubmitHandeler = async (e) => {
+    setMessageLoading(true);
     e.preventDefault();
     console.log("X = ", points.x, "Y = ", points.y, "id", points.stepId);
-    setShowForm(false);
-    setFeedbackActive(false);
-    setMessage("");
-    setPoints(null);
+    let check = await postReview(points, message, selectedStep._id);
+    if (check === true) {
+      cancelHandeler();
+    }
+    setMessageLoading(false);
   };
 
   const cancelHandeler = () => {
@@ -83,28 +87,28 @@ const Overview = ({
             <>
               <div className="d-flex justify-content-between align-items-center">
                 {selectedStep.finalImage === null && currentStepHandeler() && (
-                  <>
-                    <Button
-                      onClick={() =>
-                        approveStep(selectedStep._id, selectedStep.projectId)
-                      }
-                      className={styles.btn}
-                    >
-                      Approve
-                    </Button>
-                    {feedbackActive ? (
-                      <span className="fw-bold">
-                        Click on the image to add feedback
-                      </span>
-                    ) : (
-                      <Button
-                        onClick={handleClickFeedback}
-                        className={styles.btn_feedback}
-                      >
-                        Feedback
-                      </Button>
-                    )}
-                  </>
+                  <Button
+                    onClick={() =>
+                      approveStep(selectedStep._id, selectedStep.projectId)
+                    }
+                    className={styles.btn}
+                  >
+                    Approve
+                  </Button>
+                )}
+                {selectedStep.finalImage === null && feedbackActive ? (
+                  <div className="">
+                    <span className="fw-bold d-block">
+                      Click on the image to add feedback
+                    </span>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={handleClickFeedback}
+                    className={styles.btn_feedback}
+                  >
+                    Feedback
+                  </Button>
                 )}
               </div>
               {points !== null &&
@@ -122,22 +126,41 @@ const Overview = ({
                           onChange={(e) => setMessage(e.target.value)}
                         />
                         <div className="pt-2">
-                          <Button type="submit" className={styles.btn}>
-                            Submit
-                          </Button>
                           <Button
-                            type="reset"
-                            onClick={cancelHandeler}
-                            className={styles.btn_feedback}
+                            type="submit"
+                            disabled={messageLoading}
+                            className={styles.btn}
                           >
-                            Cancel
+                            {messageLoading ? "Loading..." : "Submit"}
                           </Button>
+                          {!messageLoading && (
+                            <Button
+                              type="reset"
+                              onClick={cancelHandeler}
+                              className={styles.btn_feedback}
+                            >
+                              Cancel
+                            </Button>
+                          )}
                         </div>
                       </Form.Group>
                     </Form>
                   </div>
                 )}
             </>
+          )}
+
+          {collection.feedbacks.length > 0 && (
+            <div className={styles.fb_wrapper}>
+              <h5>Feedbacks</h5>
+              {collection.feedbacks.map((item, i) => (
+                <div className={styles.feedback}>
+                  <span className={styles.fb_text}>
+                    {i + 1}. {item.message}
+                  </span>
+                </div>
+              ))}
+            </div>
           )}
         </>
       )}
@@ -150,4 +173,4 @@ const mapStateToProps = (state) => ({
   selectedProject: state.project.selected_project,
 });
 
-export default connect(mapStateToProps, { approveStep })(Overview);
+export default connect(mapStateToProps, { approveStep, postReview })(Overview);
