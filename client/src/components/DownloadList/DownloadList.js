@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import styles from "./DownloadList.module.scss";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 const FileDownload = require("js-file-download");
 
 const DownloadList = ({ project }) => {
@@ -11,6 +12,7 @@ const DownloadList = ({ project }) => {
   const [selected2, setSelected2] = useState([]);
   const [all1, setAll1] = useState(false);
   const [all2, setAll2] = useState(false);
+  const [download, setDownload] = useState("");
   const checkValidity = (task) => {
     if (task.steps.filter((step) => step.finalImage === null).length > 0) {
       return false;
@@ -29,7 +31,7 @@ const DownloadList = ({ project }) => {
     }
   };
   const onSelectCheck2 = (id) => {
-    if (selected.includes(id)) {
+    if (selected2.includes(id)) {
       setSelected2(selected2.filter((item) => item !== id));
       if (all2) {
         setAll2(false);
@@ -80,9 +82,20 @@ const DownloadList = ({ project }) => {
       }
     } else {
       try {
-        let res = await axios.get(
-          `${BASE_URL}/api/download/project/${project._id}`,
-          { responseType: "blob" }
+        const formData = {
+          productList: selected,
+        };
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+          responseType: "blob",
+        };
+        let res = await axios.post(
+          `${BASE_URL}/api/download/select/${project._id}`,
+          JSON.stringify(formData),
+          config
         );
         if (res.data) {
           FileDownload(res.data, `${project.name}.zip`);
@@ -92,9 +105,61 @@ const DownloadList = ({ project }) => {
       }
     }
   };
+  const downloadHandeler2 = async () => {
+    try {
+      const formData = {
+        productList: selected2,
+      };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      };
+      let res = await axios.post(
+        `${BASE_URL}/api/download/link/${project._id}`,
+        JSON.stringify(formData),
+        config
+      );
+      if (res.data) {
+        setDownload(res.data.downloadLink);
+        toast.success("Link Generated Successfully");
+      }
+    } catch (err) {
+      err.response.data.msg.map((msg) => toast.error(msg));
+    }
+  };
   return (
     <Form>
       <div className={styles.wrapper}>
+        <Modal
+          backdrop="static"
+          show={download !== ""}
+          onHide={() => setDownload("")}
+        >
+          <Modal.Body className="bg-primary bordered text-light">
+            <h4>Download Link</h4>
+            <div className="py-3">
+              <input
+                type="text"
+                className="form-control"
+                disabled
+                value={download}
+              />
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <CopyToClipboard
+                text={download}
+                onCopy={() => toast.success("Link saved to clipboard")}
+              >
+                <Button className={styles.btn}>Copy Link</Button>
+              </CopyToClipboard>
+              <Button variant="dark" onClick={() => setDownload("")}>
+                Close
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
         <div className={styles.steps_wrapper}>
           <div className="d-flex justify-content-center align-items-center"></div>
           <Row>
@@ -111,6 +176,7 @@ const DownloadList = ({ project }) => {
                 variant="primary"
                 disabled={selected2.length <= 0}
                 className={styles.btn}
+                onClick={() => downloadHandeler2()}
               >
                 Genarate Download Link
               </Button>
