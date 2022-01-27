@@ -7,8 +7,8 @@ const Users = ({ item }) => {
   return (
     <div className={styles.users}>
       {item.projectUser.length > 0 &&
-        item.projectUser.map((user) => (
-          <div className={styles.wrapper}>
+        item.projectUser.map((user, i) => (
+          <div key={i} className={styles.wrapper}>
             <OverlayTrigger
               placement="right"
               delay={{ show: 250, hide: 400 }}

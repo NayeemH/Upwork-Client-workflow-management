@@ -10,12 +10,12 @@ import {
   toogleSidebarVisibility,
 } from "../../actions/Dashboard.action";
 import styles from "./Sidebar.module.scss";
-import { BsFillFolderFill } from "react-icons/bs";
 
 const Sidebar = ({ logout }) => {
   let { sidebar_visible } = useSelector((state) => state.dashboard);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const role = useSelector((state) => state.dashboard.role);
 
   const handeleClick = () => {
     dispatch(toogleSidebarVisibility(false));
@@ -47,26 +47,30 @@ const Sidebar = ({ logout }) => {
                 Dashboard
               </NavLink>
             </div>
-            <div className={styles.link_base}>
-              <div></div>
-              <h3>
-                <span>
-                  <AiFillHome />
-                </span>
-                Overview
-              </h3>
-            </div>
-            <div className={styles.link_group}>
-              <NavLink to="/manager-list" onClick={handeleClick}>
-                Manager list
-              </NavLink>
-              <NavLink to="/developer-list" onClick={handeleClick}>
-                Developer List
-              </NavLink>
-              <NavLink to="/client-list" onClick={handeleClick}>
-                Client list
-              </NavLink>
-            </div>
+            {role === "admin" && (
+              <>
+                <div className={styles.link_base}>
+                  <div></div>
+                  <h3>
+                    <span>
+                      <AiFillHome />
+                    </span>
+                    Overview
+                  </h3>
+                </div>
+                <div className={styles.link_group}>
+                  <NavLink to="/manager-list" onClick={handeleClick}>
+                    Manager list
+                  </NavLink>
+                  <NavLink to="/developer-list" onClick={handeleClick}>
+                    Developer List
+                  </NavLink>
+                  <NavLink to="/client-list" onClick={handeleClick}>
+                    Client list
+                  </NavLink>
+                </div>
+              </>
+            )}
             {/* <div className={styles.link_base}>
               <div></div>
               <h3>
@@ -88,24 +92,28 @@ const Sidebar = ({ logout }) => {
               </NavLink>
             </div> */}
 
-            <div className={styles.link_base}>
-              <div></div>
-              <NavLink to="/add-project" onClick={handeleClick}>
-                <span>
-                  <BiLayerPlus />
-                </span>
-                Add Project
-              </NavLink>
-            </div>
-            <div className={styles.link_base}>
-              <div></div>
-              <NavLink to="/add-user" onClick={handeleClick}>
-                <span>
-                  <FiUserPlus />
-                </span>
-                Add New User
-              </NavLink>
-            </div>
+            {role === "admin" && (
+              <>
+                <div className={styles.link_base}>
+                  <div></div>
+                  <NavLink to="/add-project" onClick={handeleClick}>
+                    <span>
+                      <BiLayerPlus />
+                    </span>
+                    Add Project
+                  </NavLink>
+                </div>
+                <div className={styles.link_base}>
+                  <div></div>
+                  <NavLink to="/add-user" onClick={handeleClick}>
+                    <span>
+                      <FiUserPlus />
+                    </span>
+                    Add New User
+                  </NavLink>
+                </div>
+              </>
+            )}
             <div className={styles.link_base}>
               <div></div>
               <NavLink to="/settings" onClick={handeleClick}>

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Col } from "react-bootstrap";
+import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "./Preview.module.scss";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
@@ -14,6 +14,7 @@ import { saveAs } from "file-saver";
 import Moment from "react-moment";
 import { useNavigate } from "react-router-dom";
 import { BiHelpCircle } from "react-icons/bi";
+import ReactPannellum from "react-pannellum";
 
 const Preview = ({
   data,
@@ -98,34 +99,64 @@ const Preview = ({
         </div>
       </div>
       <div className={styles.img_wrapper} ref={imgRef}>
-        <img
-          src={`${IMAGE_PATH}original/${data.image}`}
-          alt=""
-          onClick={(e) => imgClickHandeler(e)}
-          className={styles.img}
-        />
-
-        {points !== null && data._id === points.stepId && (
-          <div
-            className={styles.point}
-            style={{ left: `${points.x - 1}%`, top: `${points.y - 1}%` }}
-          >
-            <BiHelpCircle />
-          </div>
+        {data.imageType && data.imageType === "3d" ? (
+          <ReactPannellum
+            id="test"
+            sceneId="firstScene"
+            imageSource={`${IMAGE_PATH}original/${data.image}`}
+            config={{ autoLoad: true }}
+            style={{
+              width: "100%",
+              height: "90vh",
+            }}
+            onClick={(e) => console.log("AAAA", e)}
+          />
+        ) : (
+          <img
+            src={`${IMAGE_PATH}original/${data.image}`}
+            alt=""
+            onClick={(e) => imgClickHandeler(e)}
+            className={styles.img}
+          />
         )}
 
-        {data.feedbacks.map((feedback) => (
-          <div
-            className={styles.point}
-            key={feedback._id}
-            style={{
-              left: `${feedback.points[0] - 1}%`,
-              top: `${feedback.points[1] - 1}%`,
-            }}
-          >
-            <BiHelpCircle />
-          </div>
-        ))}
+        {data.imageType &&
+          data.imageType !== "3d" &&
+          points !== null &&
+          data._id === points.stepId && (
+            <div
+              className={styles.point}
+              style={{ left: `${points.x - 1}%`, top: `${points.y - 1}%` }}
+            >
+              <BiHelpCircle />
+            </div>
+          )}
+
+        {(!data.imageType || data.imageType !== "3d") &&
+          data.feedbacks.map((feedback, i) => (
+            <div
+              className={styles.point}
+              key={feedback._id}
+              style={{
+                left: `${feedback.points[0] - 1}%`,
+                top: `${feedback.points[1] - 1}%`,
+              }}
+            >
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={
+                  <Tooltip id={feedback._id}>
+                    {i + 1}. {feedback.message}
+                  </Tooltip>
+                }
+              >
+                <span>
+                  <BiHelpCircle id={feedback._id} />
+                </span>
+              </OverlayTrigger>
+            </div>
+          ))}
 
         <div
           className={`d-flex justify-content-between align-items-center pt-2 ${styles.history_wrapper}`}

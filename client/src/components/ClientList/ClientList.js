@@ -30,7 +30,7 @@ const ClientList = () => {
             </div>
           ) : (
             list.map((item, i) => (
-              <tr>
+              <tr key={i}>
                 <td>{i + 1}</td>
                 <td>
                   <div className={styles.img_wrapper}>

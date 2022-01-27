@@ -8,9 +8,11 @@ import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import { AiOutlineCheck } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 const FileDownload = require("js-file-download");
 
 const ProjectDetails = ({ project }) => {
+  const role = useSelector((state) => state.dashboard.role);
   const { id } = useParams();
   const navigate = useNavigate();
   let width = window.innerWidth;
@@ -50,14 +52,16 @@ const ProjectDetails = ({ project }) => {
   return (
     <div className={styles.wrapper}>
       <div className="d-flex">
-        <Button
-          variant="primary"
-          as={Link}
-          to={`/project/add-task/${id}`}
-          className={styles.button}
-        >
-          Add New Task
-        </Button>
+        {(role === "admin" || role === "manager" || role === "developer") && (
+          <Button
+            variant="primary"
+            as={Link}
+            to={`/project/add-task/${id}`}
+            className={styles.button}
+          >
+            Add New Task
+          </Button>
+        )}
         <Button
           variant="primary"
           as={Link}

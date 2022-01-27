@@ -16,15 +16,24 @@ import {
   REFRESH_TOKEN_GENARATED,
   RESET_LINK_SEND,
   RESET_LINK_SEND_ERROR,
+  SET_ROLE,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { useJwt } from "react-jwt";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
   dispatch({
     type: DASHBOARD_PROJECT_LIST_GRID,
+    payload: type,
+  });
+};
+// SET ROLE ACTION
+export const setRole = (type) => (dispatch) => {
+  dispatch({
+    type: SET_ROLE,
     payload: type,
   });
 };
@@ -80,6 +89,7 @@ export const login = (values) => async (dispatch) => {
           });
           //console.log(res.data);
           setAuthToken(refreshRes.data.accessToken);
+
           toast.success("Login successfully");
           return true;
         }
@@ -119,8 +129,8 @@ export const getRefreshToken = () => async (dispatch) => {
       type: ACCESS_TOKEN_SUCCESS,
       payload: refreshRes.data.accessToken,
     });
-    //console.log(res.data);
     setAuthToken(refreshRes.data.accessToken);
+
     return true;
     //}
   } catch (error) {

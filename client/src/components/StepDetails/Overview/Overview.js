@@ -19,6 +19,7 @@ const Overview = ({
   points,
   setPoints,
   postReview,
+  role,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -59,7 +60,7 @@ const Overview = ({
   const formSubmitHandeler = async (e) => {
     setMessageLoading(true);
     e.preventDefault();
-    console.log("X = ", points.x, "Y = ", points.y, "id", points.stepId);
+    //console.log("X = ", points.x, "Y = ", points.y, "id", points.stepId);
     let check = await postReview(points, message, selectedStep._id);
     if (check === true) {
       cancelHandeler();
@@ -74,11 +75,19 @@ const Overview = ({
     setFeedbackActive(false);
   };
 
+  const handle3D = () => {
+    setPoints({ x: 0, y: 0, stepId: collection._id });
+    setShowForm(true);
+  };
+
   return (
     <Col md={3} className={styles.wrapper}>
-      <Button onClick={handleClick} className={styles.btn}>
-        Upload Task Image
-      </Button>
+      {(role === "admin" || role === "manager" || role === "developer") &&
+        selectedStep.finalImage === null && (
+          <Button onClick={handleClick} className={styles.btn}>
+            Upload Task Image
+          </Button>
+        )}
       {collection && (
         <>
           <h5>{collection.title}</h5>
@@ -86,16 +95,18 @@ const Overview = ({
           {final && (
             <>
               <div className="d-flex justify-content-between align-items-center">
-                {selectedStep.finalImage === null && currentStepHandeler() && (
-                  <Button
-                    onClick={() =>
-                      approveStep(selectedStep._id, selectedStep.projectId)
-                    }
-                    className={styles.btn}
-                  >
-                    Approve
-                  </Button>
-                )}
+                {role === "client" &&
+                  selectedStep.finalImage === null &&
+                  currentStepHandeler() && (
+                    <Button
+                      onClick={() =>
+                        approveStep(selectedStep._id, selectedStep.projectId)
+                      }
+                      className={styles.btn}
+                    >
+                      Approve
+                    </Button>
+                  )}
                 {selectedStep.finalImage === null && feedbackActive ? (
                   <div className="">
                     <span className="fw-bold d-block">
@@ -105,7 +116,11 @@ const Overview = ({
                 ) : (
                   selectedStep.finalImage === null && (
                     <Button
-                      onClick={handleClickFeedback}
+                      onClick={() =>
+                        collection.imageType && collection.imageType === "3d"
+                          ? handle3D()
+                          : handleClickFeedback()
+                      }
                       className={styles.btn_feedback}
                     >
                       Feedback
@@ -156,7 +171,7 @@ const Overview = ({
             <div className={styles.fb_wrapper}>
               <h5>Feedbacks</h5>
               {collection.feedbacks.map((item, i) => (
-                <div className={styles.feedback}>
+                <div key={i} className={styles.feedback}>
                   <span className={styles.fb_text}>
                     {i + 1}. {item.message}
                   </span>
@@ -173,6 +188,7 @@ const Overview = ({
 const mapStateToProps = (state) => ({
   selectedStep: state.project.selected_step,
   selectedProject: state.project.selected_project,
+  role: state.dashboard.role,
 });
 
 export default connect(mapStateToProps, { approveStep, postReview })(Overview);

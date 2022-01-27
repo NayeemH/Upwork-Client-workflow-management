@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -14,8 +14,8 @@ import { ToastContainer } from "react-toastify";
 import PrivateOutlet from "./utils/PrivateOutlet";
 import AddProjectPage from "./views/AddProjectPage/AddProjectPage";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getRefreshToken } from "./actions/Dashboard.action";
+import { useDispatch, useSelector } from "react-redux";
+import { getRefreshToken, setRole } from "./actions/Dashboard.action";
 import PasswordChangePage from "./views/PasswordChangePage/PasswordChangePage";
 import SettingsPage from "./views/SettingsPage/SettingsPage";
 import AddTaskPage from "./views/AddTaskPage/AddTaskPage";
@@ -27,9 +27,17 @@ import UploadStepImagePage from "./views/UploadStepImagePage/UploadStepImagePage
 import ViewerPage from "./views/ViewerPage/ViewerPage";
 import DownloadPage from "./views/DownloadPage/DownloadPage";
 import DeveloperListPage from "./views/DeveloperListPage/DeveloperListPage";
+import { useJwt } from "react-jwt";
 
 function App() {
   const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const role = useSelector((state) => state.dashboard.role);
+  const { decodedToken } = useJwt(token);
+  if (decodedToken) {
+    dispatch(setRole(decodedToken.userType));
+  }
+
   useEffect(() => {
     dispatch(getRefreshToken());
   }, []);
@@ -58,17 +66,81 @@ function App() {
                 path="project/:projectId/step/:stepId"
                 element={<StepDetailsPage />}
               />
-              <Route path="project/add-task/:id" element={<AddTaskPage />} />
+              <Route
+                path="project/add-task/:id"
+                element={
+                  role === "admin" ||
+                  role === "manager" ||
+                  role === "developer" ? (
+                    <AddTaskPage />
+                  ) : (
+                    <Navigate to="/dashboard" />
+                  )
+                }
+              />
               <Route
                 path="project/:projectId/step/:stepId/upload"
-                element={<UploadStepImagePage />}
+                element={
+                  role !== "admin" ||
+                  role === "manager" ||
+                  role === "developer" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <UploadStepImagePage />
+                  )
+                }
               />
-              <Route path="add-user" element={<AddUserPage />} />
-              <Route path="add-project" element={<AddProjectPage />} />
+              <Route
+                path="add-user"
+                element={
+                  role !== "admin" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <AddUserPage />
+                  )
+                }
+              />
+              <Route
+                path="add-project"
+                element={
+                  role !== "admin" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <AddProjectPage />
+                  )
+                }
+              />
               <Route path="settings" element={<SettingsPage />} />
-              <Route path="manager-list" element={<ManagerListPage />} />
-              <Route path="developer-list" element={<DeveloperListPage />} />
-              <Route path="client-list" element={<ClientListPage />} />
+              <Route
+                path="manager-list"
+                element={
+                  role !== "admin" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <ManagerListPage />
+                  )
+                }
+              />
+              <Route
+                path="developer-list"
+                element={
+                  role !== "admin" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <DeveloperListPage />
+                  )
+                }
+              />
+              <Route
+                path="client-list"
+                element={
+                  role !== "admin" ? (
+                    <Navigate to="/dashboard" />
+                  ) : (
+                    <ClientListPage />
+                  )
+                }
+              />
               <Route path="viewer" element={<ViewerPage />} />
               <Route
                 path="settings/password"
