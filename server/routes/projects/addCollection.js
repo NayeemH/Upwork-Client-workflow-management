@@ -10,7 +10,7 @@ const Collection = require('../../models/collection');
 router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
-        const {title, description} = req.body;
+        const {title, description, imageType} = req.body;
         const {buffer, mimetype} = req.file;
         const {stepId} = req.params;
 
@@ -43,6 +43,7 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
             projectId: project._id,
             title,
             description,
+            imageType,
             image: images[0],
         });
         const newCollection = await collection.save();

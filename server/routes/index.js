@@ -8,6 +8,7 @@ const isAdmin = require('./authenticate/isAdmin');
 const activate = require('./activate');
 const project = require('./projects');
 const profile = require('./profile');
+const download = require('./download');
 
 // User Register and login function 
 router.use('/user', user);
@@ -23,5 +24,9 @@ router.use('/project',isAuth, project);
 
 // Profile Info
 router.use('/profile', isAuth, profile);
+
+// Profile Info
+router.use('/download', isAuth, download);
+
 
 module.exports = router;

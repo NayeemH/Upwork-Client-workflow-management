@@ -31,6 +31,9 @@ const collectionSchema = Schema({
     description: {
         type: String,
     },
+    imageType: {
+        type: String
+    },
     image: {
         type: String,
         required: true

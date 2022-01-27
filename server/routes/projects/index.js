@@ -8,6 +8,7 @@ const getStep = require('./getStep');
 const addCollection = require('./addCollection');
 const addFeedBack = require('./addFeedback');
 const stepApprove = require('./stepApprove');
+const downloadProductList = require('./downloadProductList');
 
 // Routes
 router.use('/all', all);
@@ -17,5 +18,6 @@ router.use('/step', getStep);
 router.use('/collection', addCollection);
 router.use('/feedback', addFeedBack);
 router.use('/stepApprove', stepApprove);
+router.use('/download', downloadProductList);
 
 module.exports = router;
