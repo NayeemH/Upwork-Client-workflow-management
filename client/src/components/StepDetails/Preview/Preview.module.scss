@@ -2,9 +2,14 @@
   width: 100%;
 }
 
+.viewer {
+  width: 100% !important;
+}
+
 .img_wrapper {
   width: 80%;
   margin: 0 auto;
+  position: relative;
 }
 
 .nav {
@@ -25,11 +30,13 @@
   color: var(--primary-hover) !important;
 }
 
+.back_icon,
 .icon {
   color: var(--light) !important;
   transition: 0.3s all ease-in-out;
 }
 
+.back_icon:hover,
 .icon:hover {
   color: var(--primary) !important;
   cursor: pointer;
@@ -65,4 +72,9 @@
 
 .date {
   color: var(--secondary-500);
+}
+
+.point {
+  position: absolute;
+  z-index: 9999;
 }

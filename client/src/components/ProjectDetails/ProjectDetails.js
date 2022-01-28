@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Steps, { Step } from "rc-steps";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
 import "rc-steps/assets/index.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { IMAGE_PATH } from "../../constants/URL";
+import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import { AiOutlineCheck } from "react-icons/ai";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+const FileDownload = require("js-file-download");
 
 const ProjectDetails = ({ project }) => {
+  const role = useSelector((state) => state.dashboard.role);
   const { id } = useParams();
   const navigate = useNavigate();
+  let width = window.innerWidth;
   const currentStepHandeler = (product) => {
     let current = 0;
-    console.log(product.steps);
     product.steps.map((item, i) => {
       if (item.finalImage !== null) {
         if (current <= i) {
@@ -23,16 +28,49 @@ const ProjectDetails = ({ project }) => {
 
     return current;
   };
+
+  const downloadButtonHandeler = (task) => {
+    if (task.steps.filter((step) => step.finalImage === null).length > 0) {
+      return false;
+    }
+    return true;
+  };
+
+  const downloadProduct = async (task) => {
+    try {
+      let res = await axios.get(
+        `${BASE_URL}/api/download/product/${task._id}`,
+        { responseType: "blob" }
+      );
+      if (res.data) {
+        FileDownload(res.data, `${task.name}.zip`);
+      }
+    } catch (err) {
+      err.response.data.msg.map((msg) => toast.error(msg));
+    }
+  };
   return (
     <div className={styles.wrapper}>
-      <Button
-        variant="primary"
-        as={Link}
-        to={`/project/add-task/${id}`}
-        className={styles.button}
-      >
-        Add New Task
-      </Button>
+      <div className="d-flex">
+        {(role === "admin" || role === "manager" || role === "developer") && (
+          <Button
+            variant="primary"
+            as={Link}
+            to={`/project/add-task/${id}`}
+            className={styles.button}
+          >
+            Add New Task
+          </Button>
+        )}
+        <Button
+          variant="primary"
+          as={Link}
+          to={`/project/${id}/download`}
+          className={styles.button}
+        >
+          Download
+        </Button>
+      </div>
       <div className={styles.steps_wrapper}>
         {project.productList &&
           project.productList.map((task, index) => (
@@ -50,6 +88,7 @@ const ProjectDetails = ({ project }) => {
                   labelPlacement="vertical"
                   current={currentStepHandeler(task)}
                   icons={{ finish: <AiOutlineCheck color="#fff" /> }}
+                  direction={width > 768 ? "horizontal" : "vertical"}
                 >
                   {task.steps &&
                     task.steps.map((step, i) => (
@@ -68,7 +107,8 @@ const ProjectDetails = ({ project }) => {
               <div className="d-flex justify-content-center align-items-center">
                 <Button
                   variant="outline-primary"
-                  disabled={!task.compeleted}
+                  disabled={!downloadButtonHandeler(task)}
+                  onClick={() => downloadProduct(task)}
                   className={styles.btn}
                 >
                   Download Resource

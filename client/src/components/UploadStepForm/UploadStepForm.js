@@ -70,12 +70,14 @@ const UploadStepForm = ({ uploadStep }) => {
   let initVals = {
     title: "",
     image: "",
+    type: "static",
     description: "",
   };
 
   const SignupSchema = Yup.object().shape({
     title: Yup.string().required("Title is required!"),
     image: Yup.string().nullable(),
+    type: Yup.string().required("Type is required!"),
     description: Yup.string().required("Description is required!"),
   });
   return (
@@ -131,6 +133,26 @@ const UploadStepForm = ({ uploadStep }) => {
                     className={`${styles.input} w-100`}
                     isInvalid={errors.description && touched.description}
                   />
+                </InputGroup>
+                <InputGroup className="mb-3 d-flex flex-column">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <label htmlFor="type" className="d-block">
+                      Image Type
+                    </label>
+                    {errors.type && touched.type ? (
+                      <small className="text-danger">{errors.type}</small>
+                    ) : null}
+                  </div>
+
+                  <Field
+                    as={BootstrapForm.Select}
+                    placeholder="Select Type of Image"
+                    name="type"
+                    className={` form-control w-100`}
+                  >
+                    <option value="static">Static</option>
+                    <option value="3d">360</option>
+                  </Field>
                 </InputGroup>
                 <div className="">
                   <div className={styles.preview}>

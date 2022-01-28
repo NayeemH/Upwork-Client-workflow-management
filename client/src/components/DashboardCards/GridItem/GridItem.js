@@ -10,6 +10,7 @@ import {
   addFavoriteProject,
   removeFavoriteProject,
 } from "../../../actions/Project.action";
+import Users from "../Users/Users";
 
 const GridItem = ({ item, star = false }) => {
   const navigate = useNavigate();
@@ -29,9 +30,13 @@ const GridItem = ({ item, star = false }) => {
                 {item.name}
               </Card.Title>
               <Card.Text>{item.description}</Card.Text>
+              <Users item={item} />
             </Card.Body>
             <Card.Footer className="d-flex justify-content-between align-items-center">
-              <span className={styles.down}>
+              <span
+                className={styles.down}
+                onClick={() => navigate(`/project/${item.id}/download`)}
+              >
                 <MdDownload /> Download
               </span>
               {item.notification > 0 && (

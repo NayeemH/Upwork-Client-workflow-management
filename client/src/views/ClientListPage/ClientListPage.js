@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getClientList } from "../../actions/Dashboard.action";
 import ClientList from "../../components/ClientList/ClientList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./ClientListPage.module.css";
 
 const ClientListPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getClientList());
+  }, []);
   return (
     <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />

@@ -9,5 +9,15 @@
 }
 
 .img {
+  height: 100%;
+}
+
+.img_wrapper {
+  height: 40px;
   width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

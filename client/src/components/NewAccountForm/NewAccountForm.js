@@ -22,7 +22,7 @@ const NewAccountForm = ({ createAccount }) => {
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
 
   const onSubmitHandeler = async (values) => {
-    let check = createAccount({ ...values, id });
+    let check = await createAccount({ ...values, id });
     if (check === true) {
       navigate("/dashboard");
     }

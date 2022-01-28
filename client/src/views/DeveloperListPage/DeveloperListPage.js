@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getManagerList } from "../../actions/Dashboard.action";
+import { getDevList } from "../../actions/Dashboard.action";
 import ClientList from "../../components/ClientList/ClientList";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
-import styles from "./ManagerListPage.module.css";
+import styles from "./DeveloperListPage.module.css";
 
-const ManagerListPage = () => {
+const DeveloperListPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getManagerList());
+    dispatch(getDevList());
   }, []);
   return (
     <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
@@ -24,7 +24,7 @@ const ManagerListPage = () => {
           </Link>{" "}
         </Breadcrumb.Item>
         <Breadcrumb.Item className={styles.bc_name} active>
-          Manager List
+          Developer List
         </Breadcrumb.Item>
       </Breadcrumb>
       <ClientList />
@@ -32,4 +32,4 @@ const ManagerListPage = () => {
   );
 };
 
-export default ManagerListPage;
+export default DeveloperListPage;

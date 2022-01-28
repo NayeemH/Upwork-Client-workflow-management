@@ -14,10 +14,14 @@ import {
   GET_PROJECT_DETAILS,
   GET_STEP,
   GET_STEP_ERROR,
+  PROJECT_ACCEPT_EXISTING_USER,
+  PROJECT_ACCEPT_EXISTING_USER_ERROR,
   PROJECT_CREATE_ERROR,
   PROJECT_CREATE_SUCCESS,
   PROJECT_INVITATION_ERROR,
   PROJECT_INVITATION_SUCCESS,
+  REVIEW_ADDED,
+  REVIEW_ADDED_ERROR,
   STEP_APPROVED,
   STEP_APPROVE_ERROR,
   TASK_ADDED,
@@ -118,6 +122,37 @@ export const createAccount = (values) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: ACCOUNT_CREATE_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+// CREATE ACCOUNT EXISTING USER
+export const createAccountExisting = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/activate/loginMail/user/${id}`,
+      {},
+      config
+    );
+    if (res.status === 200) {
+      dispatch({
+        type: PROJECT_ACCEPT_EXISTING_USER,
+      });
+      toast.success("Project accepted successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: PROJECT_ACCEPT_EXISTING_USER_ERROR,
     });
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
@@ -276,7 +311,7 @@ export const getStepDetails = (id) => async (dispatch) => {
       type: GET_STEP,
       payload: res.data,
     });
-    console.log(res);
+    //console.log(res);
   } catch (err) {
     dispatch({
       type: GET_STEP_ERROR,
@@ -293,6 +328,7 @@ export const uploadStep = (values, file, id, projectId) => async (dispatch) => {
 
   formData.append("title", values.title);
   formData.append("description", values.description);
+  formData.append("imageType", values.type);
   formData.append("image", file);
 
   const config = {
@@ -348,7 +384,7 @@ export const selectIndex = (index) => (dispatch) => {
 };
 
 // APPROVE STEP
-export const approveStep = (id) => async (dispatch) => {
+export const approveStep = (id, projectId) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -366,7 +402,7 @@ export const approveStep = (id) => async (dispatch) => {
     dispatch({
       type: STEP_APPROVED,
     });
-    dispatch(getProjectDetails(id));
+    dispatch(getProjectDetails(projectId));
     toast.success("Step Approved successfully");
     return true;
   } catch (err) {
@@ -376,6 +412,40 @@ export const approveStep = (id) => async (dispatch) => {
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
   }
+};
 
-  return false;
+// POST REVIEW
+export const postReview = (points, msg, stepId) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+
+  const formData = {
+    message: msg,
+    points: [points.x, points.y],
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/project/feedback/${points.stepId}`,
+      JSON.stringify(formData),
+      config
+    );
+    //console.log(res);
+    dispatch({
+      type: REVIEW_ADDED,
+    });
+    dispatch(getStepDetails(stepId));
+    toast.success("Feedback added successfully");
+    return true;
+  } catch (err) {
+    dispatch({
+      type: REVIEW_ADDED_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
 };

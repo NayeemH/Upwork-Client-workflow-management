@@ -1,9 +1,18 @@
-import { DASHBOARD_PROJECT_LIST_GRID, SIDEBAR_TOGGLE } from "../constants/Type";
+import {
+  CLIENT_LIST_LOAD,
+  DASHBOARD_PROJECT_LIST_GRID,
+  DEVELOPER_LIST_LOAD,
+  MANAGER_LIST_LOAD,
+  SET_ROLE,
+  SIDEBAR_TOGGLE,
+} from "../constants/Type";
 
 const initialState = {
   projectListGrid: "grid",
   sidebar_visible: false,
   loading: true,
+  role: "",
+  list: [],
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -15,10 +24,24 @@ const dashboardReducer = (state = initialState, action) => {
         projectListGrid: payload,
         loading: false,
       };
+    case SET_ROLE:
+      return {
+        ...state,
+        role: payload,
+        loading: false,
+      };
     case SIDEBAR_TOGGLE:
       return {
         ...state,
         sidebar_visible: payload,
+        loading: false,
+      };
+    case MANAGER_LIST_LOAD:
+    case CLIENT_LIST_LOAD:
+    case DEVELOPER_LIST_LOAD:
+      return {
+        ...state,
+        list: [...payload],
         loading: false,
       };
     default:

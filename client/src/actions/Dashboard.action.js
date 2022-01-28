@@ -3,25 +3,37 @@ import { toast } from "react-toastify";
 import {
   ACCESS_TOKEN_ERROR,
   ACCESS_TOKEN_SUCCESS,
+  CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
+  DEVELOPER_LIST_LOAD,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
+  MANAGER_LIST_LOAD,
   PASSWORD_CHANGE,
   PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
   RESET_LINK_SEND,
   RESET_LINK_SEND_ERROR,
+  SET_ROLE,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
+import { useJwt } from "react-jwt";
 
 // PROJECT DISPLAY STYLE ACTION
 export const toogleDashboardProjectStyle = (type) => (dispatch) => {
   dispatch({
     type: DASHBOARD_PROJECT_LIST_GRID,
+    payload: type,
+  });
+};
+// SET ROLE ACTION
+export const setRole = (type) => (dispatch) => {
+  dispatch({
+    type: SET_ROLE,
     payload: type,
   });
 };
@@ -77,6 +89,7 @@ export const login = (values) => async (dispatch) => {
           });
           //console.log(res.data);
           setAuthToken(refreshRes.data.accessToken);
+
           toast.success("Login successfully");
           return true;
         }
@@ -116,8 +129,8 @@ export const getRefreshToken = () => async (dispatch) => {
       type: ACCESS_TOKEN_SUCCESS,
       payload: refreshRes.data.accessToken,
     });
-    //console.log(res.data);
     setAuthToken(refreshRes.data.accessToken);
+
     return true;
     //}
   } catch (error) {
@@ -212,5 +225,50 @@ export const passwordChange = (password, email, id) => async (dispatch) => {
     });
     error.response.data.msg.map((msg) => toast.error(msg));
     return false;
+  }
+};
+
+//GET CLIENT LIST ACTION
+export const getClientList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/client`);
+    // console.log(res);
+
+    dispatch({
+      type: CLIENT_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET DEVELOPER LIST ACTION
+export const getDevList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/developer`);
+    // console.log(res);
+
+    dispatch({
+      type: DEVELOPER_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+//GET MANAGER LIST ACTION
+export const getManagerList = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/api/admin/userInfo/manager`);
+    // console.log(res);
+
+    dispatch({
+      type: MANAGER_LIST_LOAD,
+      payload: res.data,
+    });
+  } catch (err) {
+    err.response.data.msg.map((msg) => toast.error(msg));
   }
 };
