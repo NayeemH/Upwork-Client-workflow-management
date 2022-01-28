@@ -13,6 +13,7 @@ const DashboardPage = () => {
       <Topbar />
       <Sidebar />
       <FilterDashboard selectedFilter="active" />
+
       <DashboardCards />
     </div>
   );
