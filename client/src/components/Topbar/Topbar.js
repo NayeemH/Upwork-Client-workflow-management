@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { GoThreeBars } from "react-icons/go";
 import styles from "./Topbar.module.css";
 import UserInfoTopbar from "./UserInfoTopbar/UserInfoTopbar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toogleSidebarVisibility } from "../../actions/Dashboard.action";
 import { useNavigate } from "react-router-dom";
 

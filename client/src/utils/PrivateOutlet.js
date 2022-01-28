@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Outlet, Navigate, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { getRefreshToken } from "../actions/Dashboard.action";
 
 const PrivateOutlet = ({ getRefreshToken, auth, loading }) => {

@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import {
   ACCESS_TOKEN_ERROR,
   ACCESS_TOKEN_SUCCESS,
+  APPROVED_PROJECT_LOAD,
+  APPROVED_PROJECT_LOAD_ERROR,
   CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
   DEVELOPER_LIST_LOAD,
@@ -270,5 +272,29 @@ export const getManagerList = () => async (dispatch) => {
     });
   } catch (err) {
     err.response.data.msg.map((msg) => toast.error(msg));
+  }
+};
+
+// FETCH PROJECTS FOR DASHBOARD
+export const fetchApprovedProject = () => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.get(`${BASE_URL}/api/project/approved`, config);
+    if (res.status === 200) {
+      dispatch({
+        type: APPROVED_PROJECT_LOAD,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: APPROVED_PROJECT_LOAD_ERROR,
+    });
   }
 };

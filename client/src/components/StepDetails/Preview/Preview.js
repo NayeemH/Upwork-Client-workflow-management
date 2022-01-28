@@ -53,7 +53,7 @@ const Preview = ({
   const imgClickHandeler = (e) => {
     if (feedbackActive && !showForm) {
       const { clientX, clientY } = e;
-      const { width, height, left, right, top, bottom } =
+      const { width, height, left, top } =
         imgRef.current.getBoundingClientRect();
       let cursorX = clientX - left;
       let cursorY = clientY - top;

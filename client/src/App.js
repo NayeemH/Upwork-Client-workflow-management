@@ -28,6 +28,7 @@ import ViewerPage from "./views/ViewerPage/ViewerPage";
 import DownloadPage from "./views/DownloadPage/DownloadPage";
 import DeveloperListPage from "./views/DeveloperListPage/DeveloperListPage";
 import { useJwt } from "react-jwt";
+import ApprovedPage from "./views/ApprovedPage/ApprovedPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/*" element={<PrivateOutlet />}>
             <>
               <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="approved" element={<ApprovedPage />} />
               <Route path="project/:id" element={<ProjectDetailsPage />} />
               <Route path="project/:id/download" element={<DownloadPage />} />
               <Route

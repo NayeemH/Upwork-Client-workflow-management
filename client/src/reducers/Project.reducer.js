@@ -1,9 +1,10 @@
-import { Step } from "rc-steps";
 import {
   ACCOUNT_CREATE_ERROR,
   ACCOUNT_CREATE_SUCCESS,
   ADD_COLLECTION_ERROR,
   ADD_FAVORITE_PROJECT,
+  APPROVED_PROJECT_LOAD,
+  APPROVED_PROJECT_LOAD_ERROR,
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
@@ -18,6 +19,7 @@ import {
 
 const initialState = {
   projects: [],
+  approved_projects: [],
   fav_projects: localStorage.getItem("fav_projects")
     ? localStorage.getItem("fav_projects").split(",")
     : [],
@@ -64,6 +66,12 @@ const projectReducer = (state = initialState, action) => {
         loading: false,
         projects: payload,
       };
+    case APPROVED_PROJECT_LOAD:
+      return {
+        ...state,
+        loading: false,
+        approved_projects: payload,
+      };
     case ADD_FAVORITE_PROJECT:
     case REMOVE_FAVORITE_PROJECT:
       return {
@@ -101,6 +109,7 @@ const projectReducer = (state = initialState, action) => {
     case ADD_COLLECTION_ERROR:
     case GET_STEP_ERROR:
     case PROJECT_CREATE_ERROR:
+    case APPROVED_PROJECT_LOAD_ERROR:
       return {
         ...state,
         loading: false,

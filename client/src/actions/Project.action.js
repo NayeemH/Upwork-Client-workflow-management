@@ -209,7 +209,7 @@ export const fetchProjects = () => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    const res = await axios.post(`${BASE_URL}/api/project/all`, {}, config);
+    const res = await axios.get(`${BASE_URL}/api/project/active`, config);
     if (res.status === 200) {
       dispatch({
         type: FETCH_DASHBOARD_PROJECT,
@@ -266,6 +266,7 @@ export const createProjectTask =
     formData.append("projectId", id);
     steps.map((step, i) => {
       formData.append(`steps[${i}]`, step.name);
+      return null;
     });
 
     const config = {
@@ -393,11 +394,7 @@ export const approveStep = (id, projectId) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    const res = await axios.post(
-      `${BASE_URL}/api/project/stepApprove/${id}`,
-      {},
-      config
-    );
+    await axios.post(`${BASE_URL}/api/project/stepApprove/${id}`, {}, config);
     // console.log(res);
     dispatch({
       type: STEP_APPROVED,
@@ -429,7 +426,7 @@ export const postReview = (points, msg, stepId) => async (dispatch) => {
   };
   try {
     // TODO ::: API CALL
-    const res = await axios.post(
+    await axios.post(
       `${BASE_URL}/api/project/feedback/${points.stepId}`,
       JSON.stringify(formData),
       config

@@ -38,12 +38,14 @@ const Overview = ({
           current = i + 1;
         }
       }
+      return null;
     });
     let finalIndex = 0;
     tempProduct.steps.map((item, i) => {
       if (item._id === selectedStep._id) {
         finalIndex = i;
       }
+      return null;
     });
 
     return current === finalIndex;
