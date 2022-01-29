@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Steps, { Step } from "rc-steps";
 import { Button } from "react-bootstrap";
 import styles from "./ProjectDetails.module.css";
@@ -24,6 +24,7 @@ const ProjectDetails = ({ project }) => {
           current = i + 1;
         }
       }
+      return null;
     });
 
     return current;

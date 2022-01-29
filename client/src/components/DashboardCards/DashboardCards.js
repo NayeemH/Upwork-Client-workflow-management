@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Container, Col } from "react-bootstrap";
+import { Row, Container, Col, Spinner } from "react-bootstrap";
 import styles from "./DashboardCards.module.css";
 import GridItem from "./GridItem/GridItem";
 import ListItem from "./ListItem/ListItem";
@@ -11,6 +11,7 @@ const DashboardCards = () => {
   const listGrid = useSelector((state) => state.dashboard.projectListGrid);
   const data = useSelector((state) => state.project.projects);
   const saved = useSelector((state) => state.project.fav_projects);
+  const loading = useSelector((state) => state.project.loading);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -18,6 +19,14 @@ const DashboardCards = () => {
 
   return (
     <Container fluid className={styles.wrapper}>
+      {loading && (
+        <div
+          className="bg-dark d-flex justify-content-center align-items-center"
+          style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
+        >
+          <Spinner animation="border" variant="light" />
+        </div>
+      )}
       {data.filter((item) => saved.includes(item.id)).length > 0 && (
         <>
           {data.filter((item) => saved.includes(item.id)).length > 0 && (

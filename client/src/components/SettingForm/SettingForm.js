@@ -11,7 +11,7 @@ import styles from "./SettingForm.module.scss";
 import { connect } from "react-redux";
 import { updateProfile } from "../../actions/Profile.action";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ImUpload } from "react-icons/im";
 import { IMAGE_PATH } from "../../constants/URL";
 import { AiOutlineLock } from "react-icons/ai";
@@ -21,7 +21,6 @@ const SettingForm = ({ updateProfile, user }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const fileRef = useRef();
 

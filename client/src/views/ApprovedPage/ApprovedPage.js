@@ -1,10 +1,10 @@
 import React from "react";
-import DashboardCards from "../../components/DashboardCards/DashboardCards";
+import ApprovedCards from "../../components/ApprovedCards/ApprovedCards";
 import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 
-const DashboardPage = () => {
+const ApprovedPage = () => {
   return (
     <div
       className="bg-dark"
@@ -12,11 +12,10 @@ const DashboardPage = () => {
     >
       <Topbar />
       <Sidebar />
-      <FilterDashboard selectedFilter="active" />
-
-      <DashboardCards />
+      <FilterDashboard selectedFilter="approved" />
+      <ApprovedCards />
     </div>
   );
 };
 
-export default DashboardPage;
+export default ApprovedPage;
