@@ -65,7 +65,7 @@ router.get('/', async (req, res, next) => {
                     break;
                 }
             }
-            if(!flag) {
+            if(!flag || projectsInfo[i].productList.length === 0) {
                 flag = 1;
                 continue;
             }
