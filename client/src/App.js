@@ -83,9 +83,7 @@ function App() {
               <Route
                 path="project/:projectId/step/:stepId/upload"
                 element={
-                  role !== "admin" ||
-                  role === "manager" ||
-                  role === "developer" ? (
+                  role === "client" ? (
                     <Navigate to="/dashboard" />
                   ) : (
                     <UploadStepImagePage />
