@@ -5,6 +5,8 @@ import {
   MANAGER_LIST_LOAD,
   SET_ROLE,
   SIDEBAR_TOGGLE,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from "../constants/Type";
 
 const initialState = {
@@ -43,6 +45,12 @@ const dashboardReducer = (state = initialState, action) => {
         ...state,
         list: [...payload],
         loading: false,
+      };
+    case LOGOUT_SUCCESS:
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        role: "",
       };
     default:
       return state;

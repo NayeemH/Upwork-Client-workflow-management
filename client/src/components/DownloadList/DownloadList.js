@@ -1,13 +1,29 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import styles from "./DownloadList.module.scss";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Moment from "react-moment";
 const FileDownload = require("js-file-download");
 
 const DownloadList = ({ project }) => {
+  const [size, setSize] = useState([]);
+  useEffect(() => {
+    const getInfo = async () => {
+      try {
+        let res = await axios.get(
+          `${BASE_URL}/api/project/download/${project._id}`
+        );
+        setSize(res.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    console.log(size);
+    getInfo();
+  }, []);
   const [selected, setSelected] = useState([]);
   const [selected2, setSelected2] = useState([]);
   const [all1, setAll1] = useState(false);
@@ -235,9 +251,28 @@ const DownloadList = ({ project }) => {
                   md={2}
                   className="d-flex align-items-start flex-column justify-content-center"
                 >
-                  <span className="d-block">4000 x 3000</span>
-                  <span className="d-block">10MB</span>
-                  <span className="d-block">13 Jan 2022 9:30</span>
+                  {size.map((item, index) =>
+                    item._id === task._id ? (
+                      <div key={index}>
+                        <span className="d-block">
+                          {item.width} x {item.height}
+                        </span>
+                        <span className="d-block">
+                          {parseInt(item.size) > 1024
+                            ? `${parseInt(item.size) / 1024} MB`
+                            : `${parseInt(item.size)} KB`}
+                        </span>
+                        <span className="d-block">
+                          <Moment
+                            format="DD-MM-YYYY"
+                            date={project.updatedAt}
+                          ></Moment>
+                        </span>
+                      </div>
+                    ) : (
+                      <></>
+                    )
+                  )}
                 </Col>
                 <Col
                   md={3}

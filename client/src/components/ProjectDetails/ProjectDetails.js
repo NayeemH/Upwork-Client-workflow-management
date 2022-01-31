@@ -53,7 +53,7 @@ const ProjectDetails = ({ project }) => {
   return (
     <div className={styles.wrapper}>
       <div className="d-flex">
-        {(role === "admin" || role === "manager" || role === "developer") && (
+        {(role === "admin" || role === "manager") && (
           <Button
             variant="primary"
             as={Link}

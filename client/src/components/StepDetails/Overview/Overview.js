@@ -97,7 +97,9 @@ const Overview = ({
           {final && (
             <>
               <div className="d-flex justify-content-between align-items-center">
-                {role === "client" &&
+                {(role === "client" ||
+                  role === "admin" ||
+                  role === "manager") &&
                   selectedStep.finalImage === null &&
                   currentStepHandeler() && (
                     <Button
