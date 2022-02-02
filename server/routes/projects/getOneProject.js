@@ -31,15 +31,15 @@ router.get('/:projectId', async (req, res, next) => {
             querySteps.push(...product.steps);
         });
 
-        const steps = await Step.find({_id: {$in: querySteps}}, {_id: 1, name: 1, viewed: 1, finalImage: 1});
+        const steps = await Step.find({_id: {$in: querySteps}}, {_id: 1, name: 1, viewed: 1, finalImage: 1, feedbackLength: 1});
 
 
         const newProducts = products.map(product => {
             const newSteps = product.steps.map(step => {
                 const newStep = steps.find(({_id}) => _id.toString() === step.toString());
-                const {_id, name, viewed, finalImage} = newStep;
+                const {_id, name, viewed, finalImage, feedbackLength} = newStep;
 
-                return {_id, name, viewed, finalImage};
+                return {_id, name, viewed, finalImage, feedbackLength};
             });
             const {_id, name, image, currentStep, completed} = product;
             return {_id, name, image, steps: newSteps, currentStep, completed};
