@@ -151,9 +151,7 @@ const Preview = ({
                   </Tooltip>
                 }
               >
-                <span>
-                  <BiHelpCircle id={feedback._id} />
-                </span>
+                <span className={styles.point__icon}>{i + i}</span>
               </OverlayTrigger>
             </div>
           ))}
