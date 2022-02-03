@@ -1,4 +1,3 @@
-const fs = require('fs');
 const sizeOf = require('image-size');
 const { createCanvas, loadImage } = require('canvas')
 
@@ -63,7 +62,7 @@ const FinalImage = async (buffer) => {
     }  
 
 
-    const image = await loadImage(image);
+    const image = await loadImage(buffer);
  
     ctx.drawImage(image,
         0, 0, width, height,
