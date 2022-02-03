@@ -151,7 +151,7 @@ const Preview = ({
                   </Tooltip>
                 }
               >
-                <span className={styles.point__icon}>{i + i}</span>
+                <span className={styles.point__icon}>{i + 1}</span>
               </OverlayTrigger>
             </div>
           ))}

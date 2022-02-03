@@ -9,5 +9,6 @@
 }
 
 .wrapper {
+  border-bottom: 1px solid var(--light);
   padding: 0.5rem 2.5rem;
 }

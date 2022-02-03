@@ -21,7 +21,12 @@ const GridItem = ({ item, star = false }) => {
       {item && (
         <Col>
           <Card bg="dark" text="light" className={styles.crd}>
-            <Card.Img variant="top" src={`${IMAGE_PATH}small/${item.image}`} />
+            <Card.Img
+              variant="top"
+              src={`${IMAGE_PATH}small/${item.image}`}
+              onClick={() => navigate(`/project/${item.id}`)}
+              style={{ cursor: "pointer" }}
+            />
             <Card.Body>
               <Card.Title
                 onClick={() => navigate(`/project/${item.id}`)}
@@ -29,7 +34,7 @@ const GridItem = ({ item, star = false }) => {
               >
                 {item.name}
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text className={styles.desc}>{item.description}</Card.Text>
               <Users item={item} />
             </Card.Body>
             <Card.Footer className="d-flex justify-content-between align-items-center">
@@ -39,8 +44,10 @@ const GridItem = ({ item, star = false }) => {
               >
                 <MdDownload /> Download
               </span>
-              {item.notification > 0 && (
-                <span className={styles.notification}>{item.notification}</span>
+              {item.productNumber > 0 && (
+                <span className={styles.notification}>
+                  {item.productNumber}
+                </span>
               )}
               <div className="d-flex justify-content-between align-items-center">
                 <span className={styles.id}>ID: {item.id.substring(0, 6)}</span>

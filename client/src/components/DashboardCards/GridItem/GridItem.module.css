@@ -1,5 +1,5 @@
 .crd {
-  background: var(--dark-bg) !important;
+  background: var(--light-bg) !important;
   border: 1px solid var(--secondary-500) !important;
   min-height: 450px;
   transition: 0.3s all ease-in-out;
@@ -47,4 +47,8 @@
 
 .star:hover {
   color: var(--primary);
+}
+
+.desc {
+  color: var(--primary) !important;
 }

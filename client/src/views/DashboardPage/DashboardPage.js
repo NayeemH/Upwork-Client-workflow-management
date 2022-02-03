@@ -7,7 +7,7 @@ import Topbar from "../../components/Topbar/Topbar";
 const DashboardPage = () => {
   return (
     <div
-      className="bg-dark"
+      className="bg_dark"
       style={{ minHeight: "100vh", position: "relative" }}
     >
       <Topbar />

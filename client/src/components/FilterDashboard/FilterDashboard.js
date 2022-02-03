@@ -43,7 +43,10 @@ const FilterDashboard = ({ selectedFilter }) => {
             </Button>
           </ButtonGroup>
           {selectedFilter !== "approved" && (
-            <ButtonGroup className="my-3" aria-label="First group">
+            <ButtonGroup
+              className={`${styles.btn__grp} my-3`}
+              aria-label="First group"
+            >
               {/* TODO::: FETCH PROJECT DATA DEPENDING ON THE SELECTED FILTER   */}
               <Button
                 className={

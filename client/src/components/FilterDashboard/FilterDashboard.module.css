@@ -20,23 +20,32 @@
 .active_btn {
   background: var(--primary) !important;
   color: var(--light);
+  border-color: var(--primary) !important;
 }
 
 .active_btn:hover {
   background: var(--primary-hover) !important;
+  border-color: var(--primary) !important;
 }
 
 .btn {
   background: var(--dark) !important;
+  border-color: var(--primary) !important;
 }
 
 .btn:hover {
   background: var(--primary-hover) !important;
+  border-color: var(--primary) !important;
 }
 
 .btn:focus,
 .active_btn:focus {
   box-shadow: none !important;
+  border-color: var(--primary) !important;
+}
+
+.btn__grp {
+  border-color: var(--primary) !important;
 }
 
 @media screen and (max-width: 768px) {

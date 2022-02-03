@@ -38,7 +38,7 @@ const DashboardCards = () => {
           )}
           {listGrid === "grid" ? (
             <>
-              <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+              <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">
                 {data
                   .filter((item) => saved.includes(item.id))
                   .map((item) => (
@@ -55,7 +55,7 @@ const DashboardCards = () => {
         </>
       )}
       {listGrid === "grid" ? (
-        <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+        <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">
           {data
             .filter((item) => !saved.includes(item.id))
             .map((item) => (
