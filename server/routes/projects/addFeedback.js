@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Project } = require('../../models/project');
 const Collection = require('../../models/collection');
 const Step = require('../../models/step');
-
+const User = require('../../models/user');
 
 
 
@@ -27,11 +27,11 @@ router.post('/:collectionId', async (req, res, next) => {
 
         if(!(project.adminId.toString() === userId || checkUser)) throw Error("Can not access this project");
 
-
+        const user = await User.findOne({_id: userId});
 
         await Collection.findOneAndUpdate(
             {_id: collection._id}, 
-            {$push: {feedbacks: {message, points, userId}}}
+            {$push: {feedbacks: {message, points, userName: user.username, userImage: user.image, userRole: userType}}}
         );
         
         

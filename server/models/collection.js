@@ -4,10 +4,17 @@ const Schema = mongoose.Schema;
 
 
 const feedbackSchema = Schema({
-    userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "users"
+    userName: {
+        type: String,
+        required: true
+    },
+    userImage: {
+        type: String,
+        required: true
+    },
+    userRole: {
+        type: String,
+        required: true
     },
     message: {
         type: String,

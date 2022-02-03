@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const { Project } = require('../../models/project');
 const Collection = require('../../models/collection');
-const Step = require('../../models/step');
 const ObjectId = require('mongoose').Types.ObjectId;
-
+const User = require('../../models/user');
 
 
 
@@ -31,11 +30,11 @@ router.patch('/:feedbackId', async (req, res, next) => {
 
         if(!(project.adminId.toString() === userId || checkUser)) throw Error("Can not access this project");
 
-
+        const user = await User.findOne({_id: userId});
 
         await Collection.findOneAndUpdate(
             {_id: collection._id, "feedbacks._id": new ObjectId(feedbackId)}, 
-            {$set: {"feedbacks.$.message": message}}
+            {$set: {"feedbacks.$.userName": user.username, "feedbacks.$.userImage": user.image, "feedbacks.$.userRole": userType, "feedbacks.$.message": message}}
         );
         
 
