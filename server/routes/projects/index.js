@@ -11,7 +11,8 @@ const stepApprove = require('./stepApprove');
 const downloadProductList = require('./downloadProductList');
 const approvedProjects = require('./approvedProjects');
 const activeProjects = require('./activeProjects');
-
+const deleteFeedback = require('./deleteFeedback');
+const updateFeedback = require('./updateFeedback');
 
 // Routes
 router.use('/all', all);
@@ -24,5 +25,7 @@ router.use('/stepApprove', stepApprove);
 router.use('/download', downloadProductList);
 router.use('/approved', approvedProjects);
 router.use('/active', activeProjects);
+router.use('/feedback', deleteFeedback);
+router.use('/feedback', updateFeedback);
 
 module.exports = router;

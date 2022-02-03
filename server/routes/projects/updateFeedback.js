@@ -2,17 +2,18 @@ const router = require('express').Router();
 const { Project } = require('../../models/project');
 const Collection = require('../../models/collection');
 const Step = require('../../models/step');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 
 
-router.post('/:collectionId', async (req, res, next) => {
+router.patch('/:feedbackId', async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
-        const {message, points} = req.body;
-        const {collectionId} = req.params;
+        const {message} = req.body;
+        const {feedbackId} = req.params;
 
-        const collection = await Collection.findOne({_id: collectionId}, {__v: 0});
+        const collection = await Collection.findOne({"feedbacks._id": new ObjectId(feedbackId)}, {__v: 0});
 
         if(!collection) throw Error('collection not found');
 
@@ -20,6 +21,9 @@ router.post('/:collectionId', async (req, res, next) => {
 
         if(!project) throw Error('Project not found');
 
+
+        // Check if this user is manager or admin
+        if(!((userType === 'client') || (userType === 'admin') || (userType === 'manager'))) throw Error('You are not authorized. Only admin and manager can use this');
 
 
         // Check for valid user
@@ -30,17 +34,15 @@ router.post('/:collectionId', async (req, res, next) => {
 
 
         await Collection.findOneAndUpdate(
-            {_id: collection._id}, 
-            {$push: {feedbacks: {message, points, userId}}}
+            {_id: collection._id, "feedbacks._id": new ObjectId(feedbackId)}, 
+            {$set: {"feedbacks.$.message": message}}
         );
         
-        
-        await Step.findOneAndUpdate({collections: collection._id}, {$inc: {feedbackLength: 1}});
-        
+
 
         res.json({
             success: true,
-            msg: 'Feedback is added'
+            msg: 'Feedback is updated'
         });
     }
     catch(err) {

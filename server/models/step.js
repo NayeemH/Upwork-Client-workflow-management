@@ -23,6 +23,10 @@ const stepSchema = Schema({
     finalImage: {
         type: String,
         default: null
+    },
+    feedbackLength: {
+        type: Number,
+        default: 0
     }
 }, {timestamps: true});
 

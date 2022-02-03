@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 
 const feedbackSchema = Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "users"
+    },
     message: {
         type: String,
         required: true

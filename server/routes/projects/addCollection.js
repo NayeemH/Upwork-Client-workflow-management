@@ -53,6 +53,9 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
             {$push: {collections: newCollection._id}}
         );
         
+        // Setting viewed property to false
+        await Step.findOneAndUpdate({_id: stepId}, {$set: {viewed: false, feedbackLength: 0}});
+        
 
         res.json({
             success: true,

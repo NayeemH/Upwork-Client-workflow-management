@@ -95,6 +95,7 @@ router.get('/', async (req, res, next) => {
                 name: project.name,
                 description: project.description,
                 image: project.image,
+                productNumber: project.productList.length,
                 projectUser: newProjectUser
             }
         });
