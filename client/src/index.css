@@ -100,3 +100,10 @@ select.form-select option:hover {
 .bg_dark {
   background-color: var(--dark) !important;
 }
+.bg_dark_bg {
+  background-color: var(--dark-bg) !important;
+}
+
+#user .dropdown-menu.show {
+  background: var(--dark-bg) !important;
+}

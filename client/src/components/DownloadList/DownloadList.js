@@ -153,7 +153,7 @@ const DownloadList = ({ project }) => {
           show={download !== ""}
           onHide={() => setDownload("")}
         >
-          <Modal.Body className="bg-primary bordered text-light">
+          <Modal.Body className="bg_dark_bg bordered text-light">
             <h4>Download Link</h4>
             <div className="py-3">
               <input

@@ -17,7 +17,7 @@ const ProjectDetailsPage = () => {
   }, [id]);
   return (
     <div
-      className={`bg-dark text-light`}
+      className={`bg_dark text-light`}
       style={{ minHeight: "100vh", paddingBottom: "2.5rem" }}
     >
       <Topbar />

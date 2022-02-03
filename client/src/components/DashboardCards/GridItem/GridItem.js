@@ -34,7 +34,9 @@ const GridItem = ({ item, star = false }) => {
               >
                 {item.name}
               </Card.Title>
-              <Card.Text className={styles.desc}>{item.description}</Card.Text>
+              <Card.Text className={styles.desc}>
+                {item.description.substring(0, 35)}...
+              </Card.Text>
               <Users item={item} />
             </Card.Body>
             <Card.Footer className="d-flex justify-content-between align-items-center">
