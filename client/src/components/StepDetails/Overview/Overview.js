@@ -3,7 +3,11 @@ import { Button, Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { approveStep, postReview } from "../../../actions/Project.action";
+import { IMAGE_PATH } from "../../../constants/URL";
+import { VscTrash } from "react-icons/vsc";
+import { AiOutlineEdit } from "react-icons/ai";
 import styles from "./Overview.module.scss";
+import { deleteComment } from "../../../actions/Step.action";
 
 const Overview = ({
   collection,
@@ -11,7 +15,7 @@ const Overview = ({
   selectedProject,
   approveStep,
   final,
-  index,
+
   feedbackActive,
   setFeedbackActive,
   showForm,
@@ -20,6 +24,7 @@ const Overview = ({
   setPoints,
   postReview,
   role,
+  deleteComment,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -176,9 +181,35 @@ const Overview = ({
               <h5>Feedbacks</h5>
               {collection.feedbacks.map((item, i) => (
                 <div key={i} className={styles.feedback}>
-                  <span className={styles.fb_text}>
-                    {i + 1}. {item.message}
-                  </span>
+                  <div className="w-100">
+                    <div
+                      className={`d-flex align-items-center ${styles.user_info}`}
+                    >
+                      <div className={styles.img_wrapper}>
+                        <img
+                          src={`${IMAGE_PATH}small/${item.userImage}`}
+                          alt={`${item.userName}`}
+                          className="h-100"
+                        />
+                      </div>
+                      <span className={styles.username}>{item.userName}</span>
+                      <span className={styles.userrole}>{item.userRole}</span>
+                    </div>
+                    <span className={styles.fb_text}>
+                      {i + 1}. {item.message}
+                    </span>
+                  </div>
+                  <div className={styles.actions}>
+                    <span
+                      className={styles.delete}
+                      onClick={() => deleteComment(collection._id, item._id)}
+                    >
+                      <VscTrash />
+                    </span>
+                    <span className={styles.edit}>
+                      <AiOutlineEdit />
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -195,4 +226,8 @@ const mapStateToProps = (state) => ({
   role: state.dashboard.role,
 });
 
-export default connect(mapStateToProps, { approveStep, postReview })(Overview);
+export default connect(mapStateToProps, {
+  approveStep,
+  postReview,
+  deleteComment,
+})(Overview);

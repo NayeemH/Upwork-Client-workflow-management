@@ -8,6 +8,8 @@ import {
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
+  DELETE_COMMENT_ERROR,
+  DELETE_COMMENT_SUCCESS,
   FETCH_DASHBOARD_PROJECT,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
@@ -106,7 +108,26 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         selected_collection: payload,
       };
+    case DELETE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        selected_step: {
+          ...state.selected_step,
+          collections: state.selected_step.collections.map((collection) => {
+            if (collection._id === payload.collectionId) {
+              let tmp = collection.feedbacks.filter(
+                (item) => item._id !== payload.feedbackId
+              );
+              return { ...collection, feedbacks: tmp };
+            } else {
+              return collection;
+            }
+          }),
+        },
+        loading: false,
+      };
     case ADD_COLLECTION_ERROR:
+    case DELETE_COMMENT_ERROR:
     case GET_STEP_ERROR:
     case PROJECT_CREATE_ERROR:
     case APPROVED_PROJECT_LOAD_ERROR:
