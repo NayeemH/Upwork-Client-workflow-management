@@ -45,6 +45,10 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
       .min(6, "Old Password is too short!"),
     password: Yup.string()
       .required("New Password is required!")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+        "Password not strong enough!"
+      )
       .min(6, "New Password is too short!"),
     password2: Yup.string()
       .oneOf([Yup.ref("password"), null], "New Passwords do not match!")
@@ -161,6 +165,18 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                     />
                   )}
                 </InputGroup>
+                <div className={styles.req}>
+                  <span className="d-block"> *Must be 6 characters long.</span>
+                  <span className="d-block">
+                    *Must contain one number [0-9].
+                  </span>
+                  <span className="d-block">
+                    *Must contain one uppercase letter [A-Z].{" "}
+                  </span>
+                  <span className="d-block">
+                    *Must contain one special character [! @ # $ % & *].
+                  </span>
+                </div>
 
                 <div className="pt-3">
                   <Button

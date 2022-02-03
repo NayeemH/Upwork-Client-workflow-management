@@ -8,7 +8,7 @@ const RefreshTokenLayout = (props) => {
     <>
       {loading ? (
         <div
-          className="bg-dark d-flex justify-content-center align-items-center"
+          className="bg_dark d-flex justify-content-center align-items-center"
           style={{ minHeight: "100vh" }}
         >
           <Spinner animation="border" variant="light" />

@@ -1,6 +1,6 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 import {
   LoginPage,
   FogetPasswordPage,

@@ -21,7 +21,7 @@ const DashboardCards = () => {
     <Container fluid className={styles.wrapper}>
       {loading && (
         <div
-          className="bg-dark d-flex justify-content-center align-items-center"
+          className="bg_dark d-flex justify-content-center align-items-center"
           style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
         >
           <Spinner animation="border" variant="light" />
