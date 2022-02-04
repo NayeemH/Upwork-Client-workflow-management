@@ -89,4 +89,11 @@
   font-weight: bold !important;
   border-radius: 50%;
   border: 2px solid var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.point__icon.active {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
 }

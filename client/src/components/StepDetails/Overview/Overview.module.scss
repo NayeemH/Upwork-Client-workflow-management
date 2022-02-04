@@ -46,6 +46,13 @@
   padding: 15px 10px;
   margin-top: 8px;
   display: flex;
+  border: 1px solid var(--dark);
+  transition: 0.3s all ease-in-out;
+}
+
+.feedback.active {
+  border: 1px solid var(--primary) !important;
+  transition: 0.3s all ease-in-out;
 }
 
 .fb_text {

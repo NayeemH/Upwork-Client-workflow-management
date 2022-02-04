@@ -35,6 +35,8 @@ const Overview = ({
   toogleEditModalVisibility,
   feedback,
   editReview,
+  hoverFB,
+  setHoverFB,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -243,7 +245,14 @@ const Overview = ({
             <div className={styles.fb_wrapper}>
               <h5>Feedbacks</h5>
               {collection.feedbacks.map((item, i) => (
-                <div key={i} className={styles.feedback}>
+                <div
+                  key={i}
+                  className={`${styles.feedback} ${
+                    hoverFB === item._id ? styles.active : ""
+                  }`}
+                  onMouseEnter={() => setHoverFB(item._id)}
+                  onMouseLeave={() => setHoverFB("")}
+                >
                   <div className="w-100">
                     <div
                       className={`d-flex align-items-center ${styles.user_info}`}

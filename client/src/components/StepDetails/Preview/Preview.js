@@ -23,11 +23,12 @@ const Preview = ({
   collections,
   projectId,
   feedbackActive,
-  setFeedbackActive,
   showForm,
   setShowForm,
   points,
   setPoints,
+  hoverFB,
+  setHoverFB,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -135,8 +136,11 @@ const Preview = ({
         {(!data.imageType || data.imageType !== "3d") &&
           data.feedbacks.map((feedback, i) => (
             <div
-              className={styles.point}
+              className={`${styles.point} 
+              }`}
               key={feedback._id}
+              onMouseLeave={() => setHoverFB("")}
+              onMouseEnter={() => setHoverFB(feedback._id)}
               style={{
                 left: `${feedback.points[0] - 1}%`,
                 top: `${feedback.points[1] - 1}%`,
@@ -151,7 +155,13 @@ const Preview = ({
                   </Tooltip>
                 }
               >
-                <span className={styles.point__icon}>{i + 1}</span>
+                <span
+                  className={`${styles.point__icon} ${
+                    hoverFB === feedback._id ? styles.active : ""
+                  }`}
+                >
+                  {i + 1}
+                </span>
               </OverlayTrigger>
             </div>
           ))}
