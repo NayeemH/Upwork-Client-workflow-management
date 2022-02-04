@@ -37,7 +37,7 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
 
         
         // Save the image        
-        const images = await saveImage(buffer, mimetype);
+        const images = await saveImage(buffer, mimetype, step.name);
 
         const collection = new Collection({
             projectId: project._id,

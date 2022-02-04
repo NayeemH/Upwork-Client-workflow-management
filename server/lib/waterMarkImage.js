@@ -3,7 +3,7 @@ const { createCanvas, loadImage } = require('canvas')
 
 
 
-const waterMarkImage = (width) => {
+const waterMarkImage = (width, name) => {
     const canvas = createCanvas(width, width);
 
     const ctx = canvas.getContext('2d');
@@ -25,22 +25,22 @@ const waterMarkImage = (width) => {
     ctx.stroke();
 
 
-    const text = ctx.measureText('Concept');
+    const text = ctx.measureText(name);
 
     ctx.clearRect(width / 3, width / 3, width / 3, width / 3);
     ctx.clearRect(10, 100 - text.actualBoundingBoxAscent, text.width, text.actualBoundingBoxAscent + 20);
     ctx.clearRect(width - text.width, width - 50 - text.actualBoundingBoxAscent, text.width, text.actualBoundingBoxAscent + 20);
 
-    ctx.fillText('Concept', 10, 100);
+    ctx.fillText(name, 10, 100);
 
-    ctx.fillText('Concept', width - text.width, width - 50);    
+    ctx.fillText(name, width - text.width, width - 50);    
 
     return canvas;
 }
 
 
 
-const FinalImage = async (buffer) => {
+const FinalImage = async (buffer, name) => {
 
     const {width, height} = sizeOf(buffer);
 
@@ -69,7 +69,7 @@ const FinalImage = async (buffer) => {
         0, 0, width, height
     );
 
-    const waterMark = waterMarkImage(d);
+    const waterMark = waterMarkImage(d, name);
 
     ctx.drawImage(waterMark,
         0, 0, d, d,
