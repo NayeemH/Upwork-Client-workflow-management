@@ -3,10 +3,11 @@ import { toast } from "react-toastify";
 import {
   DELETE_COMMENT_ERROR,
   DELETE_COMMENT_SUCCESS,
+  EDIT_FEEDBACK_MODAL_TOGGLE,
 } from "../constants/Type";
 import { BASE_URL } from "../constants/URL";
 
-// FETCH PROJECTS FOR DASHBOARD
+// DELETE FEEDBACK ACTION
 export const deleteComment = (collectionId, feedbackId) => async (dispatch) => {
   const config = {
     withCredentials: true,
@@ -28,4 +29,12 @@ export const deleteComment = (collectionId, feedbackId) => async (dispatch) => {
       type: DELETE_COMMENT_ERROR,
     });
   }
+};
+
+// FEEDBACK EDIT MODAL TOOGLE ACTION
+export const toogleEditModalVisibility = (modal) => (dispatch) => {
+  dispatch({
+    type: EDIT_FEEDBACK_MODAL_TOGGLE,
+    payload: modal,
+  });
 };

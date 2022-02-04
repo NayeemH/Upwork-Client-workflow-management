@@ -1,13 +1,20 @@
 import React, { useState } from "react";
-import { Button, Col, Form } from "react-bootstrap";
+import { Button, Col, Form, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { approveStep, postReview } from "../../../actions/Project.action";
+import {
+  approveStep,
+  editReview,
+  postReview,
+} from "../../../actions/Project.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { VscTrash } from "react-icons/vsc";
 import { AiOutlineEdit } from "react-icons/ai";
 import styles from "./Overview.module.scss";
-import { deleteComment } from "../../../actions/Step.action";
+import {
+  deleteComment,
+  toogleEditModalVisibility,
+} from "../../../actions/Step.action";
 
 const Overview = ({
   collection,
@@ -15,7 +22,7 @@ const Overview = ({
   selectedProject,
   approveStep,
   final,
-
+  isModalOpen,
   feedbackActive,
   setFeedbackActive,
   showForm,
@@ -25,10 +32,15 @@ const Overview = ({
   postReview,
   role,
   deleteComment,
+  toogleEditModalVisibility,
+  feedback,
+  editReview,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [messageLoading, setMessageLoading] = useState(false);
+  const [editMsg, setEditMsg] = useState("");
+  const [editLoading, setEditLoading] = useState(false);
 
   const currentStepHandeler = () => {
     let current = 0;
@@ -87,8 +99,59 @@ const Overview = ({
     setShowForm(true);
   };
 
+  const editSubmitHandeler = async (e) => {
+    e.preventDefault();
+    setEditLoading(true);
+    let check = await editReview(editMsg, feedback._id, selectedStep._id);
+    if (check === true) {
+      toogleEditModalVisibility({});
+      setEditLoading(false);
+    } else {
+      setEditLoading(false);
+    }
+  };
+
   return (
     <Col md={3} className={styles.wrapper}>
+      <Modal
+        backdrop="static"
+        show={isModalOpen}
+        onHide={() => toogleEditModalVisibility({})}
+        centered
+        style={{ zIndex: "9999" }}
+      >
+        <Modal.Body className="bg_dark_bg bordered text-light">
+          <h4>Edit Feedback</h4>
+          <div className="pt-3">
+            {feedback && (
+              <form onSubmit={(e) => editSubmitHandeler(e)}>
+                <input
+                  type="text"
+                  value={editMsg === "" ? feedback.message : editMsg}
+                  onChange={(e) => setEditMsg(e.target.value)}
+                  className="form-control"
+                />
+                <div className="d-flex justify-content-around align-items-center pt-4">
+                  <Button
+                    type="submit"
+                    disabled={editLoading}
+                    className={styles.btn}
+                  >
+                    {editLoading ? "Loading..." : "Save"}
+                  </Button>
+                  <Button
+                    type="reset"
+                    onClick={() => toogleEditModalVisibility({})}
+                    className={styles.btn_feedback}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            )}
+          </div>
+        </Modal.Body>
+      </Modal>
       {(role === "admin" || role === "manager" || role === "developer") &&
         selectedStep.finalImage === null && (
           <Button onClick={handleClick} className={styles.btn}>
@@ -206,7 +269,10 @@ const Overview = ({
                     >
                       <VscTrash />
                     </span>
-                    <span className={styles.edit}>
+                    <span
+                      className={styles.edit}
+                      onClick={() => toogleEditModalVisibility(item)}
+                    >
                       <AiOutlineEdit />
                     </span>
                   </div>
@@ -224,10 +290,14 @@ const mapStateToProps = (state) => ({
   selectedStep: state.project.selected_step,
   selectedProject: state.project.selected_project,
   role: state.dashboard.role,
+  isModalOpen: state.project.feedback_modal,
+  feedback: state.project.selected_feedback,
 });
 
 export default connect(mapStateToProps, {
   approveStep,
   postReview,
   deleteComment,
+  toogleEditModalVisibility,
+  editReview,
 })(Overview);

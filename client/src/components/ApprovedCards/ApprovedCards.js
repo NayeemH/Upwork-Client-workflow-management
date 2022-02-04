@@ -16,10 +16,6 @@ const ApprovedCards = () => {
 
   return (
     <Container fluid className={styles.wrapper}>
-      {data.length === 0 && (
-        <span className="d-block h3">No Project Found</span>
-      )}
-
       {loading && (
         <div
           className="bg_dark d-flex justify-content-center align-items-center"

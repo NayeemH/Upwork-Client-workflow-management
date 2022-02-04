@@ -8,6 +8,8 @@ import {
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
+  EDIT_FEEDBACK_ERROR,
+  EDIT_FEEDBACK_SUCCESS,
   FETCH_DASHBOARD_PROJECT,
   FETCH_DASHBOARD_PROJECT_ERROR,
   GET_INVITED_PROJECT_DETAILS,
@@ -441,6 +443,41 @@ export const postReview = (points, msg, stepId) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: REVIEW_ADDED_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+};
+
+// EDIT REVIEW
+export const editReview = (msg, id, stepId) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
+
+  const formData = {
+    message: msg,
+  };
+  try {
+    // TODO ::: API CALL
+    await axios.patch(
+      `${BASE_URL}/api/project/feedback/${id}`,
+      JSON.stringify(formData),
+      config
+    );
+    //console.log(res);
+    dispatch({
+      type: EDIT_FEEDBACK_SUCCESS,
+    });
+    dispatch(getStepDetails(stepId));
+    toast.success("Feedback edited successfully");
+    return true;
+  } catch (err) {
+    dispatch({
+      type: EDIT_FEEDBACK_ERROR,
     });
     err.response.data.msg.map((msg) => toast.error(msg));
     return false;
