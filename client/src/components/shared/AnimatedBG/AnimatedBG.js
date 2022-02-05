@@ -5,6 +5,7 @@ const AnimatedBG = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.background}>
+        {/* <span></span>
         <span></span>
         <span></span>
         <span></span>
@@ -23,8 +24,7 @@ const AnimatedBG = () => {
         <span></span>
         <span></span>
         <span></span>
-        <span></span>
-        <span></span>
+        <span></span> */}
       </div>
     </div>
   );

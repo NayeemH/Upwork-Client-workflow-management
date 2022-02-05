@@ -16,20 +16,16 @@ const ApprovedCards = () => {
 
   return (
     <Container fluid className={styles.wrapper}>
-      {data.length === 0 && (
-        <span className="d-block h3">No Project Found</span>
-      )}
-
       {loading && (
         <div
-          className="bg-dark d-flex justify-content-center align-items-center"
+          className="bg_dark d-flex justify-content-center align-items-center"
           style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
         >
           <Spinner animation="border" variant="light" />
         </div>
       )}
 
-      <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+      <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">
         {data.map((item) => (
           <GridItemApprove item={item} key={item.id} />
         ))}

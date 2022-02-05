@@ -1,13 +1,14 @@
 :root {
-  --primary: #0d6efd;
-  --primary-hover: #014bb9;
+  --primary: #a8aa01;
+  --primary-hover: #7d8002;
   --secondary: rgb(211, 211, 211);
   --secondary-500: rgba(211, 211, 211, 0.5);
   --danger: #dc3545;
   --danger-hover: #a52734;
-  --dark: #212529;
-  --dark-bg: #1d2024;
+  --dark: #3a3a3a;
+  --dark-bg: #232323;
   --light: #fff;
+  --light-bg: #444444;
 }
 
 body {
@@ -67,4 +68,42 @@ select.form-select option:hover {
 .icon-hidden.form-control.is-valid,
 .icon-hidden .was-validated .form-control:invalid {
   background-image: none !important;
+}
+
+.rc-steps-item-error .rc-steps-item-icon {
+  border: 2px solid var(--danger) !important;
+  background: none !important;
+  position: relative;
+}
+
+.rc-steps-item-error .rc-steps-item-icon::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  background: var(--danger) !important;
+  background-image: url(./assets/question.svg) !important;
+  background-size: 10px !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  border-radius: 50%;
+  bottom: 60%;
+  left: 70%;
+  position: absolute;
+  z-index: 9999;
+}
+
+.rc-steps-item-process .rc-steps-item-icon {
+  background: var(--primary) !important;
+}
+
+.bg_dark {
+  background-color: var(--dark) !important;
+}
+.bg_dark_bg {
+  background-color: var(--dark-bg) !important;
+}
+
+#user .dropdown-menu.show {
+  background: var(--dark-bg) !important;
 }

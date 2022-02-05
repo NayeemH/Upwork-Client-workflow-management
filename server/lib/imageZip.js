@@ -9,7 +9,7 @@ const imageZip = (images, foldername = 'Images') => {
     images.forEach((image, i) => {
         const ext = image.path.split('.');
 
-        const buffer = fs.readFileSync(path.resolve(`data/image/original/${image.path}`));
+        const buffer = fs.readFileSync(path.resolve(`private-data/image/${image.path}`));
         zip.addFile(`${foldername}/${i + 1} ${image.name}.${ext[ext.length - 1]}`, buffer, '');
         
     });

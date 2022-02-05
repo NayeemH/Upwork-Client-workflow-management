@@ -18,6 +18,7 @@ const StepDetails = ({
   const [feedbackActive, setFeedbackActive] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [points, setPoints] = useState(null);
+  const [hoverFB, setHoverFB] = useState("");
 
   useEffect(() => {
     getStepDetails(stepId);
@@ -47,6 +48,8 @@ const StepDetails = ({
               setShowForm={setShowForm}
               points={points}
               setPoints={setPoints}
+              hoverFB={hoverFB}
+              setHoverFB={setHoverFB}
             />
           )}
           {selectedCollectionIndex >= 0 && (
@@ -60,6 +63,8 @@ const StepDetails = ({
               setShowForm={setShowForm}
               points={points}
               setPoints={setPoints}
+              hoverFB={hoverFB}
+              setHoverFB={setHoverFB}
             />
           )}
           {step.collections.length === 0 && <Overview />}

@@ -18,6 +18,36 @@
   margin-left: 8px;
   overflow: hidden;
 }
+.dropdown {
+  height: 35px;
+  width: 35px;
+  background: var(--dark-bg) !important;
+}
+
+.dropdown_item {
+  background: var(--dark-bg) !important;
+  color: var(--light) !important;
+}
+.dropdown_item:hover {
+  background: var(--dark) !important;
+  color: var(--light) !important;
+}
+
+.dropdown button {
+  padding: 0 0 !important;
+  height: 37px !important;
+  overflow: hidden !important;
+}
+
+.dropdown button:focus,
+.dropdown button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown::after {
+  display: none !important;
+}
 
 .image {
   height: 100%;

@@ -21,7 +21,7 @@ const DashboardCards = () => {
     <Container fluid className={styles.wrapper}>
       {loading && (
         <div
-          className="bg-dark d-flex justify-content-center align-items-center"
+          className="bg_dark d-flex justify-content-center align-items-center"
           style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
         >
           <Spinner animation="border" variant="light" />
@@ -38,7 +38,7 @@ const DashboardCards = () => {
           )}
           {listGrid === "grid" ? (
             <>
-              <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+              <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">
                 {data
                   .filter((item) => saved.includes(item.id))
                   .map((item) => (
@@ -55,7 +55,7 @@ const DashboardCards = () => {
         </>
       )}
       {listGrid === "grid" ? (
-        <Row xs={1} md={4} lg={5} className="g-4 py-4 mx-0">
+        <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">
           {data
             .filter((item) => !saved.includes(item.id))
             .map((item) => (

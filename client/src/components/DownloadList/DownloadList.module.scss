@@ -4,16 +4,23 @@
 
 .steps_wrapper {
   color: var(--light) !important;
-  background: var(--dark-bg) !important;
-  border: 1px solid var(--dark-bg);
+  background: var(--light-bg) !important;
+  border: 1px solid var(--light-bg);
   padding: 0 0 !important;
   border-radius: 7px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .steps_wrapper:hover {
   border: 1px solid var(--primary);
+}
+
+.hr {
+  width: 100%;
+  height: 1px;
+  background: var(--secondary);
+  margin-bottom: 15px;
 }
 
 .img {
@@ -36,4 +43,15 @@
 .btn:hover {
   background: var(--primary-hover) !important;
   color: var(--light) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .img {
+    width: 100%;
+    max-height: none;
+  }
+
+  .name {
+    padding-top: 10px;
+  }
 }

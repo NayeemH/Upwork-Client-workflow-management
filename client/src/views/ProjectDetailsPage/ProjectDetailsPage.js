@@ -17,7 +17,7 @@ const ProjectDetailsPage = () => {
   }, [id]);
   return (
     <div
-      className={`bg-dark text-light`}
+      className={`bg_dark text-light`}
       style={{ minHeight: "100vh", paddingBottom: "2.5rem" }}
     >
       <Topbar />
@@ -34,7 +34,7 @@ const ProjectDetailsPage = () => {
       </Breadcrumb>
       {project === {} || project._id !== id ? (
         <div
-          className="bg-dark d-flex justify-content-center align-items-center"
+          className="bg_dark d-flex justify-content-center align-items-center"
           style={{ minHeight: "calc(100vh - 150px)", zIndex: 999 }}
         >
           <Spinner animation="border" variant="light" />

@@ -54,6 +54,7 @@
   background: var(--dark-bg);
   color: var(--light);
   border-radius: 5px !important;
+  z-index: 9999;
 }
 
 .item {
@@ -77,4 +78,29 @@
 .point {
   position: absolute;
   z-index: 9999;
+}
+
+.point__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  font-weight: bold !important;
+  border-radius: 50%;
+  border: 2px solid var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.point__icon.active {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .img_wrapper {
+    width: 100%;
+  }
 }

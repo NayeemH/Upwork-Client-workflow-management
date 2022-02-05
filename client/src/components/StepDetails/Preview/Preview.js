@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "./Preview.module.scss";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MdHistory } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectedCollectionChange,
   selectIndex,
@@ -12,7 +12,7 @@ import {
 import { IoMdDownload } from "react-icons/io";
 import { saveAs } from "file-saver";
 import Moment from "react-moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiHelpCircle } from "react-icons/bi";
 import ReactPannellum from "react-pannellum";
 
@@ -23,16 +23,92 @@ const Preview = ({
   collections,
   projectId,
   feedbackActive,
-  setFeedbackActive,
   showForm,
   setShowForm,
   points,
   setPoints,
+  hoverFB,
+  setHoverFB,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showHistory, setShowHistory] = useState(false);
   const imgRef = useRef(null);
+  const project = useSelector((state) => state.project.selected_project);
+  const { stepId } = useParams();
+
+  useEffect(() => {
+    window.addEventListener("keyup", (e) => {
+      if (e.keyCode === 37) {
+        if (index > 0) {
+          dispatch(selectIndex(index - 1));
+        }
+      }
+      if (e.keyCode === 39) {
+        if (index !== length - 1) {
+          dispatch(selectIndex(index + 1));
+        }
+      }
+      if (e.keyCode === 38) {
+        let currentProd = undefined;
+        let currentStep = undefined;
+
+        project.productList.map((item, i) => {
+          item.steps.map((stp, j) => {
+            if (stepId === stp._id) {
+              currentProd = i;
+              currentStep = j;
+            }
+            return null;
+          });
+          return null;
+        });
+
+        let len = project.productList[currentProd].steps.length;
+
+        //console.log(currentProd, currentStep, len);
+        if (
+          currentProd !== undefined &&
+          currentStep !== undefined &&
+          len - 1 > currentStep
+        ) {
+          navigate(
+            `/project/${projectId}/step/${
+              project.productList[currentProd].steps[currentStep + 1]._id
+            }`
+          );
+        }
+      }
+      if (e.keyCode === 40) {
+        let currentProd = undefined;
+        let currentStep = undefined;
+
+        project.productList.map((item, i) => {
+          item.steps.map((stp, j) => {
+            if (stepId === stp._id) {
+              currentProd = i;
+              currentStep = j;
+            }
+            return null;
+          });
+          return null;
+        });
+
+        // console.log(currentProd, currentStep.len);
+        if (
+          currentProd !== undefined &&
+          currentStep !== undefined &&
+          currentStep > 0
+        ) {
+          navigate(
+            `/project/${projectId}/step/${
+              project.productList[currentProd].steps[currentStep - 1]._id
+            }`
+          );
+        }
+      }
+    });
+  }, []);
 
   const downloadImage = () => {
     saveAs(
@@ -109,7 +185,6 @@ const Preview = ({
               width: "100%",
               height: "90vh",
             }}
-            onClick={(e) => console.log("AAAA", e)}
           />
         ) : (
           <img
@@ -135,8 +210,11 @@ const Preview = ({
         {(!data.imageType || data.imageType !== "3d") &&
           data.feedbacks.map((feedback, i) => (
             <div
-              className={styles.point}
+              className={`${styles.point} 
+              }`}
               key={feedback._id}
+              onMouseLeave={() => setHoverFB("")}
+              onMouseEnter={() => setHoverFB(feedback._id)}
               style={{
                 left: `${feedback.points[0] - 1}%`,
                 top: `${feedback.points[1] - 1}%`,
@@ -151,15 +229,19 @@ const Preview = ({
                   </Tooltip>
                 }
               >
-                <span>
-                  <BiHelpCircle id={feedback._id} />
+                <span
+                  className={`${styles.point__icon} ${
+                    hoverFB === feedback._id ? styles.active : ""
+                  }`}
+                >
+                  {i + 1}
                 </span>
               </OverlayTrigger>
             </div>
           ))}
 
         <div
-          className={`d-flex justify-content-between align-items-center pt-2 ${styles.history_wrapper}`}
+          className={`d-flex justify-content-between align-items-center pt-2 pb-md-0 pb-3 ${styles.history_wrapper}`}
         >
           {showHistory && (
             <div className={styles.list}>
@@ -169,7 +251,9 @@ const Preview = ({
                   className={`py-1 ${styles.item}`}
                   onClick={() => selectFunc(i)}
                 >
-                  <span className="d-block">{item.title}</span>
+                  <span className="d-block">
+                    {i + 1}. {item.title}
+                  </span>
                   <span className={styles.date}>
                     <Moment format="DD-MM-YYYY">{item.createAt}</Moment>
                   </span>

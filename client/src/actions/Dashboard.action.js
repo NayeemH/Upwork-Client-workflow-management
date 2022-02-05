@@ -32,6 +32,7 @@ export const toogleDashboardProjectStyle = (type) => (dispatch) => {
     payload: type,
   });
 };
+
 // SET ROLE ACTION
 export const setRole = (type) => (dispatch) => {
   dispatch({

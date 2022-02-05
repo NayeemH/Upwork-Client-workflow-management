@@ -4,6 +4,18 @@ const Schema = mongoose.Schema;
 
 
 const feedbackSchema = Schema({
+    userName: {
+        type: String,
+        required: true
+    },
+    userImage: {
+        type: String,
+        required: true
+    },
+    userRole: {
+        type: String,
+        required: true
+    },
     message: {
         type: String,
         required: true

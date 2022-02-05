@@ -15,7 +15,12 @@ const GridItemApprove = ({ item }) => {
       {item && (
         <Col>
           <Card bg="dark" text="light" className={styles.crd}>
-            <Card.Img variant="top" src={`${IMAGE_PATH}small/${item.image}`} />
+            <Card.Img
+              onClick={() => navigate(`/project/${item.id}`)}
+              style={{ cursor: "pointer" }}
+              variant="top"
+              src={`${IMAGE_PATH}small/${item.image}`}
+            />
             <Card.Body>
               <Card.Title
                 onClick={() => navigate(`/project/${item.id}`)}
@@ -23,7 +28,9 @@ const GridItemApprove = ({ item }) => {
               >
                 {item.name}
               </Card.Title>
-              <Card.Text>{item.description}</Card.Text>
+              <Card.Text className={styles.desc}>
+                {item.description.substring(0, 35)}...
+              </Card.Text>
               <Users item={item} />
             </Card.Body>
             <Card.Footer className="d-flex justify-content-between align-items-center">

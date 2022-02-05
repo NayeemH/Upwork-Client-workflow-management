@@ -1,7 +1,7 @@
 .crd {
-  background: var(--dark-bg) !important;
-  border: 1px solid var(--secondary-500) !important;
-  min-height: 450px;
+  background: var(--light-bg) !important;
+  border: 1px solid var(--light-bg) !important;
+  min-height: 400px;
   transition: 0.3s all ease-in-out;
 }
 
@@ -15,6 +15,11 @@
   color: var(--primary) !important;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+
+.desc {
+  font-size: 13px;
+  color: var(--primary) !important;
 }
 
 .down:hover {

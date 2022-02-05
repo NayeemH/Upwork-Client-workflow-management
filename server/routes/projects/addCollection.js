@@ -37,7 +37,7 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
 
         
         // Save the image        
-        const images = await saveImage(buffer, mimetype);
+        const images = await saveImage(buffer, mimetype, step.name);
 
         const collection = new Collection({
             projectId: project._id,
@@ -52,6 +52,9 @@ router.post('/:stepId', fileFetch.single('image'), async (req, res, next) => {
             {_id: stepId}, 
             {$push: {collections: newCollection._id}}
         );
+        
+        // Setting viewed property to false
+        await Step.findOneAndUpdate({_id: stepId}, {$set: {viewed: false, feedbackLength: 0}});
         
 
         res.json({

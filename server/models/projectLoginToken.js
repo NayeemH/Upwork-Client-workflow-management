@@ -27,8 +27,7 @@ const projectTokenSchema = Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now(),
-        expires: 3600
+        default: Date.now()
     }
 }, {timestamps: true});
 

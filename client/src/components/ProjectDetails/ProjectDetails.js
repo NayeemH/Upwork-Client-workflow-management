@@ -52,7 +52,7 @@ const ProjectDetails = ({ project }) => {
   };
   return (
     <div className={styles.wrapper}>
-      <div className="d-flex">
+      <div className="d-flex flex-md-row flex-column align-items-center">
         {(role === "admin" || role === "manager") && (
           <Button
             variant="primary"
@@ -67,16 +67,16 @@ const ProjectDetails = ({ project }) => {
           variant="primary"
           as={Link}
           to={`/project/${id}/download`}
-          className={styles.button}
+          className={`${styles.button} mt-md-0 `}
         >
-          Download
+          Finished Products Downloads
         </Button>
       </div>
       <div className={styles.steps_wrapper}>
         {project.productList &&
           project.productList.map((task, index) => (
             <div className={styles.task} key={index}>
-              <div className="p-3">
+              <div className={styles.img_task}>
                 <img
                   src={`${IMAGE_PATH}small/${task.image}`}
                   className="img-fluid"
@@ -98,6 +98,17 @@ const ProjectDetails = ({ project }) => {
                         title={step.name}
                         key={i}
                         className={styles.stp}
+                        icon={
+                          <div className={styles.icon__text_wrapper}>
+                            <span className="text-light">{i + 1}</span>
+                            {step.feedbackLength > 0 &&
+                              step.viewed === true && (
+                                <span className={styles.count}>
+                                  {step.feedbackLength}
+                                </span>
+                              )}
+                          </div>
+                        }
                         onClick={() =>
                           navigate(`/project/${project._id}/step/${step._id}`)
                         }
@@ -110,9 +121,9 @@ const ProjectDetails = ({ project }) => {
                   variant="outline-primary"
                   disabled={!downloadButtonHandeler(task)}
                   onClick={() => downloadProduct(task)}
-                  className={styles.btn}
+                  className={styles.btn__dwn}
                 >
-                  Download Resource
+                  Go to Downloads
                 </Button>
               </div>
             </div>

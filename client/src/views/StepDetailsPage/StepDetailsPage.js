@@ -13,7 +13,7 @@ const StepDetailsPage = () => {
     (state) => state.project.selected_project
   );
   return (
-    <div className={`bg-dark text-light`} style={{ minHeight: "100vh" }}>
+    <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>

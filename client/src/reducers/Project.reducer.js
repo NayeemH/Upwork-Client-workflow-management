@@ -8,6 +8,9 @@ import {
   COLLECTION_INDEX,
   COLLECTION_NEXT,
   COLLECTION_PREV,
+  DELETE_COMMENT_ERROR,
+  DELETE_COMMENT_SUCCESS,
+  EDIT_FEEDBACK_MODAL_TOGGLE,
   FETCH_DASHBOARD_PROJECT,
   GET_INVITED_PROJECT_DETAILS,
   GET_PROJECT_DETAILS,
@@ -27,6 +30,8 @@ const initialState = {
   invited_project: {},
   selected_step: {},
   selected_collection: 0,
+  selected_feedback: {},
+  feedback_modal: false,
   err: "",
   loading: true,
 };
@@ -106,7 +111,33 @@ const projectReducer = (state = initialState, action) => {
         ...state,
         selected_collection: payload,
       };
+    case DELETE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        selected_step: {
+          ...state.selected_step,
+          collections: state.selected_step.collections.map((collection) => {
+            if (collection._id === payload.collectionId) {
+              let tmp = collection.feedbacks.filter(
+                (item) => item._id !== payload.feedbackId
+              );
+              return { ...collection, feedbacks: tmp };
+            } else {
+              return collection;
+            }
+          }),
+        },
+        loading: false,
+      };
+
+    case EDIT_FEEDBACK_MODAL_TOGGLE:
+      return {
+        ...state,
+        selected_feedback: payload ? payload : {},
+        feedback_modal: !state.feedback_modal,
+      };
     case ADD_COLLECTION_ERROR:
+    case DELETE_COMMENT_ERROR:
     case GET_STEP_ERROR:
     case PROJECT_CREATE_ERROR:
     case APPROVED_PROJECT_LOAD_ERROR:

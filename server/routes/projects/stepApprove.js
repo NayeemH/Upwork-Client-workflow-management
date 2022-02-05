@@ -36,7 +36,7 @@ router.post('/:stepId', async (req, res, next) => {
         
         await Step.findOneAndUpdate(
             {_id: stepId}, 
-            {$set: {finalImage: collection.image}}
+            {$set: {finalImage: collection.image, feedbackLength: 0}}
         );
         
 
