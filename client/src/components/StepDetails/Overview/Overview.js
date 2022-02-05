@@ -166,7 +166,7 @@ const Overview = ({
           <p className={styles.desc}>{collection.description}</p>
           {final && (
             <>
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
                 {(role === "client" ||
                   role === "admin" ||
                   role === "manager") &&

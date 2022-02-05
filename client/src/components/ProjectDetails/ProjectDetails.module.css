@@ -10,7 +10,7 @@
 .task {
   display: grid;
   grid-template-columns: 220px 1fr 200px;
-  background: var(--dark-bg);
+  background: var(--light-bg);
   margin-bottom: 20px;
 }
 
@@ -93,12 +93,34 @@
   color: var(--secondary) !important;
 }
 
+.btn__dwn {
+  border: 2px solid var(--primary) !important;
+  color: var(--light) !important;
+  padding: 2px 20px !important;
+  border-radius: 10px;
+}
+.btn__dwn:disabled {
+  border: 2px solid var(--light) !important;
+  color: var(--light) !important;
+  padding: 2px 20px !important;
+  border-radius: 10px;
+}
+.btn__dwn:hover {
+  border: 2px solid var(--primary) !important;
+  background: var(--dark) !important;
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
-    padding: 0 10px !important;
+    padding: 5px 10px !important;
   }
   .task {
     grid-template-columns: 1fr !important;
-    padding-bottom: 30px;
+    padding: 10px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .name {
+    padding-top: 10px;
   }
 }

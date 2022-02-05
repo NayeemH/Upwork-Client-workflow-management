@@ -21,7 +21,6 @@ const DownloadList = ({ project }) => {
         console.log(error);
       }
     };
-    console.log(size);
     getInfo();
   }, []);
   const [selected, setSelected] = useState([]);
@@ -179,29 +178,24 @@ const DownloadList = ({ project }) => {
         <div className={styles.steps_wrapper}>
           <div className="d-flex justify-content-center align-items-center"></div>
           <Row>
-            <Col md={7} className="d-flex align-items-center p-3 px-5">
-              <Button
-                variant="primary"
-                disabled={selected.length <= 0}
-                className={styles.btn}
-                onClick={() => downloadHandeler1()}
-              >
-                Download
-              </Button>
-              <Button
-                variant="primary"
-                disabled={selected2.length <= 0}
-                className={styles.btn}
-                onClick={() => downloadHandeler2()}
-              >
-                Genarate Download Link
-              </Button>
-            </Col>
+            <Col
+              xs={12}
+              md={6}
+              className="d-flex flex-md-row flex-column align-items-center p-3 px-5"
+            ></Col>
 
             <Col
               md={3}
               className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
             >
+              <Button
+                variant="primary"
+                disabled={selected.length <= 0}
+                className={`${styles.btn}  mb-3`}
+                onClick={() => downloadHandeler1()}
+              >
+                Download all selected files
+              </Button>
               <span className="d-block">Select all for downloaing now</span>
               <Form.Check
                 checked={all1}
@@ -211,9 +205,17 @@ const DownloadList = ({ project }) => {
               />
             </Col>
             <Col
-              md={2}
+              md={3}
               className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
             >
+              <Button
+                variant="primary"
+                disabled={selected2.length <= 0}
+                className={`${styles.btn} mb-3`}
+                onClick={() => downloadHandeler2()}
+              >
+                Genarate Download Link
+              </Button>
               <span className="d-block">
                 Select all for genarating download link
               </span>
@@ -226,12 +228,16 @@ const DownloadList = ({ project }) => {
             </Col>
           </Row>
         </div>
+        <div className={styles.hr}></div>
         {project.productList
           .filter((product) => checkValidity(product))
           .map((task, index) => (
             <div className={styles.steps_wrapper} key={index}>
               <Row>
-                <Col md={4} className="d-flex align-items-center">
+                <Col
+                  md={3}
+                  className="d-flex align-items-center flex-md-row flex-column"
+                >
                   <img
                     src={`${IMAGE_PATH}small/${task.image}`}
                     className={styles.img}
@@ -241,7 +247,8 @@ const DownloadList = ({ project }) => {
                 </Col>
                 <Col
                   md={1}
-                  className="d-flex align-items-end flex-column justify-content-center"
+                  xs={6}
+                  className="d-flex align-items-end flex-column justify-content-center p-md-0 p-3"
                 >
                   <span className="d-block">Dimension</span>
                   <span className="d-block">Size</span>
@@ -249,7 +256,8 @@ const DownloadList = ({ project }) => {
                 </Col>
                 <Col
                   md={2}
-                  className="d-flex align-items-start flex-column justify-content-center"
+                  xs={6}
+                  className="d-flex align-items-start flex-column justify-content-center p-md-0 p-3"
                 >
                   {size.map((item, index) =>
                     item._id === task._id ? (
@@ -276,7 +284,8 @@ const DownloadList = ({ project }) => {
                 </Col>
                 <Col
                   md={3}
-                  className="d-flex align-items-center justify-content-center"
+                  xs={6}
+                  className="d-flex align-items-center justify-content-center p-md-0 p-3"
                 >
                   <Form.Check
                     checked={selected.includes(task._id)}
@@ -286,8 +295,9 @@ const DownloadList = ({ project }) => {
                   />
                 </Col>
                 <Col
-                  md={2}
-                  className="d-flex align-items-center justify-content-center"
+                  md={3}
+                  xs={6}
+                  className="d-flex align-items-center justify-content-center p-md-0 p-3"
                 >
                   <Form.Check
                     type="checkbox"
