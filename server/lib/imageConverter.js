@@ -23,10 +23,10 @@ const fileFetch = multer({storage: memoryStorage});
 
 
 // Save image
-const saveImage = async (buffer, mimetype) => {
+const saveImage = async (buffer, mimetype, imageName = 'Concept') => {
     // Make small image buffer
     const resizedImage = await smallBufferImage(buffer);
-    const waterMarkBuffer = await waterMarkImage(buffer);
+    const waterMarkBuffer = await waterMarkImage(buffer, imageName);
     
     const ext = mimetype.split('/')[1];
     const name = `${Date.now()}.${crypto.randomBytes(15).toString('hex')}`;
