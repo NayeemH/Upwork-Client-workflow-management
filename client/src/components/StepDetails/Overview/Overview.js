@@ -15,6 +15,8 @@ import {
   deleteComment,
   toogleEditModalVisibility,
 } from "../../../actions/Step.action";
+import { AiOutlineCheck } from "react-icons/ai";
+import Moment from "react-moment";
 
 const Overview = ({
   collection,
@@ -43,6 +45,7 @@ const Overview = ({
   const [messageLoading, setMessageLoading] = useState(false);
   const [editMsg, setEditMsg] = useState("");
   const [editLoading, setEditLoading] = useState(false);
+  const [submitModal, setsubmitModal] = useState(false);
 
   const currentStepHandeler = () => {
     let current = 0;
@@ -86,7 +89,18 @@ const Overview = ({
     if (check === true) {
       cancelHandeler();
     }
+    setsubmitModal(false);
     setMessageLoading(false);
+  };
+
+  const modalHandeler = (e) => {
+    e.preventDefault();
+    setsubmitModal(true);
+  };
+
+  const cancelHandelerModal = () => {
+    setsubmitModal(false);
+    cancelHandeler();
   };
 
   const cancelHandeler = () => {
@@ -115,6 +129,53 @@ const Overview = ({
 
   return (
     <Col md={3} className={styles.wrapper}>
+      <Modal
+        backdrop="static"
+        show={submitModal}
+        size="lg"
+        onHide={() => setsubmitModal(false)}
+        centered
+        style={{ zIndex: "9999" }}
+      >
+        <Modal.Body className="">
+          <h4>Give Feedback</h4>
+          <div className="pt-3">
+            {feedback && (
+              <form onSubmit={(e) => formSubmitHandeler(e)}>
+                <span className={styles.submit_feedback_modal_text}>
+                  You hereby let us know that your organization has finished
+                  collecting feedback on this visual, and that our team can get
+                  to work processing the feedback for a new version. We strive
+                  to achieve a good result in as few steps as possible end
+                  result. So check everything carefully.
+                </span>
+                <div className="d-flex justify-content-end align-items-center pt-4">
+                  <Button
+                    type="reset"
+                    onClick={() => cancelHandelerModal()}
+                    className={`${styles.btn_submit} ${styles.red}`}
+                  >
+                    <span style={{ marginRight: 5 }}>
+                      <FaTimes />{" "}
+                    </span>{" "}
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={messageLoading}
+                    className={styles.btn_submit}
+                  >
+                    <span style={{ marginRight: 5 }}>
+                      <AiOutlineCheck />{" "}
+                    </span>
+                    {messageLoading ? "Sending..." : "Send"}
+                  </Button>
+                </div>
+              </form>
+            )}
+          </div>
+        </Modal.Body>
+      </Modal>
       <Modal
         backdrop="static"
         show={isModalOpen}
@@ -206,7 +267,7 @@ const Overview = ({
                 collection._id === points.stepId &&
                 showForm === true && (
                   <div className={styles.form}>
-                    <Form onSubmit={(e) => formSubmitHandeler(e)}>
+                    <Form onSubmit={(e) => modalHandeler(e)}>
                       <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Control
                           as="textarea"
@@ -265,10 +326,15 @@ const Overview = ({
                         />
                       </div>
                       <span className={styles.username}>{item.userName}</span>
-                      <span className={styles.userrole}>{item.userRole}</span>
+                      {/* <span className={styles.userrole}>{item.userRole}</span> */}
                     </div>
                     <span className={styles.fb_text}>
                       {i + 1}. {item.message}
+                    </span>
+                    <span className={styles.fb_date}>
+                      <Moment format="DD-MM-YYYY hh:mm">
+                        {item.updatedAt}
+                      </Moment>
                     </span>
                   </div>
                   <div className={styles.actions}>

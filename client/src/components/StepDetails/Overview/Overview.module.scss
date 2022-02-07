@@ -22,6 +22,25 @@
   background: var(--primary-hover) !important;
   transition: 0.3s all ease-in-out;
 }
+
+.btn_submit {
+  outline: none !important;
+  border: 1px solid rgb(0, 134, 22) !important;
+  color: rgb(0, 134, 22) !important;
+  padding: 8px 26px;
+  background: none !important;
+  transition: 0.3s all ease-in-out;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
+}
+.btn_submit.red {
+  border: 1px solid var(--danger) !important;
+  color: var(--danger) !important;
+}
+
+.btn_submit:hover {
+  transition: 0.3s all ease-in-out;
+}
 .btn_feedback {
   outline: none !important;
   border: 1px solid var(--primary) !important;
@@ -74,9 +93,8 @@
 
 .username {
   font-size: 16px;
-  font-weight: bold;
   margin-right: 4px;
-  color: var(--primary);
+  color: var(--light);
 }
 
 .userrole {
@@ -105,4 +123,9 @@
   color: var(--primary);
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+
+.fb_date {
+  font-size: 13px;
+  color: var(--secondary);
 }
