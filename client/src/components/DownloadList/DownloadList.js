@@ -6,6 +6,8 @@ import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import styles from "./DownloadList.module.scss";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Moment from "react-moment";
+import { MdContentCopy } from "react-icons/md";
+import { AiOutlineCheck } from "react-icons/ai";
 const FileDownload = require("js-file-download");
 
 const DownloadList = ({ project }) => {
@@ -151,26 +153,33 @@ const DownloadList = ({ project }) => {
           backdrop="static"
           show={download !== ""}
           onHide={() => setDownload("")}
+          size="lg"
+          centered
         >
-          <Modal.Body className="bg_dark_bg bordered text-light">
-            <h4>Download Link</h4>
-            <div className="py-3">
-              <input
-                type="text"
-                className="form-control"
-                disabled
-                value={download}
-              />
-            </div>
-            <div className="d-flex justify-content-between align-items-center">
+          <Modal.Body>
+            <span className="fs-4">Your downloads are ready</span>
+            <span className="d-block pt-2">
+              Copy the link to share your downloads.
+            </span>
+
+            <span className="d-block pt-3 pb-3">
+              {download}{" "}
               <CopyToClipboard
                 text={download}
                 onCopy={() => toast.success("Link saved to clipboard")}
               >
-                <Button className={styles.btn}>Copy Link</Button>
+                <span className={styles.down}>
+                  <MdContentCopy />
+                </span>
               </CopyToClipboard>
-              <Button variant="dark" onClick={() => setDownload("")}>
-                Close
+            </span>
+
+            <div className="d-flex justify-content-end align-items-center">
+              <Button
+                className={styles.down_btn}
+                onClick={() => setDownload("")}
+              >
+                <AiOutlineCheck /> Finish
               </Button>
             </div>
           </Modal.Body>

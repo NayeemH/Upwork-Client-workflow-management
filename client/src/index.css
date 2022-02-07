@@ -50,17 +50,18 @@ select.form-select option:hover {
 }
 
 .rc-steps-item-process .rc-steps-item-icon .rc-steps-icon {
-  color: #fff !important;
+  color: var(--light-bg) !important;
   font-weight: bold;
 }
 
 .rc-steps-item-finish .rc-steps-item-icon {
   background: var(--primary) !important;
   color: var(--light) !important;
+  border: none !important;
 }
 
 .rc-steps-item-wait .rc-steps-item-icon {
-  background: var(--dark) !important;
+  background: var(--light-bg) !important;
 }
 /* STEPS STYLES END*/
 
@@ -94,7 +95,40 @@ select.form-select option:hover {
 }
 
 .rc-steps-item-process .rc-steps-item-icon {
-  background: var(--primary) !important;
+  background: none !important;
+}
+
+.rc-steps-item.rc-steps-item-wait .rc-steps-item-icon .rc-steps-icon {
+  color: var(--light-bg) !important;
+}
+.rc-steps-item.rc-steps-item-wait .rc-steps-item-icon,
+.rc-steps-item.rc-steps-item-process .rc-steps-item-icon {
+  border-width: 2px !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: var(--primary) !important;
+  height: 2px;
+}
+.rc-steps-item-process .rc-steps-item-tail:after,
+.rc-steps-item-wait .rc-steps-item-tail:after {
+  background-color: transparent !important;
+  border-bottom: 2px dashed var(--light) !important;
+}
+
+.rc-steps-item:last-child .rc-steps-item-tail,
+.rc-steps-item:last-child .rc-steps-item-title:after {
+  content: "";
+  display: inline-block !important;
+  background: transparent !important;
+  height: 1px;
+  border-radius: 1px;
+  width: 82%;
+  transition: background 0.3s;
+}
+
+.rc-steps-label-vertical .rc-steps-item-tail {
+  padding: 0 12px !important;
 }
 
 .bg_dark {

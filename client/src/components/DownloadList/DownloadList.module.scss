@@ -45,6 +45,29 @@
   color: var(--light) !important;
 }
 
+.down:hover,
+.down {
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.modal_wrapper {
+  width: 1500px !important;
+  background: #fff;
+}
+
+.down_btn {
+  border: 1px solid rgb(0, 134, 22) !important;
+  background: none !important;
+  color: rgb(0, 134, 22) !important;
+  transition: 0.3s all ease-in-out;
+}
+
+.down_btn:hover {
+  background: rgba(0, 134, 22, 0.3) !important;
+  transition: 0.3s all ease-in-out;
+}
+
 @media screen and (max-width: 768px) {
   .img {
     width: 100%;

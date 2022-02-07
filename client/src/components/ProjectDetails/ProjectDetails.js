@@ -88,7 +88,9 @@ const ProjectDetails = ({ project }) => {
                 <Steps
                   labelPlacement="vertical"
                   current={currentStepHandeler(task)}
-                  icons={{ finish: <AiOutlineCheck color="#fff" /> }}
+                  icons={{
+                    finish: <AiOutlineCheck color="#fff" />,
+                  }}
                   direction={width > 768 ? "horizontal" : "vertical"}
                 >
                   {task.steps &&
@@ -98,17 +100,6 @@ const ProjectDetails = ({ project }) => {
                         title={step.name}
                         key={i}
                         className={styles.stp}
-                        icon={
-                          <div className={styles.icon__text_wrapper}>
-                            <span className="text-light">{i + 1}</span>
-                            {step.feedbackLength > 0 &&
-                              step.viewed === true && (
-                                <span className={styles.count}>
-                                  {step.feedbackLength}
-                                </span>
-                              )}
-                          </div>
-                        }
                         onClick={() =>
                           navigate(`/project/${project._id}/step/${step._id}`)
                         }

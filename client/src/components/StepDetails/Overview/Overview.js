@@ -8,8 +8,8 @@ import {
   postReview,
 } from "../../../actions/Project.action";
 import { IMAGE_PATH } from "../../../constants/URL";
-import { VscTrash } from "react-icons/vsc";
-import { AiOutlineEdit } from "react-icons/ai";
+import { FaTimes } from "react-icons/fa";
+import { MdModeEdit } from "react-icons/md";
 import styles from "./Overview.module.scss";
 import {
   deleteComment,
@@ -178,7 +178,7 @@ const Overview = ({
                       }
                       className={styles.btn}
                     >
-                      Approve
+                      Aggree
                     </Button>
                   )}
                 {selectedStep.finalImage === null && feedbackActive ? (
@@ -276,13 +276,13 @@ const Overview = ({
                       className={styles.delete}
                       onClick={() => deleteComment(collection._id, item._id)}
                     >
-                      <VscTrash />
+                      <FaTimes />
                     </span>
                     <span
                       className={styles.edit}
                       onClick={() => toogleEditModalVisibility(item)}
                     >
-                      <AiOutlineEdit />
+                      <MdModeEdit />
                     </span>
                   </div>
                 </div>

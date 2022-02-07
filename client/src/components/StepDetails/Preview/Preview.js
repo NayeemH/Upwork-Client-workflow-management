@@ -245,6 +245,10 @@ const Preview = ({
         >
           {showHistory && (
             <div className={styles.list}>
+              <span className={styles.history_heading}>
+                Use arrow keys left and right to <br />
+                step through history.
+              </span>
               {collections.map((item, i) => (
                 <div
                   key={item._id}
