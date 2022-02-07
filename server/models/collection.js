@@ -27,7 +27,7 @@ const feedbackSchema = Schema({
     points: {
         type: Array,
     }
-})
+}, {timestamps: true});
 
 // Project Users data
 const collectionSchema = Schema({
@@ -57,7 +57,7 @@ const collectionSchema = Schema({
         type: Date,
         default: Date.now()
     }
-}); 
+}, {timestamps: true}); 
 
 
 
