@@ -31,17 +31,13 @@ const AddTaskForm = ({ createProjectTask, id }) => {
       toast.error("Please add atleast one step");
       return;
     }
-    if (selectedFile) {
-      setIsLoading(true);
-      let check = await createProjectTask(values, selectedFile, id, input);
-      if (check) {
-        setIsLoading(false);
-        navigate(`/project/${id}`);
-      }
+    setIsLoading(true);
+    let check = await createProjectTask(values, selectedFile, id, input);
+    if (check) {
       setIsLoading(false);
-    } else {
-      toast.error("Please select a file");
+      navigate(`/project/${id}`);
     }
+    setIsLoading(false);
   };
   const addHandeler = () => {
     setInput([...input, { id: input.length, name: "" }]);

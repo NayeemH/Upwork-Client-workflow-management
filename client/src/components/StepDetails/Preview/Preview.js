@@ -146,12 +146,7 @@ const Preview = ({
   };
 
   const imgClickHandeler = (e) => {
-    if (
-      feedbackActive &&
-      !showForm &&
-      !data.imageType &&
-      !data.imageType === "3d"
-    ) {
+    if (e.target.id === "img") {
       const { clientX, clientY } = e;
       const { width, height, left, top } =
         imgRef.current.getBoundingClientRect();
@@ -232,6 +227,7 @@ const Preview = ({
           <img
             src={`${IMAGE_PATH}original/${data.image}`}
             alt=""
+            id="img"
             onClick={(e) => imgClickHandeler(e)}
             className={styles.img}
           />
