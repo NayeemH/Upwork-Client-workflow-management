@@ -11,7 +11,7 @@ router.post('/', fileFetch.single('image'), async (req, res, next) => {
     try {
         const {userId, userType} = req.user;
         const {projectId, name, steps} = req.body;
-        const {buffer, mimetype} = req.file;
+        
 
         // Check if this user is manager or admin
         if(!((userType === 'manager') || (userType === 'admin'))) throw Error('You are not authorized. Only admin and manager can use this');
@@ -27,8 +27,13 @@ router.post('/', fileFetch.single('image'), async (req, res, next) => {
 
 
 
-        // Save the image        
-        const images = await saveImage(buffer, mimetype);
+        // Save the image    
+        let images;
+        if(req.file) {
+            const {buffer, mimetype} = req.file;
+            images = await saveImage(buffer, mimetype);
+        }    
+        
 
         // Creating step data
         const newSteps = await Promise.all(
@@ -44,7 +49,7 @@ router.post('/', fileFetch.single('image'), async (req, res, next) => {
         const product = new Product({
             projectId: project._id,
             name,
-            image: images[1],
+            image: images && images[1],
             steps: newSteps.map(({_id}) => _id)
         });
 
