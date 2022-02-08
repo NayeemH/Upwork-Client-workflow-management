@@ -120,7 +120,7 @@ const Preview = ({
         pitch: coords[0],
         yaw: coords[1],
         type: "info",
-        text: "Demo",
+        text: "",
       });
 
       setPoints({ x: coords[0], y: coords[1], stepId: data._id });
@@ -207,12 +207,13 @@ const Preview = ({
               autoLoad: true,
               hotSpotDebug: true,
               hotSpots: [
-                ...data.feedbacks.map((item) => {
+                ...data.feedbacks.map((item, i) => {
                   return {
                     id: item._id,
                     pitch: item.points[0],
                     yaw: item.points[1],
                     type: "info",
+                    content: `${i + 1}`,
                     text: item.message,
                   };
                 }),

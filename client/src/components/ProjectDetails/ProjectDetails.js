@@ -77,13 +77,15 @@ const ProjectDetails = ({ project }) => {
           project.productList.map((task, index) => (
             <div className={styles.task} key={index}>
               <div className={styles.img_task}>
-                <img
-                  src={`${IMAGE_PATH}small/${task.image}`}
-                  className="img-fluid"
-                  alt=""
-                />
+                {task.image && (
+                  <img
+                    src={`${IMAGE_PATH}small/${task.image}`}
+                    className="img-fluid"
+                    alt=""
+                  />
+                )}
               </div>
-              <div className="d-flex flex-column  justify-content-center">
+              <div className="d-flex flex-column  justify-content-center py-3">
                 <h4 className={styles.name}>{task.name}</h4>
                 <Steps
                   labelPlacement="vertical"
