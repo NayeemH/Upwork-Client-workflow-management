@@ -27,13 +27,15 @@ router.use('/project',isAuth, project);
 // Profile Info
 router.use('/profile', isAuth, profile);
 
+
+// Download link
+router.use('/download', downloadLink);
+
 // Profile Info
 router.use('/download', isAuth, download);
 
 
 
-// Download link
-router.use('/download', downloadLink);
 
 
 module.exports = router;
