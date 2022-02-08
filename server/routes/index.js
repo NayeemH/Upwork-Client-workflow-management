@@ -9,6 +9,8 @@ const activate = require('./activate');
 const project = require('./projects');
 const profile = require('./profile');
 const download = require('./download');
+const downloadLink = require('./activate/download');
+
 
 // User Register and login function 
 router.use('/user', user);
@@ -27,6 +29,11 @@ router.use('/profile', isAuth, profile);
 
 // Profile Info
 router.use('/download', isAuth, download);
+
+
+
+// Download link
+router.use('/download', downloadLink);
 
 
 module.exports = router;
