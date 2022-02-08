@@ -141,3 +141,13 @@ select.form-select option:hover {
 #user .dropdown-menu.show {
   background: var(--dark-bg) !important;
 }
+
+/* .pnlm-hotspot-base.pnlm-hotspot.pnlm-sprite.pnlm-info.pnlm-tooltip {
+  background: var(--danger) !important;
+  width: 20px !important;
+  height: 20px !important;
+} */
+
+.pnlm-sprite.pnlm-hot-spot-debug-indicator {
+  display: none !important;
+}

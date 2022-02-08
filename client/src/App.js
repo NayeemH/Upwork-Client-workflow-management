@@ -1,5 +1,6 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import "./libs/react-pannelum/pannellum.css";
 import "./index.css";
 import {
   LoginPage,

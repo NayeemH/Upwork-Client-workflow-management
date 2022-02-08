@@ -39,6 +39,9 @@ const Overview = ({
   editReview,
   hoverFB,
   setHoverFB,
+  currentIndex,
+  lookAt,
+  removeHotSpot,
 }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -110,11 +113,6 @@ const Overview = ({
     setFeedbackActive(false);
   };
 
-  const handle3D = () => {
-    setPoints({ x: 0, y: 0, stepId: collection._id });
-    setShowForm(true);
-  };
-
   const editSubmitHandeler = async (e) => {
     e.preventDefault();
     setEditLoading(true);
@@ -124,6 +122,13 @@ const Overview = ({
       setEditLoading(false);
     } else {
       setEditLoading(false);
+    }
+  };
+
+  const deleteFeedbackHandeler = async (id) => {
+    deleteComment(collection._id, id);
+    if (collection.imageType && collection.imageType === "3d") {
+      removeHotSpot(id, "firstScene");
     }
   };
 
@@ -223,7 +228,9 @@ const Overview = ({
         )}
       {collection && (
         <>
-          <h5>{collection.title}</h5>
+          <h5>
+            {currentIndex + 1}. {collection.title}
+          </h5>
           <p className={styles.desc}>{collection.description}</p>
           {final && (
             <>
@@ -251,11 +258,7 @@ const Overview = ({
                 ) : (
                   selectedStep.finalImage === null && (
                     <Button
-                      onClick={() =>
-                        collection.imageType && collection.imageType === "3d"
-                          ? handle3D()
-                          : handleClickFeedback()
-                      }
+                      onClick={() => handleClickFeedback()}
                       className={styles.btn_feedback}
                     >
                       Feedback
@@ -313,6 +316,11 @@ const Overview = ({
                   }`}
                   onMouseEnter={() => setHoverFB(item._id)}
                   onMouseLeave={() => setHoverFB("")}
+                  onClick={() =>
+                    collection.imageType &&
+                    collection.imageType === "3d" &&
+                    lookAt(item.points[0], item.points[1])
+                  }
                 >
                   <div className="w-100">
                     <div
@@ -340,7 +348,7 @@ const Overview = ({
                   <div className={styles.actions}>
                     <span
                       className={styles.delete}
-                      onClick={() => deleteComment(collection._id, item._id)}
+                      onClick={() => deleteFeedbackHandeler(item._id)}
                     >
                       <FaTimes />
                     </span>
@@ -364,6 +372,7 @@ const Overview = ({
 const mapStateToProps = (state) => ({
   selectedStep: state.project.selected_step,
   selectedProject: state.project.selected_project,
+  currentIndex: state.project.selected_collection,
   role: state.dashboard.role,
   isModalOpen: state.project.feedback_modal,
   feedback: state.project.selected_feedback,

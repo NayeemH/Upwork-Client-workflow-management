@@ -14,7 +14,6 @@ import { saveAs } from "file-saver";
 import Moment from "react-moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiHelpCircle } from "react-icons/bi";
-import ReactPannellum from "react-pannellum";
 
 const Preview = ({
   data,
@@ -29,6 +28,10 @@ const Preview = ({
   setPoints,
   hoverFB,
   setHoverFB,
+  ReactPannellum,
+  addHotSpot,
+  lookAt,
+  mouseEventToCoords,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -108,7 +111,23 @@ const Preview = ({
         }
       }
     });
-  }, []);
+  }, [collections]);
+
+  const mouseClick3D = (e) => {
+    if (data.imageType && data.imageType === "3d" && feedbackActive) {
+      let coords = mouseEventToCoords(e);
+      addHotSpot({
+        pitch: coords[0],
+        yaw: coords[1],
+        type: "info",
+        text: "Demo",
+      });
+
+      setPoints({ x: coords[0], y: coords[1], stepId: data._id });
+
+      setShowForm(true);
+    }
+  };
 
   const downloadImage = () => {
     saveAs(
@@ -127,7 +146,12 @@ const Preview = ({
   };
 
   const imgClickHandeler = (e) => {
-    if (feedbackActive && !showForm) {
+    if (
+      feedbackActive &&
+      !showForm &&
+      !data.imageType &&
+      !data.imageType === "3d"
+    ) {
       const { clientX, clientY } = e;
       const { width, height, left, top } =
         imgRef.current.getBoundingClientRect();
@@ -174,13 +198,31 @@ const Preview = ({
           </span>
         </div>
       </div>
-      <div className={styles.img_wrapper} ref={imgRef}>
+      <div
+        className={styles.img_wrapper}
+        ref={imgRef}
+        onClick={(e) => mouseClick3D(e)}
+      >
         {data.imageType && data.imageType === "3d" ? (
           <ReactPannellum
             id="test"
             sceneId="firstScene"
             imageSource={`${IMAGE_PATH}original/${data.image}`}
-            config={{ autoLoad: true }}
+            config={{
+              autoLoad: true,
+              hotSpotDebug: true,
+              hotSpots: [
+                ...data.feedbacks.map((item) => {
+                  return {
+                    id: item._id,
+                    pitch: item.points[0],
+                    yaw: item.points[1],
+                    type: "info",
+                    text: item.message,
+                  };
+                }),
+              ],
+            }}
             style={{
               width: "100%",
               height: "90vh",
