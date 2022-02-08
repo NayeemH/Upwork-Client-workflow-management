@@ -7,11 +7,12 @@
   left: 0;
   z-index: -1;
   overflow: hidden;
+  background: var(--dark-bg);
 }
 .background {
   width: 100vw;
   height: 100vh;
-  background: url(../../../assets/bg.jpg) no-repeat center center fixed;
+  background: var(--dark-bg);
   background-size: cover;
 }
 .background span {
