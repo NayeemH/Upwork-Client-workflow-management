@@ -1,8 +1,9 @@
 import React from "react";
+import { memo } from "react";
 import { BASE_URL, IMAGE_PATH } from "../../../constants/URL";
 import styles from "./AnimatedBG.module.css";
 
-const AnimatedBG = () => {
+const AnimatedBG = memo(() => {
   // get random number between 1-5 to select random image
 
   return (
@@ -39,6 +40,6 @@ const AnimatedBG = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AnimatedBG;

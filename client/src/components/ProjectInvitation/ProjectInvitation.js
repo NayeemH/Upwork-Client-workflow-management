@@ -21,7 +21,7 @@ const ProjectInvitation = () => {
 
   useEffect(() => {
     dispatch(getInvitedProjectDetails(id));
-  });
+  }, [id]);
 
   const onAcceptHandeler = () => {
     toast.success("Project Accepted");
@@ -63,8 +63,7 @@ const ProjectInvitation = () => {
                 <h3 className={styles.project_desc}>{project.description}</h3>
                 <span className="d-block pt-4">
                   You have been invited to join this project. By joining this
-                  project you accept our{" "}
-                  <Link to="/terms">Terms & Conditions</Link>
+                  project you accept our Terms & Conditions
                 </span>
               </Col>
             </Row>
