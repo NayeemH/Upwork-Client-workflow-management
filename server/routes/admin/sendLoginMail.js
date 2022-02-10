@@ -4,14 +4,14 @@ const {Project} = require('../../models/project');
 const {ProjectToken, ProjectTokenValidator }= require('../../models/projectLoginToken');
 const {EmailAuth} = require('../../models/emailAuth');
 const {sendMail} = require('../user/sendMail');
-const {CLIENT_URL} = process.env;
+const {CLIENT_DOMAIN} = process.env;
 
 
 
 router.post('/', async (req, res, next) => {
     try {
         const { projectId, email, userType } = req.body;
-        const {userId: adminId} = req.user;
+        const {userId: adminId, domain} = req.user;
 
         await ProjectTokenValidator({projectId, email, userType});
 
@@ -63,11 +63,11 @@ router.post('/', async (req, res, next) => {
             const emailResult = await sendMail({
                 to: email,
                 subject: 'Login to the Project',
-                text: `Click on the given link ${CLIENT_URL}${activateURL}`,
+                text: `Click on the given link http://${domain}.${CLIENT_DOMAIN}${activateURL}`,
                 template: 'loginmail',
                 context: {
                     email: email,
-                    link: `${CLIENT_URL}${activateURL}` // Create this link to react router
+                    link: `http://${domain}.${CLIENT_DOMAIN}${activateURL}` // Create this link to react router
                 }
             });
         }

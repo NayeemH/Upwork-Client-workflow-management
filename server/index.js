@@ -14,6 +14,15 @@ const router = require("./routes");
 // Create Express App
 const app = express();
 
+// Set Domain offset
+if(process.env.NODE_ENV === 'production') {
+  app.set('subdomain offset', 0);
+}
+else {
+  // This is for localhost
+  app.set('subdomain offset', 1);
+}
+
 // Cookie Parser
 app.use(cookieParser());
 

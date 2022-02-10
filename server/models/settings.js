@@ -35,6 +35,9 @@ const settingsSchema = Schema({
     },
     sessions: {
         type: [sessionSchema],
+    },
+    domain: {
+        type: String,
     }
 });
 
