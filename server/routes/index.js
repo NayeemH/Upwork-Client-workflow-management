@@ -12,9 +12,12 @@ const profile = require('./profile');
 const download = require('./download');
 const downloadLink = require('./activate/download');
 const owner = require('./owner');
-
+const adminActivate = require('./activate/adminActivate');
 // Owner Info
 router.use('/', owner);
+
+// Admin activate
+router.use('/activate', adminActivate);
 
 // User Register and login function 
 router.use('/user', domain, user);
