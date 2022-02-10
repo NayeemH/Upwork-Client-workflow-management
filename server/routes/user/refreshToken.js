@@ -39,11 +39,11 @@ router.post("/", async (req, res, next) => {
 
 			// Create Refresh and Access Token
 			const newRefreshToken = await issueToken(
-				{ userId: user.userId, userType: user.userType, tokenType: "refresh" },
+				{ userId: user.userId, domain: user.domain, userType: user.userType, tokenType: "refresh" },
 				"180d"
 			);
 			const newAccessToken = await issueToken(
-				{ userId: user.userId, userType: user.userType, tokenType: "access" },
+				{ userId: user.userId, domain: user.domain, userType: user.userType, tokenType: "access" },
 				"300m"
 			);
 

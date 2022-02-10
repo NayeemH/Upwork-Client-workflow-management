@@ -14,7 +14,7 @@ router.post('/:user/:token', async (req, res, next) => {
     try {
         const {username, password} = req.body;
         const {user, token} = req.params;
-
+        const {domain} = req.user;
 
         const info = token.split('.');
 
@@ -41,6 +41,7 @@ router.post('/:user/:token', async (req, res, next) => {
             const refreshToken = await issueToken({
                 userId: newData._id,
                 userType,
+                domain,
                 tokenType: "refresh"}, '180d');
 
 
@@ -60,7 +61,8 @@ router.post('/:user/:token', async (req, res, next) => {
                     sessionId: crypto.randomBytes(10).toString('hex'),
                     refreshToken,
                     verified: true
-                }
+                },
+                domain
             });
 
             // Setting refresh token to cookie

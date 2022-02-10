@@ -9,6 +9,7 @@ router.post("/", async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
+    const {domain} = req.user;
     const auth = await EmailAuth.findOne({ email });
 
     // Check the email
@@ -21,11 +22,13 @@ router.post("/", async (req, res, next) => {
     if (!check) throw Error("Invalid Password");
 
     // Fetching the setting
-    const setting = await Settings.findOne({ userId: auth.userId });
+    const setting = await Settings.findOne({ userId: auth.userId, domain });
 
+    if(!setting) throw Error('You are not authorized in this domain');
+    
     // Create Refresh and Access Token
     const refreshToken = await issueToken(
-      { userId: auth.userId, userType: setting.userType, tokenType: "refresh" },
+      { userId: auth.userId, domain: setting.domain, userType: setting.userType, tokenType: "refresh" },
       "180d"
     );
 
