@@ -234,7 +234,7 @@ const CreateOrgForm = ({ createOrg }) => {
                   <div className="d-flex  justify-content-between align-items-center">
                     {" "}
                     <label htmlFor="image" className="d-block">
-                      Image
+                      Logo
                     </label>
                     <Button
                       variant="outline-light"
