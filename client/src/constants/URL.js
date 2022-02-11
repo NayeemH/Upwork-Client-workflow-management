@@ -1,4 +1,5 @@
-export let BASE_URL = `http://${window.location.host.replace(
+export const PROTOCOL = "http://";
+export let BASE_URL = `${PROTOCOL}${window.location.host.replace(
   ":3000",
   ":5001"
 )}`;

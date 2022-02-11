@@ -15,7 +15,7 @@
 }
 
 .crd {
-  width: 22rem;
+  width: 25rem;
   background: var(--dark) !important;
 }
 
@@ -26,9 +26,22 @@
   background: var(--primary) !important;
   transition: 0.3s all ease-in-out;
 }
+.btn_change {
+  outline: none !important;
+  border: 1px solid var(--primary) !important;
+  padding: 8px 26px;
+  background: none !important;
+  transition: 0.3s all ease-in-out;
+}
 
 .btn:hover {
   background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+}
+.btn_change:hover {
+  border-color: var(--light) !important;
+  background: var(--dark-bg) !important;
+  color: var(--light) !important;
   transition: 0.3s all ease-in-out;
 }
 

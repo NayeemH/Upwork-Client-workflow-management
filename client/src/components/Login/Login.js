@@ -11,14 +11,16 @@ import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
 import logoImg from "../../assets/Logo.png";
-import { login } from "../../actions/Dashboard.action";
+import { getOrganization, login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { IMAGE_PATH, PROTOCOL } from "../../constants/URL";
 const queryString = require("query-string");
 
-const Login = ({ login, loading }) => {
+const Login = ({ login, getOrganization }) => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const domain = useSelector((state) => state.domain);
   const [isLoading, setIsLoading] = useState(false);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -30,7 +32,25 @@ const Login = ({ login, loading }) => {
     if (isAuthenticated) {
       navigate("/dashboard");
     }
+    const func = async () => {
+      if (!domain.logo || domain.subdomain) {
+        const sub = { email: domain.subdomain };
+        let check = await getOrganization(sub);
+        if (check !== 200) {
+          window.location.replace(
+            `${PROTOCOL}${window.location.origin.split(".")[1]}`
+          );
+        }
+      }
+    };
+    func();
   }, [isAuthenticated]);
+
+  const orgHandeler = () => {
+    window.location.replace(
+      `${PROTOCOL}${window.location.origin.split(".")[1]}`
+    );
+  };
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
@@ -62,8 +82,12 @@ const Login = ({ login, loading }) => {
       <div className={styles.wrapper}>
         <Card bg="dark" text="light" className={styles.crd}>
           <Card.Header className="d-flex justify-content-between align-items-center">
-            <span className={styles.heading}>Login</span>
-            <img src={logoImg} className={styles.logo} alt="" />
+            <span className={styles.heading}>{domain.subdomain}</span>
+            <img
+              src={`${IMAGE_PATH}small/${domain.logo}`}
+              className={styles.logo}
+              alt=""
+            />
           </Card.Header>
           <Card.Body>
             <Formik
@@ -131,7 +155,7 @@ const Login = ({ login, loading }) => {
                     </Link>
                   </div>
 
-                  <div className="pt-3">
+                  <div className="pt-3 d-flex justify-content-between">
                     <Button
                       variant="primary"
                       type="submit"
@@ -139,6 +163,13 @@ const Login = ({ login, loading }) => {
                       disabled={isLoading}
                     >
                       {isLoading ? "Loading..." : "Login"}
+                    </Button>
+                    <Button
+                      variant="primary"
+                      className={styles.btn_change}
+                      onClick={orgHandeler}
+                    >
+                      Change Organization
                     </Button>
                   </div>
                 </Form>
@@ -155,4 +186,4 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, getOrganization })(Login);

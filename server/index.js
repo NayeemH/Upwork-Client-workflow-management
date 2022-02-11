@@ -15,12 +15,11 @@ const router = require("./routes");
 const app = express();
 
 // Set Domain offset
-if(process.env.NODE_ENV === 'production') {
-  app.set('subdomain offset', 0);
-}
-else {
+if (process.env.NODE_ENV === "production") {
+  app.set("subdomain offset", 0);
+} else {
   // This is for localhost
-  app.set('subdomain offset', 1);
+  app.set("subdomain offset", 1);
 }
 
 // Cookie Parser
@@ -29,7 +28,7 @@ app.use(cookieParser());
 // Cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: "*",
     credentials: true,
   })
 );
@@ -42,9 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Static files
-app.use(express.static(path.resolve('data')));
+app.use(express.static(path.resolve("data")));
 
-app.use(express.static(path.resolve('client/build')));
+app.use(express.static(path.resolve("client/build")));
 
 // Routers
 app.use("/api", router);
@@ -61,7 +60,6 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({ success: false, msg: [error.message] });
 });
-
 
 // Listening port
 const PORT = process.env.PORT || 5001;

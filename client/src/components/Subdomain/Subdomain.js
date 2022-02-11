@@ -12,12 +12,11 @@ import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Subdomain.module.css";
 import { getOrganization } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
+import { BASE_URL, PROTOCOL } from "../../constants/URL";
 
 const Subdomain = ({ getOrganization }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {}, []);
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
@@ -25,8 +24,12 @@ const Subdomain = ({ getOrganization }) => {
     if (check === 200) {
       setTimeout(() => {
         setIsLoading(false);
-        navigate("/login");
+        window.location.replace(
+          `${PROTOCOL}${values.email}.${window.location.host}`
+        );
       }, 1000);
+    } else if (check === 404) {
+      navigate("/create-organization");
     } else {
       setIsLoading(false);
     }
