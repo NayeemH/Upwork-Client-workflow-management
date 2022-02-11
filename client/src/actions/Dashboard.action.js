@@ -8,6 +8,8 @@ import {
   CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
   DEVELOPER_LIST_LOAD,
+  GET_ORG_DATA,
+  GET_ORG_DATA_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
@@ -297,5 +299,31 @@ export const fetchApprovedProject = () => async (dispatch) => {
     dispatch({
       type: APPROVED_PROJECT_LOAD_ERROR,
     });
+  }
+};
+
+// GET ORGANIZATION DATA
+export const getOrganization = (values) => async (dispatch) => {
+  try {
+    await axios.get(
+      `http://${values.email}.${BASE_URL.replace(
+        "http://",
+        ""
+      )}/api/getDomainInfo`,
+
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: GET_ORG_DATA,
+    });
+    return 200;
+  } catch (error) {
+    dispatch({
+      type: GET_ORG_DATA_ERROR,
+    });
+    console.log(error);
+    return false;
   }
 };

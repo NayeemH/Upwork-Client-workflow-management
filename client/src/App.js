@@ -30,6 +30,7 @@ import DownloadPage from "./views/DownloadPage/DownloadPage";
 import DeveloperListPage from "./views/DeveloperListPage/DeveloperListPage";
 import { useJwt } from "react-jwt";
 import ApprovedPage from "./views/ApprovedPage/ApprovedPage";
+import LandingPage from "./views/LandingPage/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,8 @@ function App() {
       <ToastContainer newestOnTop theme="dark" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/forget-password" element={<FogetPasswordPage />} />
           <Route
             path="/activate/loginMail/:status/:id"
