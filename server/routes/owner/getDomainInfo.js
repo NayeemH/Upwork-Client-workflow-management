@@ -7,8 +7,11 @@ router.get('/', async (req, res, next) => {
 
         const domainValue =  await Domain.findOne({subdomain: domain}, {__v: 0, _id: 0});
         
-        if(!domainValue) throw Error('Domain not found');
-
+        if(!domainValue) {
+            const error =  Error('Domain not found');
+            res.status(404);
+            throw error;
+        }
         // Send the response with the access Token
         res.json({
             success: true, 
