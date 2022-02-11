@@ -5,9 +5,6 @@ const domainSchema = mongoose.Schema({
     subdomain: {
         type: String,
     },
-    companyName: {
-        type: String,
-    },
     companyLogo: {
         type: String,
     }
