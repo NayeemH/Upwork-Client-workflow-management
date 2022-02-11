@@ -29,7 +29,16 @@ app.use(cookieParser());
 // Cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      const regularEx = RegExp(`${process.env.CLIENT_DOMAIN}$`, 'i');
+
+      if(regularEx.test(origin)) {
+        callback(null, true);
+      }
+      else {
+        callback(null, false);
+      }
+    },
     credentials: true,
   })
 );
