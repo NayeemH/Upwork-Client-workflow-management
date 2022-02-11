@@ -6,10 +6,10 @@ router.get('/', async (req, res, next) => {
         const {domain} = req.user;
 
         const domainValue =  await Domain.findOne({subdomain: domain}, {__v: 0, _id: 0});
-        
+        console.log(domainValue);
         if(!domainValue) {
             const error =  Error('Domain not found');
-            res.status(404);
+            error.status = 404;
             throw error;
         }
         // Send the response with the access Token
