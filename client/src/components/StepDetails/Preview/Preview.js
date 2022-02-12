@@ -206,6 +206,8 @@ const Preview = ({
             config={{
               autoLoad: true,
               hotSpotDebug: true,
+              showZoomCtrl: false,
+              showFullscreenCtrl: false,
               hotSpots: [
                 ...data.feedbacks.map((item, i) => {
                   return {
