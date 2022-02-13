@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Domain = require('../../models/domain');
 
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const {domain} = req.body;
 
