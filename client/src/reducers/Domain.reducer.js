@@ -1,8 +1,9 @@
 import { GET_ORG_DATA } from "../constants/Type";
+import { BASE } from "../constants/URL";
 
 const checkDomain = () => {
   let loc = window.location.host.split(".")[0];
-  if (loc === "localhost" || loc === "localhost:3000") {
+  if (loc === "localhost" || loc === "localhost:3000" || loc === BASE) {
     return "";
   } else {
     return loc;

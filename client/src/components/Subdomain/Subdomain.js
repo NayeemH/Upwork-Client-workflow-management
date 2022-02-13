@@ -11,8 +11,8 @@ import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Subdomain.module.css";
 import { getOrganization } from "../../actions/Dashboard.action";
-import { connect, useSelector } from "react-redux";
-import { BASE_URL, PROTOCOL } from "../../constants/URL";
+import { connect } from "react-redux";
+import { PROTOCOL } from "../../constants/URL";
 
 const Subdomain = ({ getOrganization }) => {
   const navigate = useNavigate();

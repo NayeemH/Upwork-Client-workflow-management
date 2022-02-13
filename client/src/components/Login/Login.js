@@ -14,7 +14,7 @@ import logoImg from "../../assets/Logo.png";
 import { getOrganization, login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { IMAGE_PATH, PROTOCOL } from "../../constants/URL";
+import { IMAGE_PATH, PROD, PROTOCOL } from "../../constants/URL";
 const queryString = require("query-string");
 
 const Login = ({ login, getOrganization }) => {
@@ -38,7 +38,10 @@ const Login = ({ login, getOrganization }) => {
         let check = await getOrganization(sub);
         if (check !== 200) {
           window.location.replace(
-            `${PROTOCOL}${window.location.origin.split(".")[1]}`
+            `${PROTOCOL}${window.location.origin.split(".")[1]}.${
+              window.location.origin.split(".")[2] &&
+              window.location.origin.split(".")[2]
+            }`
           );
         }
       }
