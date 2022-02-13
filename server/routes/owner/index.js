@@ -9,6 +9,6 @@ const domain = require('../authenticate/subDomain');
 
 // Routes
 router.use('/createDomain', createDomain);
-router.use('/getDomainInfo',domain, getDomainInfo);
+router.use('/getDomainInfo', getDomainInfo);
 
 module.exports = router;

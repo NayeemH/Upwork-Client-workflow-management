@@ -3,7 +3,7 @@ const Domain = require('../../models/domain');
 
 router.get('/', async (req, res, next) => {
     try {
-        const {domain} = req.user;
+        const {domain} = req.body;
 
         const domainValue =  await Domain.findOne({subdomain: domain}, {__v: 0, _id: 0});
 
