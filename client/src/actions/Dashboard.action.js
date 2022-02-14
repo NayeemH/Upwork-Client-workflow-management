@@ -307,11 +307,15 @@ export const fetchApprovedProject = () => async (dispatch) => {
 // GET ORGANIZATION DATA
 export const getOrganization = (values) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `${PROTOCOL}${values.email}.${BASE_URL.replace(
-        `${PROTOCOL}`,
-        ""
-      )}/api/getDomainInfo/`
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      `${PROTOCOL}${BASE_URL.replace(`${PROTOCOL}`, "")}/api/getDomainInfo/`,
+      JSON.stringify({ domain: values.email }),
+      config
     );
     //console.log(res);
     dispatch({
@@ -321,7 +325,7 @@ export const getOrganization = (values) => async (dispatch) => {
     return 200;
   } catch (err) {
     console.log(err.response);
-    if (err.response.data.msg[0] === "Domain not found") {
+    if (err.response.status === 404) {
       dispatch({
         type: GET_ORG_DATA_ERROR,
       });
