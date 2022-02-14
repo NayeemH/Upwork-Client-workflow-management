@@ -16,7 +16,7 @@ const app = express();
 
 // Set Domain offset
 if(process.env.NODE_ENV === 'production') {
-  app.set('subdomain offset', 0);
+  app.set('subdomain offset', 2);
 }
 else {
   // This is for localhost
