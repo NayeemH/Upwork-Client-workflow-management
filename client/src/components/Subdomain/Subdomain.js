@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import {
   Button,
@@ -29,7 +29,7 @@ const Subdomain = ({ getOrganization }) => {
         );
       }, 1000);
     } else if (check === 404) {
-      navigate("/create-organization");
+      navigate(`/create-organization?org=${values.email}`);
     } else {
       setIsLoading(false);
     }
@@ -40,7 +40,12 @@ const Subdomain = ({ getOrganization }) => {
   };
 
   const SignupSchema = Yup.object().shape({
-    email: Yup.string().required("Organization Name is required!"),
+    email: Yup.string()
+      .matches(
+        "^[a-z]+$",
+        "Name can not contain special charecter, space or Uppercase letter."
+      )
+      .required("Organization Name is required!"),
   });
   return (
     <>

@@ -10,11 +10,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
-import logoImg from "../../assets/Logo.png";
 import { getOrganization, login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { BASE, IMAGE_PATH, PROD, PROTOCOL } from "../../constants/URL";
+import { BASE, IMAGE_PATH, PROTOCOL } from "../../constants/URL";
 const queryString = require("query-string");
 
 const Login = ({ login, getOrganization }) => {

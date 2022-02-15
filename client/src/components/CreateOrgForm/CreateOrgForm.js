@@ -14,6 +14,8 @@ import { ImUpload } from "react-icons/im";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { createOrg } from "../../actions/Dashboard.action";
 import { PROTOCOL } from "../../constants/URL";
+import { useLocation, useNavigate } from "react-router-dom";
+const queryString = require("query-string");
 
 const CreateOrgForm = ({ createOrg }) => {
   //STATES
@@ -22,6 +24,9 @@ const CreateOrgForm = ({ createOrg }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+  const location = useLocation();
+  const parsed = queryString.parse(location.search);
+  const navigate = useNavigate();
 
   const fileRef = useRef();
 
@@ -57,6 +62,7 @@ const CreateOrgForm = ({ createOrg }) => {
   const resetlHandeler = () => {
     setSelectedFile(undefined);
     setPreview(undefined);
+    navigate("/");
   };
 
   //ONSELECT FILE HANDELER
@@ -73,7 +79,7 @@ const CreateOrgForm = ({ createOrg }) => {
   };
 
   let initVals = {
-    name: "",
+    name: parsed.org ? parsed.org : "",
     image: "",
     email: "",
     password: "",
@@ -83,8 +89,8 @@ const CreateOrgForm = ({ createOrg }) => {
   const SignupSchema = Yup.object().shape({
     name: Yup.string()
       .matches(
-        /^[A-Za-z]+$/,
-        "Name can not contain special charecter or space."
+        "^[a-z]+$",
+        "Name can not contain special charecter, space or Uppercase letter."
       )
       .required("Organization name is required!"),
     image: Yup.string().nullable(),
@@ -108,6 +114,7 @@ const CreateOrgForm = ({ createOrg }) => {
         </Card.Header>
         <Card.Body>
           <Formik
+            enableReinitialize
             initialValues={initVals}
             validationSchema={SignupSchema}
             onSubmit={(values) => onSubmitHandeler(values)}

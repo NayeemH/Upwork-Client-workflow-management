@@ -1,6 +1,6 @@
 export const PROTOCOL = "http://";
-export const PROD = true;
-export const BASE = "meetnayeem";
+export const PROD = false;
+export const BASE = PROD ? "meetnayeem" : "localhost";
 
 export let BASE_URL = PROD
   ? `${PROTOCOL}${window.location.host + ":5001"}`
