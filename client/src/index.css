@@ -114,7 +114,8 @@ select.form-select option:hover {
   height: 2px;
 }
 .rc-steps-item-process .rc-steps-item-tail:after,
-.rc-steps-item-wait .rc-steps-item-tail:after {
+.rc-steps-item-wait .rc-steps-item-tail:after,
+.rc-steps-item-error .rc-steps-item-tail:after {
   background-color: transparent !important;
   border-bottom: 2px dashed var(--light) !important;
 }

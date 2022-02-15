@@ -1,5 +1,5 @@
 export const PROTOCOL = "http://";
-export const PROD = false;
+export const PROD = true;
 export const BASE = PROD ? "meetnayeem" : "localhost";
 
 export let BASE_URL = PROD
