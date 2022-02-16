@@ -1,6 +1,6 @@
 :root {
-  --primary: #a8aa01;
-  --primary-hover: #7d8002;
+  --primary: #f68a3c;
+  --primary-hover: #fa6e0a;
   --secondary: rgb(211, 211, 211);
   --secondary-500: rgba(211, 211, 211, 0.5);
   --danger: #dc3545;
@@ -9,6 +9,7 @@
   --dark-bg: #232323;
   --light: #fff;
   --light-bg: #444444;
+  --border: #4d4d4d;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");

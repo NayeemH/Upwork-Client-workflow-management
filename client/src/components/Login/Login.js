@@ -13,7 +13,7 @@ import styles from "./Login.module.css";
 import { getOrganization, login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { BASE, IMAGE_PATH, PROTOCOL } from "../../constants/URL";
+import { BASE, PROD, PROTOCOL } from "../../constants/URL";
 const queryString = require("query-string");
 
 const Login = ({ login, getOrganization }) => {
@@ -49,10 +49,7 @@ const Login = ({ login, getOrganization }) => {
   }, [isAuthenticated]);
 
   const orgHandeler = () => {
-    window.location.replace(
-      `${PROTOCOL}${BASE}.com
-      `
-    );
+    window.location.replace(PROD ? `${PROTOCOL}${BASE}.com` : `localhost:3000`);
   };
 
   const onSubmitHandeler = async (values) => {
@@ -84,15 +81,22 @@ const Login = ({ login, getOrganization }) => {
       <AnimatedBG />
       <div className={styles.wrapper}>
         <Card bg="dark" text="light" className={styles.crd}>
-          <Card.Header className="d-flex justify-content-between align-items-center">
+          {/* <Card.Header className="d-flex justify-content-between align-items-center">
             <span className={styles.heading}>{domain.subdomain}</span>
             <img
               src={`${IMAGE_PATH}small/${domain.logo}`}
               className={styles.logo}
               alt=""
             />
-          </Card.Header>
+          </Card.Header> */}
           <Card.Body>
+            <span className={`${styles.link} pb-3`} onClick={orgHandeler}>
+              Go back
+            </span>
+            <h1 className="fs-4 fw-normal py-3">
+              Sign in to continue <br />
+              your journey
+            </h1>
             <Formik
               initialValues={initVals}
               validationSchema={SignupSchema}
@@ -103,12 +107,12 @@ const Login = ({ login, getOrganization }) => {
                   <InputGroup className="mb-3 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-center pb-2">
                       <label htmlFor="email" className="d-block">
-                        Email
+                        Email Address
                       </label>
                     </div>
                     <Field
                       as={BootstrapForm.Control}
-                      placeholder="Provide your email address"
+                      placeholder="yourname@email.com"
                       name="email"
                       isValid={!errors.email && touched.email}
                       type="email"
@@ -131,7 +135,6 @@ const Login = ({ login, getOrganization }) => {
                     </div>
                     <Field
                       as={BootstrapForm.Control}
-                      placeholder="Create your own password"
                       name="password"
                       isValid={!errors.password && touched.password}
                       type={isPasswordVisible ? "text" : "password"}
@@ -152,13 +155,16 @@ const Login = ({ login, getOrganization }) => {
                       />
                     )}
                   </InputGroup>
-                  <div className="text-end">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span style={{ fontSize: 14 }}>
+                      <input type="checkbox" /> Remember Me
+                    </span>
                     <Link to="/forget-password" className={styles.link}>
                       Forget Password?
                     </Link>
                   </div>
 
-                  <div className="pt-3 d-flex justify-content-between">
+                  <div className="pt-4">
                     <Button
                       variant="primary"
                       type="submit"
@@ -167,13 +173,16 @@ const Login = ({ login, getOrganization }) => {
                     >
                       {isLoading ? "Loading..." : "Login"}
                     </Button>
-                    <Button
-                      variant="primary"
-                      className={styles.btn_change}
-                      onClick={orgHandeler}
-                    >
-                      Change Organization
-                    </Button>
+
+                    <span className={`${styles.reg} d-block pt-3`}>
+                      Not a member yet?{" "}
+                      <span
+                        onClick={() => orgHandeler()}
+                        className={styles.link_reg}
+                      >
+                        Register Now
+                      </span>
+                    </span>
                   </div>
                 </Form>
               )}
