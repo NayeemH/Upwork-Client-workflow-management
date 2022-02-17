@@ -21,10 +21,13 @@
 .dropdown {
   height: 35px;
   width: 35px;
-  background: var(--dark-bg) !important;
+  background: transparent !important;
 }
 
 .dropdown_item {
+  display: flex;
+  align-items: center;
+  font-size: 14px !important;
   background: var(--dark-bg) !important;
   color: var(--light) !important;
 }
@@ -55,4 +58,16 @@
 
 .image:hover {
   cursor: pointer;
+}
+
+.divider {
+  border-color: var(--secondary) !important;
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper.active {
+    display: none !important;
+  }
 }

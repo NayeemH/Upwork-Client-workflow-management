@@ -6,6 +6,7 @@ const PasswordChangePage = () => {
   return (
     <div>
       <AnimatedBG />
+
       <PasswordChangeForm />
     </div>
   );

@@ -84,6 +84,7 @@
 
 .input {
   background: var(--dark) !important;
+  color: var(--light) !important;
   border: 2px solid var(--border) !important;
 }
 

@@ -5,18 +5,16 @@ import UserInfoTopbar from "./UserInfoTopbar/UserInfoTopbar";
 import { useDispatch, useSelector } from "react-redux";
 import { toogleSidebarVisibility } from "../../actions/Dashboard.action";
 import { useNavigate } from "react-router-dom";
-
-//TODO::::: LOGO should be dynamic
-import logoImg from "../../assets/Logo.png";
 import { IMAGE_PATH } from "../../constants/URL";
 
 const Topbar = () => {
   const dispatch = useDispatch();
   const domain = useSelector((state) => state.domain);
   const navigate = useNavigate();
+  const role = useSelector((state) => state.dashboard.role);
 
   return (
-    <nav className={styles.wrapper}>
+    <nav className={`${styles.wrapper} ${role === "admin" && styles.admin}`}>
       <span
         className={styles.ham}
         onClick={() => dispatch(toogleSidebarVisibility(true))}

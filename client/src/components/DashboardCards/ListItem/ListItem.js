@@ -22,19 +22,21 @@ const ListItem = ({ item, star = false }) => {
               <span className={styles.id}>
                 Project Id: {item.id.substring(0, 6)}
               </span>
-              <span className={`${styles.star} pb-2 d-md-block d-none`}>
+              <span className={`${styles.star} pb-2 d-md-block d-none pe-5`}>
                 {star ? (
                   <BsStarFill
+                    className="mt-1"
                     onClick={() => dispatch(removeFavoriteProject(item.id))}
                   />
                 ) : (
                   <BsStar
+                    className="mt-1"
                     onClick={() => dispatch(addFavoriteProject(item.id))}
                   />
                 )}
               </span>
               <span
-                className="px-5 d-block "
+                className="ps-5 d-block text_primary"
                 onClick={() => navigate(`/project/${item.id}`)}
                 style={{ cursor: "pointer" }}
               >
@@ -43,14 +45,14 @@ const ListItem = ({ item, star = false }) => {
             </div>
 
             <div className="d-flex justify-content-between align-items-center ">
+              <span className={styles.down}>
+                <MdDownload /> Download
+              </span>
               {item.productNumber > 0 && (
                 <span className={styles.notification}>
                   {item.productNumber}
                 </span>
               )}
-              <span className={styles.down}>
-                <MdDownload /> Download
-              </span>
             </div>
           </Col>
         </Row>

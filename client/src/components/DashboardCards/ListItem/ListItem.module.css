@@ -20,6 +20,7 @@
 
 .down {
   font-size: 18px;
+  padding-right: 15px;
   color: var(--primary) !important;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
@@ -39,8 +40,11 @@
 }
 
 .notification {
-  color: var(--danger);
+  color: var(--light);
+  background: rgba(0, 0, 0, 0.2) !important;
+  padding: 2px 5px;
   font-weight: bold;
+  font-size: 14px;
   display: block;
   margin-right: 15px;
 }
@@ -50,6 +54,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-right: 1px solid var(--secondary) !important;
 }
 
 .star:hover {

@@ -128,7 +128,7 @@ export const getRefreshToken = () => async (dispatch) => {
         headers: {
           "Content-Type": "application/json",
         },
-        //withCredentials: true,
+        withCredentials: true,
       }
     );
     //if (refreshRes.status === 200) {

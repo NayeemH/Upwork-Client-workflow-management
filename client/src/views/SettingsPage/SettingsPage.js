@@ -1,6 +1,7 @@
 import React from "react";
 import { Breadcrumb } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import SettingForm from "../../components/SettingForm/SettingForm";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
@@ -10,6 +11,7 @@ const SettingsPage = () => {
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
+      <FilterDashboard selectedFilter="active" />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>

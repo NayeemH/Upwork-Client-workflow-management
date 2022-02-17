@@ -12,8 +12,9 @@ import { connect } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { updatePasswordProfile } from "../../actions/Profile.action";
 import { useNavigate } from "react-router-dom";
+import { IMAGE_PATH } from "../../constants/URL";
 
-const PasswordSettings = ({ updatePasswordProfile }) => {
+const PasswordSettings = ({ updatePasswordProfile, user }) => {
   const [loading, setLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
@@ -57,9 +58,9 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
   return (
     <div className={styles.wrapper}>
       <Card bg="dark" text="light" className={styles.crd}>
-        <Card.Header className="d-flex justify-content-center align-items-center">
-          <span className={styles.heading}>Change Password</span>
-        </Card.Header>
+        <Card.Title className="px-3 pt-3">
+          <span className="fs-4">Profile</span>
+        </Card.Title>
         <Card.Body>
           <Formik
             initialValues={initVals}
@@ -68,10 +69,30 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
           >
             {({ errors, touched }) => (
               <Form>
+                <div className="d-flex justify-content-between align-items-end pb-3">
+                  <div className="">
+                    <div className={`${styles.img__wrapper} text-center mb-3`}>
+                      <img
+                        src={`${IMAGE_PATH}/small/${user.image}`}
+                        alt={user.username}
+                        className="h-100"
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className={styles.btn}
+                    disabled={loading}
+                  >
+                    {loading ? "Loading..." : "Save Password"}
+                  </Button>
+                </div>
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="oldpassword" className="d-block">
-                      Old Password
+                      Current Password
                     </label>
                     {errors.oldpassword && touched.oldpassword ? (
                       <small className="text-danger">
@@ -81,7 +102,6 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Create your own oldpassword"
                     name="oldpassword"
                     isValid={!errors.oldpassword && touched.oldpassword}
                     type={isPasswordVisible3 ? "text" : "password"}
@@ -113,7 +133,6 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Create your own password"
                     name="password"
                     isValid={!errors.password && touched.password}
                     type={isPasswordVisible ? "text" : "password"}
@@ -145,7 +164,6 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                   </div>
                   <Field
                     as={BootstrapForm.Control}
-                    placeholder="Re-type to confirm password"
                     name="password2"
                     isValid={!errors.password2 && touched.password2}
                     type={isPasswordVisible2 ? "text" : "password"}
@@ -165,7 +183,7 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                     />
                   )}
                 </InputGroup>
-                <div className={styles.req}>
+                {/* <div className={styles.req}>
                   <span className="d-block"> *Must be 6 characters long.</span>
                   <span className="d-block">
                     *Must contain one number [0-9].
@@ -176,9 +194,9 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                   <span className="d-block">
                     *Must contain one special character [! @ # $ % & *].
                   </span>
-                </div>
+                </div> */}
 
-                <div className="pt-3">
+                {/* <div className="pt-3">
                   <Button
                     variant="primary"
                     type="submit"
@@ -187,7 +205,7 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
                   >
                     {loading ? "Loading..." : "Change Password"}
                   </Button>
-                </div>
+                </div> */}
               </Form>
             )}
           </Formik>
@@ -197,4 +215,10 @@ const PasswordSettings = ({ updatePasswordProfile }) => {
   );
 };
 
-export default connect(null, { updatePasswordProfile })(PasswordSettings);
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, { updatePasswordProfile })(
+  PasswordSettings
+);
