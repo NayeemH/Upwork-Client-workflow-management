@@ -4,6 +4,7 @@ const {Project} = require('../../models/project');
 const {ProjectToken, ProjectTokenValidator }= require('../../models/projectLoginToken');
 const {EmailAuth} = require('../../models/emailAuth');
 const {sendMail} = require('../user/sendMail');
+const User = require('../../models/user');
 const {CLIENT_DOMAIN} = process.env;
 
 
@@ -24,6 +25,40 @@ router.post('/', async (req, res, next) => {
         const project = await Project.findOne({adminId, _id: projectId});
 
         if(!project) throw Error("Project Not Found"); 
+
+        // Check if the user already logged in or not
+        const user = await EmailAuth.findOne({email});
+
+        if(user) {
+            await Promise.all([
+                User.findOneAndUpdate({_id: user.userId}, {$push: {projects: project._id}}),
+                Project.findOneAndUpdate({_id: project._id}, {$push: {projectUser: {userId: user.userId, userType}}})
+            ]);
+
+            res.json({
+                success: true, 
+                msg: `Successfully added to the project` 
+            });
+
+            try{
+                // Verify Email
+                const emailResult = await sendMail({
+                    to: email,
+                    subject: 'Added to a Project',
+                    text: `Added to a Project`,
+                    template: 'projectAdded',
+                    context: {
+                        email: email,
+                        projectName: project.name
+                    }
+                });
+            }
+            catch(err) {
+                console.log(err.message);
+            }
+
+            return;
+        }
 
         // Find the project token
         let projectToken = await ProjectToken.findOne({projectId, email, userType});
@@ -46,17 +81,12 @@ router.post('/', async (req, res, next) => {
             msg: `Email is send to the ${userType}` 
         });
 
-        const user = await EmailAuth.findOne({email});
-
+        
         let activateURL = '/activate/loginMail';
 
-        if(user) {
-            activateURL += `/user/${projectId}.${projectToken.token}?email=${encodeURI(email)}` // This is frantend link
-        }
-        else {
-            activateURL += `/notuser/${projectId}.${projectToken.token}?email=${encodeURI(email)}`; // This is frantend link
-        }
-
+        
+        activateURL += `/notuser/${projectId}.${projectToken.token}?email=${encodeURI(email)}`; // This is frantend link
+        
 
         try{
             // Verify Email
