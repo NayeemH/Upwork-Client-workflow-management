@@ -89,6 +89,7 @@ const PasswordSettings = ({ updatePasswordProfile, user }) => {
                     {loading ? "Loading..." : "Save Password"}
                   </Button>
                 </div>
+                <hr />
                 <InputGroup className="mb-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center">
                     <label htmlFor="oldpassword" className="d-block">

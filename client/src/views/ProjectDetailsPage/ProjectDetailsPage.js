@@ -3,6 +3,7 @@ import { Breadcrumb, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
+import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import ProjectDetails from "../../components/ProjectDetails/ProjectDetails";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
@@ -21,6 +22,7 @@ const ProjectDetailsPage = () => {
       style={{ minHeight: "100vh", paddingBottom: "2.5rem" }}
     >
       <Topbar />
+      <FilterDashboard />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>

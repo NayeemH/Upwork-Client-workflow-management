@@ -7,7 +7,7 @@
 }
 
 .img_wrapper {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   position: relative;
 }
@@ -16,6 +16,10 @@
   color: var(--primary) !important;
   font-size: 18px;
   margin-right: 50px;
+}
+
+.arrows_section {
+  background: var(--dark-bg) !important;
 }
 
 .nav_right {

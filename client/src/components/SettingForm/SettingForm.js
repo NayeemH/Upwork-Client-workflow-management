@@ -146,6 +146,7 @@ const SettingForm = ({ updateProfile, user }) => {
                     </Link>
                   </div>
                 </div>
+                <hr />
                 <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="username" className="d-block">

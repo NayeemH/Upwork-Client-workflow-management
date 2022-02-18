@@ -15,7 +15,7 @@ import {
   deleteComment,
   toogleEditModalVisibility,
 } from "../../../actions/Step.action";
-import { AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlinePlus } from "react-icons/ai";
 import Moment from "react-moment";
 
 const Overview = ({
@@ -228,44 +228,41 @@ const Overview = ({
         )}
       {collection && (
         <>
-          <h5>
-            {currentIndex + 1}. {collection.title}
-          </h5>
-          <p className={styles.desc}>{collection.description}</p>
           {final && (
             <>
-              <div className="d-flex justify-content-between align-items-center flex-md-row flex-column">
-                {(role === "client" ||
-                  role === "admin" ||
-                  role === "manager") &&
-                  selectedStep.finalImage === null &&
-                  currentStepHandeler() && (
-                    <Button
-                      onClick={() =>
-                        approveStep(selectedStep._id, selectedStep.projectId)
-                      }
-                      className={styles.btn}
-                    >
-                      Aggree
-                    </Button>
-                  )}
-                {selectedStep.finalImage === null && feedbackActive ? (
-                  <div className="">
-                    <span className="fw-bold d-block">
-                      Click on the image to add feedback
-                    </span>
-                  </div>
-                ) : (
-                  selectedStep.finalImage === null && (
-                    <Button
-                      onClick={() => handleClickFeedback()}
-                      className={styles.btn_feedback}
-                    >
-                      Feedback
-                    </Button>
-                  )
+              {(role === "client" || role === "admin" || role === "manager") &&
+                selectedStep.finalImage === null &&
+                currentStepHandeler() && (
+                  <Button
+                    onClick={() =>
+                      approveStep(selectedStep._id, selectedStep.projectId)
+                    }
+                    className={styles.btn}
+                  >
+                    Agree
+                  </Button>
                 )}
-              </div>
+              {selectedStep.finalImage === null && feedbackActive ? (
+                <div className="">
+                  <span className="fw-bold d-block">
+                    Click on the image to add feedback
+                  </span>
+                </div>
+              ) : (
+                selectedStep.finalImage === null && (
+                  <Button
+                    onClick={() => handleClickFeedback()}
+                    className={styles.btn_feedback}
+                  >
+                    <AiOutlinePlus className=" fs-6" /> New Feedback
+                  </Button>
+                )
+              )}
+
+              <h5>
+                {currentIndex + 1}. {collection.title}
+              </h5>
+              <p className={styles.desc}>{collection.description}</p>
               {points !== null &&
                 collection._id === points.stepId &&
                 showForm === true && (
@@ -336,6 +333,7 @@ const Overview = ({
                       <span className={styles.username}>{item.userName}</span>
                       {/* <span className={styles.userrole}>{item.userRole}</span> */}
                     </div>
+                    <hr className="mt-0 mb-2" />
                     <span className={styles.fb_text}>
                       {i + 1}. {item.message}
                     </span>

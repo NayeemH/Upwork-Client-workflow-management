@@ -11,7 +11,7 @@ const SettingsPage = () => {
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
-      <FilterDashboard selectedFilter="active" />
+      <FilterDashboard />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>

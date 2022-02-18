@@ -9,6 +9,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { BsExclamationLg } from "react-icons/bs";
 const FileDownload = require("js-file-download");
 
 const ProjectDetails = ({ project }) => {
@@ -69,7 +70,7 @@ const ProjectDetails = ({ project }) => {
           to={`/project/${id}/download`}
           className={`${styles.button} mt-md-0 `}
         >
-          Finished Products Downloads
+          Finished Products
         </Button>
       </div>
       <div className={styles.steps_wrapper}>
@@ -92,6 +93,7 @@ const ProjectDetails = ({ project }) => {
                   current={currentStepHandeler(task)}
                   icons={{
                     finish: <AiOutlineCheck color="#fff" />,
+                    process: <BsExclamationLg color="#fff" />,
                   }}
                   direction={width > 768 ? "horizontal" : "vertical"}
                 >

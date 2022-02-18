@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getProjectDetails } from "../../actions/Project.action";
 import DownloadList from "../../components/DownloadList/DownloadList";
+import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./DownloadPage.module.css";
@@ -22,6 +23,7 @@ const DownloadPage = () => {
     >
       <Topbar />
       <Sidebar />
+      <FilterDashboard selectedFilter="active" />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>
           <Link to="/dashboard" className={styles.bc_home}>

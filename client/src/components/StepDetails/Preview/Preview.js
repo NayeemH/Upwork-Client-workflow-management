@@ -164,7 +164,7 @@ const Preview = ({
 
   return (
     <Col md={9}>
-      <div className="d-flex  align-items-center  pb-3">
+      <div className={`${styles.arrows_section} d-flex align-items-center p-2`}>
         <span className={styles.back_icon}>
           <AiOutlineLeft
             size={20}
