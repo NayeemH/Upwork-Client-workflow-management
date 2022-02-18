@@ -131,3 +131,9 @@
   font-size: 13px;
   color: var(--secondary);
 }
+
+.textarea {
+  background: rgba($color: #000000, $alpha: 0.1) !important;
+  border: none !important;
+  color: var(--light) !important;
+}

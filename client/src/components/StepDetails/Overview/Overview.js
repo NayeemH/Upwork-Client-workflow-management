@@ -228,6 +228,10 @@ const Overview = ({
         )}
       {collection && (
         <>
+          <h5>
+            {currentIndex + 1}. {collection.title}
+          </h5>
+          <p className={styles.desc}>{collection.description}</p>
           {final && (
             <>
               {(role === "client" || role === "admin" || role === "manager") &&
@@ -259,10 +263,6 @@ const Overview = ({
                 )
               )}
 
-              <h5>
-                {currentIndex + 1}. {collection.title}
-              </h5>
-              <p className={styles.desc}>{collection.description}</p>
               {points !== null &&
                 collection._id === points.stepId &&
                 showForm === true && (
@@ -281,7 +281,8 @@ const Overview = ({
                           <Button
                             type="submit"
                             disabled={messageLoading}
-                            className={styles.btn}
+                            variant="outline-light"
+                            className={`w-100 mb-2`}
                           >
                             {messageLoading ? "Loading..." : "Submit"}
                           </Button>
@@ -289,7 +290,8 @@ const Overview = ({
                             <Button
                               type="reset"
                               onClick={cancelHandeler}
-                              className={styles.btn_feedback}
+                              variant="outline-light"
+                              className={`w-100 mb-2`}
                             >
                               Cancel
                             </Button>
