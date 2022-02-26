@@ -26,17 +26,19 @@
 
 .btn_submit {
   outline: none !important;
-  border: 1px solid rgb(0, 134, 22) !important;
-  color: rgb(0, 134, 22) !important;
+  border: none !important;
+  color: #fff !important;
+  background: var(--primary) !important;
   padding: 5px 26px;
-  background: none !important;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
   margin-right: 2.5rem;
 }
-.btn_submit.red {
-  border: 1px solid var(--danger) !important;
-  color: var(--danger) !important;
+
+.cancel_btn {
+  padding: 5px 26px !important;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
 }
 
 .btn_submit:hover {

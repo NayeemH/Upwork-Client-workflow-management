@@ -99,7 +99,7 @@ const FilterDashboard = ({ selectedFilter }) => {
               }
               onClick={() => redirectToApprove()}
             >
-              Approved
+              Finished
             </Button>
           </ButtonGroup>
           {selectedFilter !== "approved" && (

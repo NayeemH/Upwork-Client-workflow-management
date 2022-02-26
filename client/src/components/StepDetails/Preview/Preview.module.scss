@@ -55,6 +55,7 @@
   position: absolute;
   bottom: 25px;
   left: 0;
+  padding: 10px 0;
   background: var(--light-bg);
   color: var(--light);
   border-radius: 5px !important;
@@ -62,10 +63,15 @@
 }
 
 .item {
-  padding: 0px 10px !important;
+  padding: 5px 10px !important;
   padding-right: 60px !important;
   font-size: 14px;
-  color: var(--light);
+  color: var(--secondary-500);
+  border-bottom: 1px solid var(--secondary-500);
+}
+
+.item.active {
+  color: var(--light) !important;
 }
 
 .item:hover {
@@ -88,7 +94,9 @@
 
 .date {
   color: var(--secondary-500);
-  display: block;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   padding-left: 10px;
 }
 

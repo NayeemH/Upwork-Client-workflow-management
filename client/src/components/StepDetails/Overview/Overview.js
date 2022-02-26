@@ -137,13 +137,13 @@ const Overview = ({
       <Modal
         backdrop="static"
         show={submitModal}
-        size="lg"
+        size=""
         onHide={() => setsubmitModal(false)}
         centered
         style={{ zIndex: "9999" }}
       >
-        <Modal.Body className="">
-          <h4>Give Feedback</h4>
+        <Modal.Body className="bg_dark_bg text-light">
+          <h4>Send Feedback</h4>
           <div className="pt-3">
             {feedback && (
               <form onSubmit={(e) => formSubmitHandeler(e)}>
@@ -157,8 +157,9 @@ const Overview = ({
                 <div className="d-flex justify-content-end align-items-center pt-4">
                   <Button
                     type="reset"
+                    variant="outline-light"
                     onClick={() => cancelHandelerModal()}
-                    className={`${styles.btn_submit} ${styles.red}`}
+                    className={`${styles.cancel_btn} w-100 ms-3`}
                   >
                     <span style={{ marginRight: 5 }}>
                       <FaTimes />{" "}
@@ -168,7 +169,7 @@ const Overview = ({
                   <Button
                     type="submit"
                     disabled={messageLoading}
-                    className={styles.btn_submit}
+                    className={styles.btn}
                   >
                     <span style={{ marginRight: 5 }}>
                       <AiOutlineCheck />{" "}

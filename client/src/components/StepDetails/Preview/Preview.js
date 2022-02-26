@@ -4,6 +4,7 @@ import styles from "./Preview.module.scss";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MdHistory } from "react-icons/md";
+import { GoPrimitiveDot } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectedCollectionChange,
@@ -286,14 +287,16 @@ const Preview = ({
         >
           {showHistory && (
             <div className={styles.list}>
-              <span className={styles.history_heading}>
+              {/* <span className={styles.history_heading}>
                 Use arrow keys left and right to <br />
                 step through history.
-              </span>
+              </span> */}
               {collections.map((item, i) => (
                 <div
                   key={item._id}
-                  className={`py-1 ${styles.item}`}
+                  className={`py-1 ${styles.item} ${
+                    i === index && styles.active
+                  }`}
                   onClick={() => selectFunc(i)}
                 >
                   <span className="d-block">
@@ -301,6 +304,10 @@ const Preview = ({
                   </span>
                   <span className={styles.date}>
                     <Moment format="DD-MM-YYYY">{item.createAt}</Moment>
+                    <span className="mb-1 ">
+                      <GoPrimitiveDot size={12} />
+                    </span>
+                    <Moment format="hh:mm">{item.createAt}</Moment>
                   </span>
                 </div>
               ))}
