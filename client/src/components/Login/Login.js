@@ -174,7 +174,7 @@ const Login = ({ login, getOrganization }) => {
                       {isLoading ? "Loading..." : "Login"}
                     </Button>
 
-                    <span className={`${styles.reg} d-block pt-3`}>
+                    {/* <span className={`${styles.reg} d-block pt-3`}>
                       Not a member yet?{" "}
                       <span
                         onClick={() => orgHandeler()}
@@ -182,7 +182,7 @@ const Login = ({ login, getOrganization }) => {
                       >
                         Register Now
                       </span>
-                    </span>
+                    </span> */}
                   </div>
                 </Form>
               )}
