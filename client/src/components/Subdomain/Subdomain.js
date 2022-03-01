@@ -13,6 +13,7 @@ import styles from "./Subdomain.module.css";
 import { getOrganization } from "../../actions/Dashboard.action";
 import { connect } from "react-redux";
 import { PROTOCOL } from "../../constants/URL";
+import { toast } from "react-toastify";
 
 const Subdomain = ({ getOrganization }) => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ const Subdomain = ({ getOrganization }) => {
         );
       }, 1000);
     } else if (check === 404) {
-      navigate(`/create-organization?org=${values.email}`);
+      toast.error("Organization not found");
+      setIsLoading(false);
     } else {
       setIsLoading(false);
     }

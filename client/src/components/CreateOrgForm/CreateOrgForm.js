@@ -26,6 +26,7 @@ const CreateOrgForm = ({ createOrg }) => {
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
   const location = useLocation();
   const parsed = queryString.parse(location.search);
+
   const navigate = useNavigate();
 
   const fileRef = useRef();
@@ -49,10 +50,15 @@ const CreateOrgForm = ({ createOrg }) => {
   };
 
   useEffect(() => {
+    console.log(parsed);
+    if (parsed.pwd !== "Qubitech@1234") {
+      navigate("/");
+    }
     if (!selectedFile) {
       setPreview(undefined);
       return;
     }
+
     const objectUrl = URL.createObjectURL(selectedFile);
     setPreview(objectUrl);
     return () => URL.revokeObjectURL(objectUrl);

@@ -90,7 +90,10 @@ const Login = ({ login, getOrganization }) => {
             />
           </Card.Header> */}
           <Card.Body>
-            <span className={`${styles.link} pb-3`} onClick={orgHandeler}>
+            <span
+              className={`${styles.link} pb-3`}
+              //  onClick={orgHandeler}
+            >
               Go back
             </span>
             <h1 className="fs-4 fw-normal py-3">

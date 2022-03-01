@@ -34,7 +34,7 @@ const FilterDashboard = ({ selectedFilter }) => {
   return (
     <>
       <div className={styles.wrapper}>
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-start align-items-center">
           {role === "admin" && (
             <span
               className={`${styles.ham} pt-1 pe-4`}
@@ -70,18 +70,26 @@ const FilterDashboard = ({ selectedFilter }) => {
               visit www.website.com
             </Dropdown.Item>
           </DropdownButton>
+          {/* <img
+            src={`${IMAGE_PATH}small/${domain.logo}`}
+            className={styles.logo}
+            alt="company"
+            onClick={() => navigate("/dashboard")}
+          /> */}
+          <span className={styles.projects}>Projects</span>
+        </div>
+        <div className="d-flex justify-content-center align-items-center">
           <img
             src={`${IMAGE_PATH}small/${domain.logo}`}
             className={styles.logo}
             alt="company"
             onClick={() => navigate("/dashboard")}
           />
-          <span className={styles.projects}>Projects</span>
         </div>
-        <div className="d-flex align-items-center flex-column flex-md-row">
+        <div className="d-flex justify-content-md-end justify-content-center align-items-center flex-column flex-md-row">
           <span className="">Filter Projects</span>
           <ButtonGroup
-            className="ms-3 me-3 mb-3 mb-md-0"
+            className="ms-3 me-3 mb-2 mb-md-0"
             aria-label="First group"
           >
             {/* TODO::: FETCH PROJECT DATA DEPENDING ON THE SELECTED FILTER   */}
@@ -104,7 +112,7 @@ const FilterDashboard = ({ selectedFilter }) => {
           </ButtonGroup>
           {selectedFilter !== "approved" && (
             <ButtonGroup
-              className={`${styles.btn__grp} my-3`}
+              className={`${styles.btn__grp} my-2`}
               aria-label="First group"
             >
               {/* TODO::: FETCH PROJECT DATA DEPENDING ON THE SELECTED FILTER   */}
