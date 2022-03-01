@@ -3,6 +3,7 @@ import { Breadcrumb } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import AddTaskForm from "../../components/AddTaskForm/AddTaskForm";
+import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./AddTaskPage.module.css";
@@ -15,6 +16,7 @@ const AddTaskPage = () => {
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
+      <FilterDashboard />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>

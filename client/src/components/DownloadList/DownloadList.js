@@ -6,6 +6,8 @@ import { BASE_URL, IMAGE_PATH } from "../../constants/URL";
 import styles from "./DownloadList.module.scss";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Moment from "react-moment";
+import { MdContentCopy } from "react-icons/md";
+import { AiOutlineCheck } from "react-icons/ai";
 const FileDownload = require("js-file-download");
 
 const DownloadList = ({ project }) => {
@@ -151,91 +153,96 @@ const DownloadList = ({ project }) => {
           backdrop="static"
           show={download !== ""}
           onHide={() => setDownload("")}
+          size="lg"
+          centered
         >
-          <Modal.Body className="bg_dark_bg bordered text-light">
-            <h4>Download Link</h4>
-            <div className="py-3">
-              <input
-                type="text"
-                className="form-control"
-                disabled
-                value={download}
-              />
-            </div>
-            <div className="d-flex justify-content-between align-items-center">
+          <Modal.Body>
+            <span className="fs-4">Your downloads are ready</span>
+            <span className="d-block pt-2">
+              Copy the link to share your downloads.
+            </span>
+
+            <span className="d-block pt-3 pb-3">
+              {download}{" "}
               <CopyToClipboard
                 text={download}
                 onCopy={() => toast.success("Link saved to clipboard")}
               >
-                <Button className={styles.btn}>Copy Link</Button>
+                <span className={styles.down}>
+                  <MdContentCopy />
+                </span>
               </CopyToClipboard>
-              <Button variant="dark" onClick={() => setDownload("")}>
-                Close
+            </span>
+
+            <div className="d-flex justify-content-end align-items-center">
+              <Button
+                className={styles.down_btn}
+                onClick={() => setDownload("")}
+              >
+                <AiOutlineCheck /> Finish
               </Button>
             </div>
           </Modal.Body>
         </Modal>
-        <div className={styles.steps_wrapper}>
-          <div className="d-flex justify-content-center align-items-center"></div>
-          <Row>
-            <Col
-              xs={12}
-              md={6}
-              className="d-flex flex-md-row flex-column align-items-center p-3 px-5"
-            ></Col>
+        <div className="d-flex justify-content-center align-items-center"></div>
+        <Row>
+          <Col
+            xs={12}
+            md={8}
+            className="d-flex flex-md-row flex-column align-items-center pb-3 px-5"
+          ></Col>
 
-            <Col
-              md={3}
-              className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
+          <Col
+            md={2}
+            className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
+          >
+            <Button
+              variant="primary"
+              disabled={selected.length <= 0}
+              className={`${styles.btn}  mb-3`}
+              onClick={() => downloadHandeler1()}
             >
-              <Button
-                variant="primary"
-                disabled={selected.length <= 0}
-                className={`${styles.btn}  mb-3`}
-                onClick={() => downloadHandeler1()}
-              >
-                Download all selected files
-              </Button>
-              <span className="d-block">Select all for downloaing now</span>
-              <Form.Check
-                checked={all1}
-                onChange={() => onSelectAll1()}
-                type="checkbox"
-                id={`default-checkbox`}
-              />
-            </Col>
-            <Col
-              md={3}
-              className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
+              Download All
+            </Button>
+            {/* <span className="d-block">Select all for downloaing now</span> */}
+            <Form.Check
+              checked={all1}
+              onChange={() => onSelectAll1()}
+              type="checkbox"
+              id={`default-checkbox`}
+            />
+          </Col>
+          <Col
+            md={2}
+            className="d-flex align-items-center flex-column justify-content-center p-3 text-center"
+          >
+            <Button
+              variant="primary"
+              disabled={selected2.length <= 0}
+              className={`${styles.btn} mb-3`}
+              onClick={() => downloadHandeler2()}
             >
-              <Button
-                variant="primary"
-                disabled={selected2.length <= 0}
-                className={`${styles.btn} mb-3`}
-                onClick={() => downloadHandeler2()}
-              >
-                Genarate Download Link
-              </Button>
-              <span className="d-block">
-                Select all for genarating download link
-              </span>
-              <Form.Check
-                checked={all2}
-                onChange={() => onSelectAll2()}
-                type="checkbox"
-                id={`default-checkbox`}
-              />
-            </Col>
-          </Row>
-        </div>
-        <div className={styles.hr}></div>
+              Share Link
+            </Button>
+            {/* <span className="d-block">
+              Select all for genarating download link
+            </span> */}
+            <Form.Check
+              checked={all2}
+              onChange={() => onSelectAll2()}
+              type="checkbox"
+              id={`default-checkbox`}
+            />
+          </Col>
+        </Row>
+        {/* <div className={styles.hr}></div> */}
         {project.productList
           .filter((product) => checkValidity(product))
           .map((task, index) => (
             <div className={styles.steps_wrapper} key={index}>
               <Row>
                 <Col
-                  md={3}
+                  md={4}
                   className="d-flex align-items-center flex-md-row flex-column"
                 >
                   <img
@@ -248,14 +255,14 @@ const DownloadList = ({ project }) => {
                 <Col
                   md={1}
                   xs={6}
-                  className="d-flex align-items-end flex-column justify-content-center p-md-0 p-3"
+                  className={`${styles.border_left} d-flex align-items-start flex-column justify-content-center p-md-0 p-3 ps-md-2`}
                 >
-                  <span className="d-block">Dimension</span>
+                  <span className="d-block pt-2">Dimension</span>
                   <span className="d-block">Size</span>
-                  <span className="d-block">Created At</span>
+                  <span className="d-block pb-2">Created At</span>
                 </Col>
                 <Col
-                  md={2}
+                  md={3}
                   xs={6}
                   className="d-flex align-items-start flex-column justify-content-center p-md-0 p-3"
                 >
@@ -283,7 +290,7 @@ const DownloadList = ({ project }) => {
                   )}
                 </Col>
                 <Col
-                  md={3}
+                  md={2}
                   xs={6}
                   className="d-flex align-items-center justify-content-center p-md-0 p-3"
                 >
@@ -295,7 +302,7 @@ const DownloadList = ({ project }) => {
                   />
                 </Col>
                 <Col
-                  md={3}
+                  md={2}
                   xs={6}
                   className="d-flex align-items-center justify-content-center p-md-0 p-3"
                 >

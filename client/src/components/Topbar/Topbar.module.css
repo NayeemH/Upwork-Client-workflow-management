@@ -1,4 +1,5 @@
 .wrapper {
+  display: none !important;
   width: 100%;
   height: 50px;
   background: var(--dark-bg);
@@ -28,6 +29,7 @@
 
 @media screen and (max-width: 768px) {
   .wrapper {
+    display: flex !important;
     padding: 0 0.5rem !important;
   }
 }

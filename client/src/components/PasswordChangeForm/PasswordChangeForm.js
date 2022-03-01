@@ -146,7 +146,7 @@ const PasswordChangeForm = ({ passwordChange }) => {
                     />
                   )}
                 </InputGroup>
-                <div className={styles.req}>
+                {/* <div className={styles.req}>
                   <span className="d-block"> *Must be 6 characters long.</span>
                   <span className="d-block">
                     *Must contain one number [0-9].
@@ -157,7 +157,7 @@ const PasswordChangeForm = ({ passwordChange }) => {
                   <span className="d-block">
                     *Must contain one special character [! @ # $ % & *].
                   </span>
-                </div>
+                </div> */}
                 <div className="pt-3">
                   <Button
                     variant="primary"

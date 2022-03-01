@@ -14,13 +14,29 @@ const router = require("./routes");
 // Create Express App
 const app = express();
 
+// Set Domain offset
+if (process.env.NODE_ENV === "production") {
+  app.set("subdomain offset", 2);
+} else {
+  // This is for localhost
+  app.set("subdomain offset", 1);
+}
+
 // Cookie Parser
 app.use(cookieParser());
 
 // Cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      const regularEx = RegExp(`${process.env.CLIENT_DOMAIN}$`, "i");
+
+      if (regularEx.test(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
     credentials: true,
   })
 );
@@ -33,9 +49,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
 // Static files
-app.use(express.static(path.resolve('data')));
+app.use(express.static(path.resolve("data")));
 
-app.use(express.static(path.resolve('client/build')));
+app.use(express.static(path.resolve("client/build")));
 
 // Routers
 app.use("/api", router);
@@ -52,7 +68,6 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({ success: false, msg: [error.message] });
 });
-
 
 // Listening port
 const PORT = process.env.PORT || 5001;

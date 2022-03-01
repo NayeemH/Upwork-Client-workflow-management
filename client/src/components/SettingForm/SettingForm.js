@@ -14,7 +14,6 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { ImUpload } from "react-icons/im";
 import { IMAGE_PATH } from "../../constants/URL";
-import { AiOutlineLock } from "react-icons/ai";
 
 const SettingForm = ({ updateProfile, user }) => {
   //STATES
@@ -77,6 +76,9 @@ const SettingForm = ({ updateProfile, user }) => {
   return (
     <div className={styles.wrapper}>
       <Card bg="dark" text="light" className={styles.crd}>
+        <Card.Title className="px-3 pt-3">
+          <span className="fs-4">Profile</span>
+        </Card.Title>
         <Card.Body>
           <Formik
             initialValues={initVals}
@@ -86,58 +88,66 @@ const SettingForm = ({ updateProfile, user }) => {
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="">
-                  <div className={styles.preview}>
-                    {selectedFile ? (
-                      <div
-                        className={`${styles.img__wrapper} text-center mb-3`}
+                <div className="d-flex justify-content-between align-items-end">
+                  <div className="">
+                    <div className={styles.preview}>
+                      {selectedFile ? (
+                        <div
+                          className={`${styles.img__wrapper} text-center mb-3`}
+                        >
+                          <img
+                            src={preview}
+                            alt={user.username}
+                            className="img-fluid"
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className={styles.preview}>
+                      {!selectedFile ? (
+                        <div
+                          className={`${styles.img__wrapper} text-center mb-3`}
+                        >
+                          <img
+                            src={`${IMAGE_PATH}/small/${user.image}`}
+                            alt={user.username}
+                            className="h-100"
+                          />
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <Button
+                        variant="outline-light"
+                        onClick={() => fileRef.current.click()}
                       >
-                        <img
-                          src={preview}
-                          alt={user.username}
-                          className="img-fluid"
-                        />
-                      </div>
-                    ) : (
-                      <></>
-                    )}
+                        <span className="d-block mr-4">
+                          <ImUpload />
+                        </span>{" "}
+                        <span className="pl-3 d-block"> Change Image</span>
+                      </Button>
+                    </div>
+                    <div className="" style={{ display: "none" }}>
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        name="image"
+                        onChange={onSelectFile}
+                      />
+                    </div>
                   </div>
-                  <div className={styles.preview}>
-                    {!selectedFile ? (
-                      <div
-                        className={`${styles.img__wrapper} text-center mb-3`}
-                      >
-                        <img
-                          src={`${IMAGE_PATH}/small/${user.image}`}
-                          alt={user.username}
-                          className="h-100"
-                        />
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <Button
-                      variant="outline-light"
-                      onClick={() => fileRef.current.click()}
-                    >
-                      <span className="d-block mr-4">
-                        <ImUpload />
-                      </span>{" "}
-                      <span className="pl-3 d-block"> Change Image</span>
-                    </Button>
-                  </div>
-                  <div className="" style={{ display: "none" }}>
-                    <input
-                      ref={fileRef}
-                      type="file"
-                      name="image"
-                      onChange={onSelectFile}
-                    />
+                  <div className={`text-end ${styles.change}`}>
+                    <Link to="/settings/password" className="btn btn-primary">
+                      Change Password
+                    </Link>
                   </div>
                 </div>
-                <InputGroup className="mb-3 d-flex flex-column">
+                <hr />
+                <InputGroup className="my-3 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-center pb-2">
                     <label htmlFor="username" className="d-block">
                       Username
@@ -176,12 +186,6 @@ const SettingForm = ({ updateProfile, user }) => {
                     Email Address Can not be changed.
                   </small>
                 </InputGroup>
-
-                <div className={`text-end ${styles.change}`}>
-                  <Link to="/settings/password">
-                    <AiOutlineLock /> Change Password
-                  </Link>
-                </div>
 
                 <div className="pt-3">
                   <Button

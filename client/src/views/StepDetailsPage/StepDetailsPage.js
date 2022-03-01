@@ -6,6 +6,7 @@ import StepDetails from "../../components/StepDetails/StepDetails";
 import Topbar from "../../components/Topbar/Topbar";
 import styles from "./StepDetailsPage.module.css";
 import { Link } from "react-router-dom";
+import FilterDashboard from "../../components/FilterDashboard/FilterDashboard";
 
 const StepDetailsPage = () => {
   const selectedStep = useSelector((state) => state.project.selected_step);
@@ -15,6 +16,7 @@ const StepDetailsPage = () => {
   return (
     <div className={`bg_dark text-light`} style={{ minHeight: "100vh" }}>
       <Topbar />
+      <FilterDashboard />
       <Sidebar />
       <Breadcrumb className={styles.wrapper}>
         <Breadcrumb.Item>

@@ -1,24 +1,28 @@
 :root {
-  --primary: #a8aa01;
-  --primary-hover: #7d8002;
+  --primary: #f68a3c;
+  --primary-hover: #fa6e0a;
   --secondary: rgb(211, 211, 211);
   --secondary-500: rgba(211, 211, 211, 0.5);
   --danger: #dc3545;
   --danger-hover: #a52734;
-  --dark: #3a3a3a;
-  --dark-bg: #232323;
+  --dark: #1f1f1f;
+  --dark-bg: #333333;
   --light: #fff;
   --light-bg: #444444;
+  --border: #4d4d4d;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden !important;
+  background: transparent;
 }
 
 code {
@@ -50,17 +54,18 @@ select.form-select option:hover {
 }
 
 .rc-steps-item-process .rc-steps-item-icon .rc-steps-icon {
-  color: #fff !important;
+  color: var(--light-bg) !important;
   font-weight: bold;
 }
 
 .rc-steps-item-finish .rc-steps-item-icon {
   background: var(--primary) !important;
   color: var(--light) !important;
+  border: none !important;
 }
 
 .rc-steps-item-wait .rc-steps-item-icon {
-  background: var(--dark) !important;
+  background: var(--light-bg) !important;
 }
 /* STEPS STYLES END*/
 
@@ -94,7 +99,41 @@ select.form-select option:hover {
 }
 
 .rc-steps-item-process .rc-steps-item-icon {
-  background: var(--primary) !important;
+  background: none !important;
+}
+
+.rc-steps-item.rc-steps-item-wait .rc-steps-item-icon .rc-steps-icon {
+  color: var(--light-bg) !important;
+}
+.rc-steps-item.rc-steps-item-wait .rc-steps-item-icon,
+.rc-steps-item.rc-steps-item-process .rc-steps-item-icon {
+  border-width: 2px !important;
+}
+
+.rc-steps-item-finish .rc-steps-item-tail:after {
+  background-color: var(--primary) !important;
+  height: 2px;
+}
+.rc-steps-item-process .rc-steps-item-tail:after,
+.rc-steps-item-wait .rc-steps-item-tail:after,
+.rc-steps-item-error .rc-steps-item-tail:after {
+  background-color: transparent !important;
+  border-bottom: 2px dashed var(--light) !important;
+}
+
+.rc-steps-item:last-child .rc-steps-item-tail,
+.rc-steps-item:last-child .rc-steps-item-title:after {
+  content: "";
+  display: inline-block !important;
+  background: transparent !important;
+  height: 1px;
+  border-radius: 1px;
+  width: 73%;
+  transition: background 0.3s;
+}
+
+.rc-steps-label-vertical .rc-steps-item-tail {
+  padding: 0 12px !important;
 }
 
 .bg_dark {
@@ -106,4 +145,42 @@ select.form-select option:hover {
 
 #user .dropdown-menu.show {
   background: var(--dark-bg) !important;
+}
+
+/* .pnlm-hotspot-base.pnlm-hotspot.pnlm-sprite.pnlm-info.pnlm-tooltip {
+  background: var(--danger) !important;
+  width: 20px !important;
+  height: 20px !important;
+} */
+
+.pnlm-sprite.pnlm-hot-spot-debug-indicator {
+  display: none !important;
+}
+
+.pnlm-hotspot-base.pnlm-hotspot.pnlm-sprite.pnlm-info.pnlm-tooltip {
+  background: var(--danger) !important;
+  display: flex;
+  justify-content: center;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 12px;
+  font-weight: bold !important;
+  border-radius: 50%;
+  color: var(--light);
+  background: var(--danger);
+}
+
+.custom__hotspot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* img,
+svg {
+  vertical-align: text-top !important;
+} */
+
+.text_primary {
+  color: var(--primary) !important;
 }

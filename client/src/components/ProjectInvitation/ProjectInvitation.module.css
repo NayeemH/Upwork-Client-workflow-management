@@ -66,6 +66,17 @@
   color: var(--secondary);
 }
 
+.input {
+  background: var(--dark) !important;
+  color: var(--light) !important;
+  border: none !important;
+}
+.input:disabled {
+  background: var(--dark) !important;
+  color: var(--secondary) !important;
+  border: none !important;
+}
+
 @media screen and (max-width: 768px) {
   .crd {
     width: 90%;

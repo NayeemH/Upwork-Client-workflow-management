@@ -31,6 +31,7 @@ const GridItem = ({ item, star = false }) => {
               <Card.Title
                 onClick={() => navigate(`/project/${item.id}`)}
                 style={{ cursor: "pointer" }}
+                className="fs-5"
               >
                 {item.name}
               </Card.Title>
@@ -44,7 +45,8 @@ const GridItem = ({ item, star = false }) => {
                 className={styles.down}
                 onClick={() => navigate(`/project/${item.id}/download`)}
               >
-                <MdDownload /> Download
+                <MdDownload />{" "}
+                <span className="text-white d-bok ms-2">Downloads</span>
               </span>
               {item.productNumber > 0 && (
                 <span className={styles.notification}>

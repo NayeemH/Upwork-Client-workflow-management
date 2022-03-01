@@ -22,8 +22,16 @@
 .btn {
   outline: none !important;
   border: none !important;
+  width: 100% !important;
   padding: 8px 26px;
   background: var(--primary) !important;
+  transition: 0.3s all ease-in-out;
+}
+.btn_change {
+  outline: none !important;
+  border: 1px solid var(--primary) !important;
+  padding: 8px 26px;
+  background: none !important;
   transition: 0.3s all ease-in-out;
 }
 
@@ -31,9 +39,38 @@
   background: var(--primary-hover) !important;
   transition: 0.3s all ease-in-out;
 }
+.btn_change:hover {
+  border-color: var(--light) !important;
+  background: var(--dark-bg) !important;
+  color: var(--light) !important;
+  transition: 0.3s all ease-in-out;
+}
 
 .link {
+  color: var(--white) !important;
+  cursor: pointer;
+  text-decoration: none !important;
+  font-size: 14px !important;
+}
+.link:hover {
   color: var(--primary) !important;
+  text-decoration: none !important;
+}
+
+.reg {
+  color: var(--secondary) !important;
+  font-size: 14px;
+}
+
+.link_reg {
+  color: var(--light) !important;
+  transition: 0.3 all ease-in-out;
+}
+
+.link_reg:hover {
+  color: var(--primary) !important;
+  cursor: pointer;
+  transition: 0.3 all ease-in-out;
 }
 
 .eyeIcon {
@@ -43,6 +80,12 @@
   cursor: pointer;
   color: var(--dark) !important;
   z-index: 99;
+}
+
+.input {
+  background: var(--dark) !important;
+  color: var(--light) !important;
+  border: 2px solid var(--border) !important;
 }
 
 @media screen and (max-width: 768px) {

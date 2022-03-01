@@ -164,7 +164,7 @@ const NewAccountForm = ({ createAccount }) => {
                     />
                   )}
                 </InputGroup>
-
+                {/* 
                 <div className={styles.req}>
                   <span className="d-block"> *Must be 6 characters long.</span>
                   <span className="d-block">
@@ -176,7 +176,7 @@ const NewAccountForm = ({ createAccount }) => {
                   <span className="d-block">
                     *Must contain one special character [! @ # $ % & *].
                   </span>
-                </div>
+                </div> */}
 
                 <div className="pt-3">
                   <Button

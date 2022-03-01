@@ -2,9 +2,8 @@
   width: 100%;
   height: 50px;
   background: var(--dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 100px 1fr;
   padding: 0 2.5rem;
   color: var(--light);
 }
@@ -18,13 +17,14 @@
 }
 
 .active_btn {
-  background: var(--primary) !important;
-  color: var(--light);
+  background: none !important;
+  color: var(--primary) !important;
   border-color: var(--primary) !important;
 }
 
 .active_btn:hover {
-  background: var(--primary-hover) !important;
+  background: none !important;
+  color: var(--primary-hover) !important;
   border-color: var(--primary) !important;
 }
 
@@ -48,13 +48,99 @@
   border-color: var(--primary) !important;
 }
 
+.ham {
+  color: var(--primary);
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+
+.ham:hover {
+  color: var(--light);
+  transition: 0.3s all ease-in-out;
+}
+
+.logo {
+  height: 32px;
+  cursor: pointer;
+}
+
+.projects {
+  font-size: 16px !important;
+  border-left: 1px solid var(--light);
+  padding-left: 10px;
+  display: block;
+}
+
+.dropdown {
+  height: 35px;
+  width: 35px;
+  font-size: 20px !important;
+  background: var(--dark) !important;
+}
+
+.dropdown :global(.dropdown-menu) {
+  font-size: 12px !important;
+  background: var(--dark-bg) !important;
+}
+
+.dropdown_item {
+  background: var(--dark-bg) !important;
+  color: var(--light) !important;
+}
+.dropdown_item:hover {
+  background: var(--dark) !important;
+  color: var(--light) !important;
+}
+
+.dropdown button {
+  padding: 0 0 !important;
+  height: 37px !important;
+  overflow: hidden !important;
+}
+
+.dropdown button:focus,
+.dropdown button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.dropdown::after {
+  display: none !important;
+}
+
+:global(.dropdown-toggle::after) {
+  display: none !important;
+}
+
+.divider {
+  border-color: var(--secondary) !important;
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
-    flex-direction: column !important;
+    grid-template-columns: 1fr;
     height: auto !important;
-    padding: 0 0.5rem !important;
+    padding: 10px 0.5rem !important;
   }
   .list__icon {
     display: none;
+  }
+  .projects {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  .ham {
+    display: none;
+  }
+  .dropdown {
+    display: none;
+  }
+  .btn__grp {
+    display: none !important;
   }
 }

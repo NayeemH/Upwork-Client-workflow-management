@@ -11,7 +11,8 @@
 .btn {
   outline: none !important;
   border: none !important;
-  padding: 8px 26px;
+  padding: 5px 26px;
+  width: 100% !important;
   background: var(--primary) !important;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
@@ -22,14 +23,36 @@
   background: var(--primary-hover) !important;
   transition: 0.3s all ease-in-out;
 }
-.btn_feedback {
+
+.btn_submit {
   outline: none !important;
-  border: 1px solid var(--primary) !important;
-  padding: 8px 26px;
-  background: none !important;
+  border: none !important;
+  color: #fff !important;
+  background: var(--primary) !important;
+  padding: 5px 26px;
   transition: 0.3s all ease-in-out;
   margin-bottom: 12px;
   margin-right: 2.5rem;
+}
+
+.cancel_btn {
+  padding: 5px 26px !important;
+  margin-bottom: 12px;
+  margin-right: 2.5rem;
+}
+
+.btn_submit:hover {
+  transition: 0.3s all ease-in-out;
+}
+
+.btn_feedback {
+  outline: none !important;
+  border: 1px solid var(--primary) !important;
+  padding: 5px 26px;
+  width: 100% !important;
+  background: var(--primary-hover) !important;
+  transition: 0.3s all ease-in-out;
+  margin-bottom: 12px;
 }
 
 .btn_feedback:hover {
@@ -42,11 +65,11 @@
 }
 
 .feedback {
-  background: var(--dark);
+  background: rgba($color: #000000, $alpha: 0.1) !important;
   padding: 15px 10px;
   margin-top: 8px;
   display: flex;
-  border: 1px solid var(--dark);
+  border: 1px solid var(--dark-bg);
   transition: 0.3s all ease-in-out;
 }
 
@@ -74,9 +97,8 @@
 
 .username {
   font-size: 16px;
-  font-weight: bold;
   margin-right: 4px;
-  color: var(--primary);
+  color: var(--light);
 }
 
 .userrole {
@@ -105,4 +127,15 @@
   color: var(--primary);
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+
+.fb_date {
+  font-size: 13px;
+  color: var(--secondary);
+}
+
+.textarea {
+  background: rgba($color: #000000, $alpha: 0.1) !important;
+  border: none !important;
+  color: var(--light) !important;
 }

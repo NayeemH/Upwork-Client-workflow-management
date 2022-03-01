@@ -6,6 +6,12 @@ import { getStepDetails } from "../../actions/Project.action";
 import Overview from "./Overview/Overview";
 import Preview from "./Preview/Preview";
 import styles from "./StepDetails.module.scss";
+import ReactPannellum, {
+  mouseEventToCoords,
+  addHotSpot,
+  lookAt,
+  removeHotSpot,
+} from "../../libs/react-pannelum";
 
 const StepDetails = ({
   step,
@@ -50,6 +56,10 @@ const StepDetails = ({
               setPoints={setPoints}
               hoverFB={hoverFB}
               setHoverFB={setHoverFB}
+              ReactPannellum={ReactPannellum}
+              mouseEventToCoords={mouseEventToCoords}
+              lookAt={lookAt}
+              addHotSpot={addHotSpot}
             />
           )}
           {selectedCollectionIndex >= 0 && (
@@ -65,6 +75,8 @@ const StepDetails = ({
               setPoints={setPoints}
               hoverFB={hoverFB}
               setHoverFB={setHoverFB}
+              lookAt={lookAt}
+              removeHotSpot={removeHotSpot}
             />
           )}
           {step.collections.length === 0 && <Overview />}

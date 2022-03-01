@@ -9,6 +9,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { BsExclamationLg } from "react-icons/bs";
 const FileDownload = require("js-file-download");
 
 const ProjectDetails = ({ project }) => {
@@ -69,7 +70,7 @@ const ProjectDetails = ({ project }) => {
           to={`/project/${id}/download`}
           className={`${styles.button} mt-md-0 `}
         >
-          Finished Products Downloads
+          Finished Products
         </Button>
       </div>
       <div className={styles.steps_wrapper}>
@@ -77,18 +78,23 @@ const ProjectDetails = ({ project }) => {
           project.productList.map((task, index) => (
             <div className={styles.task} key={index}>
               <div className={styles.img_task}>
-                <img
-                  src={`${IMAGE_PATH}small/${task.image}`}
-                  className="img-fluid"
-                  alt=""
-                />
+                {task.image && (
+                  <img
+                    src={`${IMAGE_PATH}small/${task.image}`}
+                    className="img-fluid"
+                    alt=""
+                  />
+                )}
               </div>
-              <div className="d-flex flex-column  justify-content-center">
+              <div className="d-flex flex-column  justify-content-center py-3">
                 <h4 className={styles.name}>{task.name}</h4>
                 <Steps
                   labelPlacement="vertical"
                   current={currentStepHandeler(task)}
-                  icons={{ finish: <AiOutlineCheck color="#fff" /> }}
+                  icons={{
+                    finish: <AiOutlineCheck color="#fff" />,
+                    process: <BsExclamationLg color="#fff" />,
+                  }}
                   direction={width > 768 ? "horizontal" : "vertical"}
                 >
                   {task.steps &&
@@ -98,17 +104,6 @@ const ProjectDetails = ({ project }) => {
                         title={step.name}
                         key={i}
                         className={styles.stp}
-                        icon={
-                          <div className={styles.icon__text_wrapper}>
-                            <span className="text-light">{i + 1}</span>
-                            {step.feedbackLength > 0 &&
-                              step.viewed === true && (
-                                <span className={styles.count}>
-                                  {step.feedbackLength}
-                                </span>
-                              )}
-                          </div>
-                        }
                         onClick={() =>
                           navigate(`/project/${project._id}/step/${step._id}`)
                         }

@@ -4,6 +4,7 @@ import styles from "./Preview.module.scss";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { MdHistory } from "react-icons/md";
+import { GoPrimitiveDot } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectedCollectionChange,
@@ -14,7 +15,6 @@ import { saveAs } from "file-saver";
 import Moment from "react-moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiHelpCircle } from "react-icons/bi";
-import ReactPannellum from "react-pannellum";
 
 const Preview = ({
   data,
@@ -29,6 +29,10 @@ const Preview = ({
   setPoints,
   hoverFB,
   setHoverFB,
+  ReactPannellum,
+  addHotSpot,
+  lookAt,
+  mouseEventToCoords,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -108,7 +112,23 @@ const Preview = ({
         }
       }
     });
-  }, []);
+  }, [collections]);
+
+  const mouseClick3D = (e) => {
+    if (data.imageType && data.imageType === "3d" && feedbackActive) {
+      let coords = mouseEventToCoords(e);
+      addHotSpot({
+        pitch: coords[0],
+        yaw: coords[1],
+        type: "info",
+        text: "",
+      });
+
+      setPoints({ x: coords[0], y: coords[1], stepId: data._id });
+
+      setShowForm(true);
+    }
+  };
 
   const downloadImage = () => {
     saveAs(
@@ -127,7 +147,7 @@ const Preview = ({
   };
 
   const imgClickHandeler = (e) => {
-    if (feedbackActive && !showForm) {
+    if (e.target.id === "img") {
       const { clientX, clientY } = e;
       const { width, height, left, top } =
         imgRef.current.getBoundingClientRect();
@@ -145,7 +165,7 @@ const Preview = ({
 
   return (
     <Col md={9}>
-      <div className="d-flex  align-items-center  pb-3">
+      <div className={`${styles.arrows_section} d-flex align-items-center p-2`}>
         <span className={styles.back_icon}>
           <AiOutlineLeft
             size={20}
@@ -174,13 +194,34 @@ const Preview = ({
           </span>
         </div>
       </div>
-      <div className={styles.img_wrapper} ref={imgRef}>
+      <div
+        className={styles.img_wrapper}
+        ref={imgRef}
+        onClick={(e) => mouseClick3D(e)}
+      >
         {data.imageType && data.imageType === "3d" ? (
           <ReactPannellum
             id="test"
             sceneId="firstScene"
             imageSource={`${IMAGE_PATH}original/${data.image}`}
-            config={{ autoLoad: true }}
+            config={{
+              autoLoad: true,
+              hotSpotDebug: true,
+              showZoomCtrl: false,
+              showFullscreenCtrl: false,
+              hotSpots: [
+                ...data.feedbacks.map((item, i) => {
+                  return {
+                    id: item._id,
+                    pitch: item.points[0],
+                    yaw: item.points[1],
+                    type: "info",
+                    content: `${i + 1}`,
+                    text: item.message,
+                  };
+                }),
+              ],
+            }}
             style={{
               width: "100%",
               height: "90vh",
@@ -190,6 +231,7 @@ const Preview = ({
           <img
             src={`${IMAGE_PATH}original/${data.image}`}
             alt=""
+            id="img"
             onClick={(e) => imgClickHandeler(e)}
             className={styles.img}
           />
@@ -245,10 +287,16 @@ const Preview = ({
         >
           {showHistory && (
             <div className={styles.list}>
+              {/* <span className={styles.history_heading}>
+                Use arrow keys left and right to <br />
+                step through history.
+              </span> */}
               {collections.map((item, i) => (
                 <div
                   key={item._id}
-                  className={`py-1 ${styles.item}`}
+                  className={`py-1 ${styles.item} ${
+                    i === index && styles.active
+                  }`}
                   onClick={() => selectFunc(i)}
                 >
                   <span className="d-block">
@@ -256,6 +304,10 @@ const Preview = ({
                   </span>
                   <span className={styles.date}>
                     <Moment format="DD-MM-YYYY">{item.createAt}</Moment>
+                    <span className="mb-1 ">
+                      <GoPrimitiveDot size={12} />
+                    </span>
+                    <Moment format="hh:mm">{item.createAt}</Moment>
                   </span>
                 </div>
               ))}

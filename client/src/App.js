@@ -1,5 +1,6 @@
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import "./libs/react-pannelum/pannellum.css";
 import "./index.css";
 import {
   LoginPage,
@@ -29,11 +30,14 @@ import DownloadPage from "./views/DownloadPage/DownloadPage";
 import DeveloperListPage from "./views/DeveloperListPage/DeveloperListPage";
 import { useJwt } from "react-jwt";
 import ApprovedPage from "./views/ApprovedPage/ApprovedPage";
+import LandingPage from "./views/LandingPage/LandingPage";
+import CreateOrgPage from "./views/CreateOrgPage/CreateOrgPage";
 
 function App() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const role = useSelector((state) => state.dashboard.role);
+  const domain = useSelector((state) => state.domain.subdomain);
   const { decodedToken } = useJwt(token);
   if (decodedToken) {
     dispatch(setRole(decodedToken.userType));
@@ -47,7 +51,11 @@ function App() {
       <ToastContainer newestOnTop theme="dark" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={domain === "" ? <LandingPage /> : <LoginPage />}
+          />
+          <Route path="/create-organization" element={<CreateOrgPage />} />
           <Route path="/forget-password" element={<FogetPasswordPage />} />
           <Route
             path="/activate/loginMail/:status/:id"

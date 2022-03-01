@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./ForgetPassword.module.css";
-import logoImg from "../../assets/Logo.png";
 import { resetPassword } from "../../actions/Dashboard.action";
 import { connect } from "react-redux";
 
@@ -43,7 +42,6 @@ const ForgetPassword = ({ resetPassword }) => {
         <Card bg="dark" text="light" className={styles.crd}>
           <Card.Header className="d-flex justify-content-between align-items-center">
             <span className={styles.heading}>Reset Password</span>
-            <img src={logoImg} className={styles.logo} alt="" />
           </Card.Header>
           <Card.Body>
             <Formik

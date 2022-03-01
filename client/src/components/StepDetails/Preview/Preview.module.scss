@@ -7,7 +7,7 @@
 }
 
 .img_wrapper {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   position: relative;
 }
@@ -16,6 +16,10 @@
   color: var(--primary) !important;
   font-size: 18px;
   margin-right: 50px;
+}
+
+.arrows_section {
+  background: var(--dark-bg) !important;
 }
 
 .nav_right {
@@ -51,19 +55,26 @@
   position: absolute;
   bottom: 25px;
   left: 0;
-  background: var(--dark-bg);
+  padding: 10px 0;
+  background: var(--light-bg);
   color: var(--light);
   border-radius: 5px !important;
   z-index: 9999;
 }
 
 .item {
-  border-bottom: 1px solid var(--dark);
-  padding: 8px 20px !important;
+  padding: 5px 10px !important;
+  padding-right: 60px !important;
+  font-size: 14px;
+  color: var(--secondary-500);
+  border-bottom: 1px solid var(--secondary-500);
+}
+
+.item.active {
+  color: var(--light) !important;
 }
 
 .item:hover {
-  background: var(--primary);
   cursor: pointer;
 }
 
@@ -71,8 +82,26 @@
   border-bottom: none !important;
 }
 
+.history_heading {
+  display: block;
+  padding: 5px 5px;
+  margin: 0 5px;
+  margin-bottom: 10px;
+  color: var(--secondary-500);
+  font-size: 12px;
+  border-bottom: 1px solid var(--secondary-500);
+}
+
 .date {
   color: var(--secondary-500);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.item:hover .date {
+  color: var(--primary);
 }
 
 .point {
@@ -89,13 +118,16 @@
   font-size: 12px;
   font-weight: bold !important;
   border-radius: 50%;
-  border: 2px solid var(--light);
+  color: var(--light);
+  background: var(--danger);
   transition: 0.3s all ease-in-out;
 }
 
 .point__icon.active {
-  border: 2px solid var(--primary) !important;
-  color: var(--primary) !important;
+  border: 2px solid var(--light) !important;
+  color: var(--light) !important;
+  background: var(--danger) !important;
+  transform: scale(1.2);
   transition: 0.3s all ease-in-out;
 }
 

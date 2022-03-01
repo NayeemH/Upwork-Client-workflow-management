@@ -264,7 +264,9 @@ export const createProjectTask =
     let formData = new FormData();
 
     formData.append("name", values.name);
-    formData.append("image", file);
+    if (file) {
+      formData.append("image", file);
+    }
     formData.append("projectId", id);
     steps.map((step, i) => {
       formData.append(`steps[${i}]`, step.name);
@@ -290,7 +292,7 @@ export const createProjectTask =
           type: TASK_ADDED,
         });
         dispatch(getProjectDetails(id));
-        toast.success("TASK created successfully");
+        toast.success("Task created successfully");
         return true;
       }
     } catch (err) {

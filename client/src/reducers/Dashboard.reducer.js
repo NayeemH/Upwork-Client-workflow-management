@@ -15,6 +15,7 @@ const initialState = {
   loading: true,
   role: "",
   list: [],
+  clients: [],
 };
 
 const dashboardReducer = (state = initialState, action) => {
@@ -39,10 +40,16 @@ const dashboardReducer = (state = initialState, action) => {
         loading: false,
       };
     case MANAGER_LIST_LOAD:
-    case CLIENT_LIST_LOAD:
     case DEVELOPER_LIST_LOAD:
       return {
         ...state,
+        list: [...payload],
+        loading: false,
+      };
+    case CLIENT_LIST_LOAD:
+      return {
+        ...state,
+        clients: [...payload],
         list: [...payload],
         loading: false,
       };

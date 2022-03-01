@@ -29,13 +29,13 @@ const DashboardCards = () => {
       )}
       {data.filter((item) => saved.includes(item.id)).length > 0 && (
         <>
-          {data.filter((item) => saved.includes(item.id)).length > 0 && (
+          {/* {data.filter((item) => saved.includes(item.id)).length > 0 && (
             <Row className="pt-3 text-light text-center">
               <Col xs={12}>
                 <span className={styles.border_bottom}>Favorites</span>
               </Col>
             </Row>
-          )}
+          )} */}
           {listGrid === "grid" ? (
             <>
               <Row xs={1} md={4} lg={4} className="g-4 py-4 mx-0">

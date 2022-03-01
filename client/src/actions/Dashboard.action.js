@@ -8,11 +8,15 @@ import {
   CLIENT_LIST_LOAD,
   DASHBOARD_PROJECT_LIST_GRID,
   DEVELOPER_LIST_LOAD,
+  GET_ORG_DATA,
+  GET_ORG_DATA_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_FAIL,
   LOGOUT_SUCCESS,
   MANAGER_LIST_LOAD,
+  ORG_CREATED,
+  ORG_CREATED_ERROR,
   PASSWORD_CHANGE,
   PASSWORD_CHANGE_ERROR,
   REFRESH_TOKEN_GENARATED,
@@ -21,7 +25,7 @@ import {
   SET_ROLE,
   SIDEBAR_TOGGLE,
 } from "../constants/Type";
-import { BASE_URL } from "../constants/URL";
+import { BASE_URL, PROTOCOL } from "../constants/URL";
 import setAuthToken from "../utils/setAuthToken";
 import { useJwt } from "react-jwt";
 
@@ -298,4 +302,79 @@ export const fetchApprovedProject = () => async (dispatch) => {
       type: APPROVED_PROJECT_LOAD_ERROR,
     });
   }
+};
+
+// GET ORGANIZATION DATA
+export const getOrganization = (values) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      `${PROTOCOL}${BASE_URL.replace(`${PROTOCOL}`, "")}/api/getDomainInfo/`,
+      JSON.stringify({ domain: values.email }),
+      config
+    );
+    //console.log(res);
+    dispatch({
+      type: GET_ORG_DATA,
+      payload: res.data.data,
+    });
+    return 200;
+  } catch (err) {
+    console.log(err.response);
+    if (err.response.status === 404) {
+      dispatch({
+        type: GET_ORG_DATA_ERROR,
+      });
+      return 404;
+    }
+    dispatch({
+      type: GET_ORG_DATA_ERROR,
+    });
+    return false;
+  }
+};
+
+// CREATE Organization
+export const createOrg = (values, file) => async (dispatch) => {
+  let formData = new FormData();
+
+  formData.append("username", values.name);
+  formData.append("email", values.email);
+  formData.append("password", values.password);
+  formData.append("subdomain", values.name);
+  formData.append("image", file);
+
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  try {
+    // TODO ::: API CALL
+    const res = await axios.post(
+      `${BASE_URL}/api/createDomain`,
+      formData,
+      config
+    );
+    // console.log(res);
+    if (res.status === 200) {
+      dispatch({
+        type: ORG_CREATED,
+      });
+      toast.success("Organization created successfully");
+      return true;
+    }
+  } catch (err) {
+    dispatch({
+      type: ORG_CREATED_ERROR,
+    });
+    err.response.data.msg.map((msg) => toast.error(msg));
+    return false;
+  }
+
+  return false;
 };

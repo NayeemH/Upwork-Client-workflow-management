@@ -22,7 +22,8 @@ const authenticate = async (req, res, next) => {
             if(payload.exp * 1000 >= Date.now()) {
                 req.user = {
                     userId: payload.userId,
-                    userType: payload.userType
+                    userType: payload.userType,
+                    domain: payload.domain
                 }
 
                 return next();

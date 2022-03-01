@@ -30,7 +30,7 @@ router.post('/:projectId', async (req, res, next) => {
         const newProductList = products.map(product => product._id);
 
         
-        const token = crypto.randomBytes(10).toString('hex');
+        const token = crypto.randomBytes(6).toString('hex');
         const download = new Download({
             productList: newProductList,
             name: project.name,
@@ -41,7 +41,7 @@ router.post('/:projectId', async (req, res, next) => {
 
         res.json({
             success: true,
-            downloadLink: `${process.env.HOST_URL}/api/activate/download/${token}`
+            downloadLink: `${process.env.HOST_URL}/api/download/${token}`
         });
     }
     catch(err) {

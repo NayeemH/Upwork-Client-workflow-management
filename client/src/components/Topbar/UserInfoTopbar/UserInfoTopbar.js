@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import { getAuthUser } from "../../../actions/Profile.action";
 import { IMAGE_PATH } from "../../../constants/URL";
 import { useNavigate } from "react-router-dom";
-import {
-  NavDropdown,
-  MenuItem,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 import styles from "./UserInfoTopbar.module.css";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/Dashboard.action";
+import { FiLogOut } from "react-icons/fi";
+import { FaRegUserCircle } from "react-icons/fa";
 
-const UserInfoTopbar = ({ user, logout, getAuthUser }) => {
+const UserInfoTopbar = ({ user, logout, getAuthUser, filter = false }) => {
   const navigate = useNavigate();
   const clickHandler = () => {
     navigate("/settings");
@@ -29,9 +26,8 @@ const UserInfoTopbar = ({ user, logout, getAuthUser }) => {
     getAuthUser();
   }, []);
   return (
-    <div className={styles.wrapper} id="user">
-      <span className={styles.name}>{user.username}</span>
-
+    <div className={`${styles.wrapper} ${filter && styles.active}`} id="user">
+      {/* {!filter && <span className={styles.name}>{user.username}</span>} */}
       <DropdownButton
         variant="transparent"
         className={styles.dropdown}
@@ -51,14 +47,15 @@ const UserInfoTopbar = ({ user, logout, getAuthUser }) => {
           href="#"
           onClick={clickHandler}
         >
-          Profile
+          <FaRegUserCircle /> <span className="d-block ms-2">Profile</span>
         </Dropdown.Item>
+        <Dropdown.Divider className={styles.divider} />
         <Dropdown.Item
           href="#"
           className={styles.dropdown_item}
           onClick={logoutHandeler}
         >
-          Logout
+          <FiLogOut /> <span className="d-block ms-2">Logout</span>
         </Dropdown.Item>
       </DropdownButton>
     </div>

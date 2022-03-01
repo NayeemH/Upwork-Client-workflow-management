@@ -10,15 +10,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import AnimatedBG from "../shared/AnimatedBG/AnimatedBG";
 import styles from "./Login.module.css";
-import logoImg from "../../assets/Logo.png";
-import { login } from "../../actions/Dashboard.action";
+import { getOrganization, login } from "../../actions/Dashboard.action";
 import { connect, useSelector } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { BASE, PROD, PROTOCOL } from "../../constants/URL";
 const queryString = require("query-string");
 
-const Login = ({ login, loading }) => {
+const Login = ({ login, getOrganization }) => {
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const domain = useSelector((state) => state.domain);
   const [isLoading, setIsLoading] = useState(false);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -30,7 +31,26 @@ const Login = ({ login, loading }) => {
     if (isAuthenticated) {
       navigate("/dashboard");
     }
+    const func = async () => {
+      if (!domain.logo || domain.subdomain) {
+        const sub = { email: domain.subdomain };
+        let check = await getOrganization(sub);
+        if (check !== 200) {
+          window.location.replace(
+            `${PROTOCOL}${window.location.origin.split(".")[1]}.${
+              window.location.origin.split(".")[2] &&
+              window.location.origin.split(".")[2]
+            }`
+          );
+        }
+      }
+    };
+    func();
   }, [isAuthenticated]);
+
+  const orgHandeler = () => {
+    window.location.replace(PROD ? `${PROTOCOL}${BASE}.com` : `localhost:3000`);
+  };
 
   const onSubmitHandeler = async (values) => {
     setIsLoading(true);
@@ -61,11 +81,25 @@ const Login = ({ login, loading }) => {
       <AnimatedBG />
       <div className={styles.wrapper}>
         <Card bg="dark" text="light" className={styles.crd}>
-          <Card.Header className="d-flex justify-content-between align-items-center">
-            <span className={styles.heading}>Login</span>
-            <img src={logoImg} className={styles.logo} alt="" />
-          </Card.Header>
+          {/* <Card.Header className="d-flex justify-content-between align-items-center">
+            <span className={styles.heading}>{domain.subdomain}</span>
+            <img
+              src={`${IMAGE_PATH}small/${domain.logo}`}
+              className={styles.logo}
+              alt=""
+            />
+          </Card.Header> */}
           <Card.Body>
+            <span
+              className={`${styles.link} pb-3`}
+              //  onClick={orgHandeler}
+            >
+              Go back
+            </span>
+            <h1 className="fs-4 fw-normal py-3">
+              Sign in to continue <br />
+              your journey
+            </h1>
             <Formik
               initialValues={initVals}
               validationSchema={SignupSchema}
@@ -76,12 +110,12 @@ const Login = ({ login, loading }) => {
                   <InputGroup className="mb-3 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-center pb-2">
                       <label htmlFor="email" className="d-block">
-                        Email
+                        Email Address
                       </label>
                     </div>
                     <Field
                       as={BootstrapForm.Control}
-                      placeholder="Provide your email address"
+                      placeholder="yourname@email.com"
                       name="email"
                       isValid={!errors.email && touched.email}
                       type="email"
@@ -104,7 +138,6 @@ const Login = ({ login, loading }) => {
                     </div>
                     <Field
                       as={BootstrapForm.Control}
-                      placeholder="Create your own password"
                       name="password"
                       isValid={!errors.password && touched.password}
                       type={isPasswordVisible ? "text" : "password"}
@@ -125,13 +158,16 @@ const Login = ({ login, loading }) => {
                       />
                     )}
                   </InputGroup>
-                  <div className="text-end">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <span style={{ fontSize: 14 }}>
+                      <input type="checkbox" /> Remember Me
+                    </span>
                     <Link to="/forget-password" className={styles.link}>
                       Forget Password?
                     </Link>
                   </div>
 
-                  <div className="pt-3">
+                  <div className="pt-4">
                     <Button
                       variant="primary"
                       type="submit"
@@ -140,6 +176,16 @@ const Login = ({ login, loading }) => {
                     >
                       {isLoading ? "Loading..." : "Login"}
                     </Button>
+
+                    {/* <span className={`${styles.reg} d-block pt-3`}>
+                      Not a member yet?{" "}
+                      <span
+                        onClick={() => orgHandeler()}
+                        className={styles.link_reg}
+                      >
+                        Register Now
+                      </span>
+                    </span> */}
                   </div>
                 </Form>
               )}
@@ -155,4 +201,4 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, getOrganization })(Login);
